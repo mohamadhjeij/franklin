@@ -5,9 +5,23 @@
 
 .columns img {
     width: 100%;
+    display: none;
+}
+
+div.section.columns-container > div > h2 {
+    text-align: center;
+}
+
+.columns > div > div > a {
+    color:  #0077BA;
+    background-color: rgba(0,0,0,0);
 }
 
 @media (min-width: 900px) {
+    .columns img {
+        display: inline;
+    }
+
     .columns > div {
         display: flex;
         align-items: center;
@@ -17,6 +31,7 @@
     .columns > div > div {
         flex: 1;
         margin-left: 32px;
+        border-bottom: unset;
     }
 
     .columns > div > div:first-of-type {
