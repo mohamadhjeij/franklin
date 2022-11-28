@@ -16,7 +16,6 @@ export default async function decorate(block) {
     };
     buttons.append(button);
   });
-  block.parentElement.append(buttons);
 
   const nav = document.createElement('div');
   nav.className = 'carousel-nav';
@@ -47,4 +46,6 @@ export default async function decorate(block) {
   };
   nav.append(prev, next);
   block.parentElement.append(nav);
+
+  block.parentElement.append(buttons);
 }
