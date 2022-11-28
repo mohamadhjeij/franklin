@@ -1,0 +1,26 @@
+main .carousel-container {
+padding: 0;
+width: 100%;
+}
+
+main .carousel-wrapper {
+position: relative;
+height: 100%;
+}
+
+main .carousel {
+    display: flex;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    height: 100%;
+  
+    /* Required by Safari */
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  main .section > div.carousel-wrapper {
+    max-width: 100%;
+  }
+
+  
