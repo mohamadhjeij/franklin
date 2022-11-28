@@ -13,7 +13,8 @@ main .carousel {
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     height: 100%;
-    overflow: hidden;
+    /* required for safari */
+    overflow-x: scroll;
   }
 
 .carousel > div {
