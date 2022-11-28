@@ -16,11 +16,11 @@ export default async function decorate(block) {
     };
     buttons.append(button);
   });
-  block.parentElement.prepend(buttons);
-  
+  block.parentElement.append(buttons);
+
   const nav = document.createElement('div');
   nav.className = 'carousel-nav';
-  
+
   const next = document.createElement('button');
   next.innerHTML = '<span class="icon icon-arrow"/>';
   next.className = 'carousel-next';
@@ -33,7 +33,7 @@ export default async function decorate(block) {
     }
     current.click();
   };
-  
+
   const prev = next.cloneNode(true);
   prev.className = 'carousel-prev';
   prev.onclick = () => {
@@ -46,5 +46,5 @@ export default async function decorate(block) {
     current.click();
   };
   nav.append(prev, next);
-  block.parentElement.prepend(nav);
+  block.parentElement.append(nav);
 }
