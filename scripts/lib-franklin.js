@@ -126,23 +126,33 @@ export function toCamelCase(name) {
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
  * @param {Element} element
+ * @param {boolean} isSprite
  */
-export function decorateIcons(element = document) {
+export function decorateIcons(element = document, isSprite) {
   element.querySelectorAll('span.icon').forEach(async (span) => {
     if (span.classList.length < 2 || !span.classList[1].startsWith('icon-')) {
       return;
     }
     const icon = span.classList[1].substring(5);
-    // eslint-disable-next-line no-use-before-define
-    const resp = await fetch(`${window.hlx.codeBasePath}/icons/${icon}.svg`);
-    if (resp.ok) {
-      const iconHTML = await resp.text();
-      if (iconHTML.match(/<style/i)) {
-        const img = document.createElement('img');
-        img.src = `data:image/svg+xml,${encodeURIComponent(iconHTML)}`;
-        span.appendChild(img);
-      } else {
-        span.innerHTML = iconHTML;
+    
+    if (isSprite) {
+      const link = `${window.hlx.codeBasePath}/icons/symbols-sprite.svg#svgsymbol-${icon}`;
+      span.innerHTML = `<svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <use xlink:href="${link}"></use>
+      </svg>`;
+    }
+    else {
+      // eslint-disable-next-line no-use-before-define
+      const resp = await fetch(`${window.hlx.codeBasePath}/icons/${icon}.svg`);
+      if (resp.ok) {
+        const iconHTML = await resp.text();
+        if (iconHTML.match(/<style/i)) {
+          const img = document.createElement('img');
+          img.src = `data:image/svg+xml,${encodeURIComponent(iconHTML)}`;
+          span.appendChild(img);
+        } else {
+          span.innerHTML = iconHTML;
+        }
       }
     }
   });
