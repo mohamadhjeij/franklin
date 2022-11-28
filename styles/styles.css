@@ -12,190 +12,214 @@
 
  :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
-  --background-color: #fff;
-  --overlay-background-color: #eee;
-  --highlight-background-color: #ccc;
-  --text-color: #000;
+  --text-color-body: #606a76;
+  --text-color-headlines: #32373e;
+  --text-color-button: #ffffff;
+  --text-color-invert-body: #dce3e9;
+  --text-color-invert-headlines: #f2f5f8;
+  --text-color-invert-button: #0072ef;
+  --text-color-cyan: #008bd0;
+  --fill-color-body: #606a76;
+  --fill-color-headlines: #32373e;
+  --fill-color-highlight: #0072ef;
+  --fill-color-invert-body: #dce3e9;
+  --fill-color-invert-headlines: #f2f5f8;
+  --bg-color-primary: #ffffff;
+  --bg-color-secondary: #f8fafc;
+  --bg-color-light-01: #f8fafc;
+  --bg-color-light-02: #f2f5f8;
+  --bg-color-light-03: #ecf0f4;
+  --bg-color-light-04: #e6ebf0;
+  --bg-color-dark-01: #32373e;
+  --bg-color-dark-02: #292d32;
+  --bg-color-dark-03: #202327;
+  --bg-color-dark-04: #17191c;
+  --bg-color-cyan: #008bd0;
+  --border-color-inactive: #c2cdd6;
+  --border-color-active: #32373e;
+  --border-color-invert-inactive: #6c7784;
+  --border-color-invert-active: #f2f5f8;
+  --interaction-color-link: #0072ef;
+  --interaction-color-hover: #0052aa;
+  --interaction-color-focused: #0052aa;
+  --interaction-color-disabled: #0052aae6;
+  --interaction-color-grey-link: #dce3e9;
+  --interaction-color-grey-hover: #c2cdd6;
+  --interaction-color-grey-focused: #a4b0bc;
+  --interaction-color-grey-disabled: #d1d9e166;
+  --interaction-color-background-focused: #ecf0f4;
+  --interaction-color-background-invert-focused: #4e565f;
+  --color-alert-error: #e71e1e;
+  --color-alert-error-10: #fdf0f0;
+  --color-alert-error-70: #ed4f4f;
+  --color-alert-error-120: #500808;
+  --color-alert-warning: #cd4b13;
+  --color-alert-warning-10: #fdf1ec;
+  --color-alert-warning-40: #ec6e38;
+  --color-alert-warning-120: #3e1706;
+  --color-alert-info: #986f00;
+  --color-alert-info-10: #fff4d5;
+  --color-alert-info-40: #fdca3f;
+  --color-alert-info-120: #302300;
+  --color-alert-success: #1e8565;
+  --color-alert-success-10: #e5f9f3;
+  --color-alert-success-50: #3ad2a3;
+  --color-alert-success-120: #09271e;
+  --color-alert-marketing: #d9e906;
+  --color-information-120: #002144;
+  --color-information-110: #00346c;
+  --color-information-100: #0052aa;
+  --color-information-90: #0072ef;
+  --color-information-80: #1a88ff;
+  --color-information-70: #3396ff;
+  --color-information-60: #5db3ff;
+  --color-information-50: #7dc7ff;
+  --color-information-40: #99d6ff;
+  --color-information-30: #b1e0ff;
+  --color-information-20: #d5eeff;
+  --color-information-10: #eaf7ff;
+  --color-information-zeiss: #061e93;
+  --color-information-highlight: #dede4c;
+  --color-white: #ffffff;
+  --color-black: #000000;
 
   /* fonts */
-  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
-  --heading-font-family: var(--body-font-family);
-  --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+  --font-family-frutiger: "Frutiger Next", "Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
+  --font-size-hl-1000: 1rem;
+  --font-size-hl-1250: 1.25rem;
+  --font-size-hl-1500: 1.5rem;
+  --font-size-hl-1750: 1.75rem;
+  --font-size-hl-2000: 2rem;
+  --font-size-hl-2500: 2.5rem;
+  --font-size-hl-3000: 3rem;
+  --line-height-hl-1000: 1.5rem;
+  --line-height-hl-1250: 1.725rem;
+  --line-height-hl-1500: 1.875rem;
+  --line-height-hl-1750: 2rem;
+  --line-height-hl-2000: 2.25rem;
+  --line-height-hl-2500: 3.125rem;
+  --line-height-hl-3000: 3.75rem;
+  --font-size-display-2000: 2rem;
+  --font-size-display-2500: 2.5rem;
+  --font-size-display-3000: 3rem;
+  --font-size-display-3750: 3.75rem;
+  --font-size-display-4000: 4rem;
+  --font-size-display-5000: 5rem;
+  --font-size-display-6000: 6rem;
+  --line-height-display-2000: 2.375rem;
+  --line-height-display-2500: 2.75rem;
+  --line-height-display-3000: 3.25rem;
+  --line-height-display-3750: 4rem;
+  --line-height-display-4000: 4.25rem;
+  --line-height-display-5000: 5.25rem;
+  --line-height-display-6000: 6.5rem;
+  --font-size-quote-1500: 1.5rem;
+  --font-size-quote-2000: 2rem;
+  --font-size-quote-2500: 2.5rem;
+  --line-height-quote-1500: 1.875rem;
+  --line-height-quote-2000: 2.25rem;
+  --line-height-quote-2500: 3rem;
+  --font-size-body-750: 0.75rem;
+  --font-size-body-875: 0.875rem;
+  --font-size-body-1000: 1rem;
+  --font-size-body-1250: 1.25rem;
+  --line-height-body-750: 1.125rem;
+  --line-height-body-875: 1.25rem;
+  --line-height-body-1000: 1.5rem;
+  --line-height-body-1250: 1.75rem;
+  --font-size-caption-750: 0.75rem;
+  --line-height-caption-750: 1rem;
+  --font-size-eyebrow-750: 0.75rem;
+  --font-size-eyebrow-1000: 1rem;
+  --line-height-eyebrow-750: 1rem;
+  --line-height-eyebrow-1000: 1.25rem;
+  --font-size-button-750: 0.75rem;
+  --font-size-button-1000: 1rem;
+  --font-size-button-1250: 1.25rem;
+  --line-height-button-750: 1.125rem;
+  --line-height-button-1000: 1.5rem;
+  --line-height-button-1250: 1.75rem;
+  --font-size-link-875: 0.875rem;
+  --font-size-link-1000: 1rem;
+  --font-size-link-1250: 1.25rem;
+  --line-height-link-875: 1.25rem;
+  --line-height-link-1000: 1.25rem;
+  --line-height-link-1250: 1.75rem;
+  --font-size-table-750: 0.75rem;
+  --font-size-table-1000: 1rem;
+  --line-height-table-750: 1rem;
+  --line-height-table-1000: 1.5rem;
+  --font-size-nav-875-1: 0.875rem;
+  --font-size-nav-875-2: 0.875rem;
+  --font-size-nav-1000-1: 1rem;
+  --font-size-nav-1000-2: 1rem;
+  --font-size-nav-1000-3: 1rem;
+  --font-size-nav-1125: 1.125rem;
+  --font-size-nav-1250-1: 1.25rem;
+  --font-size-nav-1250-2: 1.25rem;
+  --line-height-nav-875-1: 1.25rem;
+  --line-height-nav-875-2: 1.5rem;
+  --line-height-nav-1000-1: 1.125rem;
+  --line-height-nav-1000-2: 1.25rem;
+  --line-height-nav-1000-3: 1.5rem;
+  --line-height-nav-1125-1: 1.5rem;
+  --line-height-nav-1250-1: 1.5rem;
+  --line-height-nav-1250-2: 1.75rem;
+  --font-size-form-label-750: 0.75rem;
+  --line-height-form-label-750: 1.125rem;
+  --letter-spacing-0: 0;
+  --letter-spacing-1: 0.5px;
+  --letter-spacing-2: 1px;
+  --letter-spacing-3: 1.5px;
+}
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 18px;
-  --body-font-size-xs: 14px;
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, menu, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, main, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
 
-  /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
+  display: block;
+}
 
-  /* nav height */
-  --nav-height: 64px;
-
+*[hidden] {
+  display: none;
 }
 
 body {
-  font-size: var(--body-font-size-m);
-  margin: 0;
-  font-family: var(--body-font-family);
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  line-height: 1;
+}
+
+menu, ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* hlx */
+body {
   display: none;
 }
 
 body.appear {
   display: unset;
-}
-
-header {
-  height: var(--nav-height);
-}
-
-h1, h2, h3,
-h4, h5, h6 {
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  margin-top: 1em;
-  margin-bottom: .5em;
-  scroll-margin: calc(var(--nav-height) + 1em);
-}
-
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
-h5 { font-size: var(--heading-font-size-s) }
-h6 { font-size: var(--heading-font-size-xs) }
-
-p, dl, ol, ul, pre, blockquote {
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-a:any-link {
-  color: var(--link-color);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: var(--link-hover-color);
-}
-
-code, pre, samp {
-  font-family: var(--fixed-font-family);
-  font-size: var(--body-font-size-s);
-}
-
-code, samp {
-  padding: .125em;
-}
-
-pre {
-  overflow: scroll;
-}
-
-/* buttons */
-
-a.button:any-link, button {
-  font-family: var(--body-font-family);
-  display: inline-block;
-  box-sizing: border-box;
-  text-decoration: none;
-  border: 2px solid transparent;
-  padding: 5px 30px;
-  text-align: center;
-  font-style: normal; 
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-radius: 30px;
-}
-
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
-}
-
-button:disabled, button:disabled:hover {
-  background-color: var(--overlay-background-color);
-  cursor: unset;
-}
-
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
-} 
-
-
-main input {
-  font-size: 1.25rem;
-  width: 100%;
-  max-width: 50rem;
-  display: block;
-  margin-bottom: 1rem;
-  padding: 0.75rem 0.6rem;    
-  border-radius: 0.25rem;
-  box-sizing: border-box;
-  border: 1px solid var(--text-color);
-  color: var(--text-color);
-  background-color: var(--background-color);
-}
-
-main input:hover {
-  border: 1px solid var(--text-color);
-}
-
-main .section {
-  padding: 64px 16px;
-}
-
-main pre {
-  background-color: var(--overlay-background-color);
-  padding: 1em;
-  border-radius: .25em;
-  overflow-x: auto;
-  white-space: pre;
-}
-
-main blockquote {
-  font-style: italic;
-  margin: 3rem;
-  text-indent: -1rem;
-  hanging-punctuation: first;
-}
-
-main blockquote p::before {
-  content: "“";
-  line-height: 0;
-}
-
-main blockquote p::after {
-  content: "”";
-  line-height: 0;
-}
-
-hr {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-  border: 0;
-  border-bottom: 1px solid var(--overlay-background-color);
 }
 
 main img {
@@ -204,34 +228,8 @@ main img {
   height: auto;
 }
 
-@media (min-width: 600px) {
-  main .section {
-    padding: 64px 32px;
-  }  
-}
-
-@media (min-width: 900px) {
-  :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;  
-  }
-  
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-}
-
 /* progressive section appearance */
 main .section[data-section-status='loading'],
 main .section[data-section-status='initialized'] {
   display: none;
-}
-
-main .section.highlight {
-  background-color: var(--highlight-background-color);
 }
