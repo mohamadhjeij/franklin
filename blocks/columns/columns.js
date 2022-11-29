@@ -2,8 +2,8 @@ export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
   [...block.children[0].children].forEach((child) => {
-    const source = child.querySelector('p > picture > source');
-    const path = new URL(source.srcset, window.location).pathname;
+    const img = child.querySelector('p > picture > img');
+    const path = new URL(img.src, window.location).pathname;
     const downloadP = child.firstElementChild.nextElementSibling;
     downloadP.remove();
     const download = document.createElement('a');
