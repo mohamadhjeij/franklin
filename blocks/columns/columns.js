@@ -9,6 +9,9 @@ export default function decorate(block) {
     const download = document.createElement('a');
     download.text = downloadP.textContent;
     download.href = path;
+    if (img.alt && img.alt.length > 0) {
+      download.download = img.alt;
+    }
     child.append(download);
 
     function formatBytes(bytes, decimals = 2) {
