@@ -171,6 +171,23 @@
   --letter-spacing-1: 0.5px;
   --letter-spacing-2: 1px;
   --letter-spacing-3: 1.5px;
+  --spacing-horizontal-xxs: 0.25rem;
+  --spacing-horizontal-xs: 0.5rem;
+  --spacing-horizontal-s: 1rem;
+  --spacing-horizontal-m: 1.5rem;
+  --spacing-horizontal-l: 2rem;
+  --spacing-horizontal-xl: 3rem;
+  --spacing-horizontal-xxl: 3.5rem;
+  --spacing-horizontal-xxxl: 4.5rem;
+  --spacing-vertical-xxs: 0.25rem;
+  --spacing-vertical-xs: 0.5rem;
+  --spacing-vertical-s: 1rem;
+  --spacing-vertical-m: 1.5rem;
+  --spacing-vertical-l: 2rem;
+  --spacing-vertical-xl: 3rem;
+  --spacing-vertical-xxl: 3.5rem;
+  --spacing-vertical-xxxl: 4.5rem;
+  --spacing-vertical-modular: 4.5rem
 }
 
 /* reset */
