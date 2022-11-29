@@ -128,20 +128,19 @@ export function toCamelCase(name) {
  * @param {Element} element
  * @param {boolean} isSprite
  */
-export function decorateIcons(element = document, isSprite) {
+export function decorateIcons(element = document, isSprite = false) {
   element.querySelectorAll('span.icon').forEach(async (span) => {
     if (span.classList.length < 2 || !span.classList[1].startsWith('icon-')) {
       return;
     }
     const icon = span.classList[1].substring(5);
-    
+
     if (isSprite) {
       const link = `${window.hlx.codeBasePath}/icons/symbols-sprite.svg#svgsymbol-${icon}`;
       span.innerHTML = `<svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
         <use xlink:href="${link}"></use>
       </svg>`;
-    }
-    else {
+    } else {
       // eslint-disable-next-line no-use-before-define
       const resp = await fetch(`${window.hlx.codeBasePath}/icons/${icon}.svg`);
       if (resp.ok) {
