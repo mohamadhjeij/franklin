@@ -84,11 +84,50 @@ export function addFavIcon(href) {
   }
 }
 
+function decorateContentBlocks(main) {
+  const sections = [...main.querySelectorAll(':scope > div[class="section"]')];
+
+  const template = document.createRange().createContextualFragment(`
+    <div class="grid__container">
+      <div class="grid__structure">
+        <div class="grid__column grid__column--inner"></div>
+      </div>
+    </div>
+  `);
+
+  // Start with 1 to ignore hero
+  for (let i = 1; i < sections.length; i += 1) {
+    const section = sections[i];
+    section.classList.add('text-block');
+
+    const content = section.querySelector('.default-content-wrapper');
+    content.classList.add('text');
+    content.classList.add('text--body-m');
+
+    const wrapper = template.cloneNode(true);
+    wrapper.querySelector('.grid__column--inner').append(content);
+    section.append(wrapper);
+
+    const h2 = section.querySelector('h2');
+    if (h2) {
+      h2.classList.add('headline__main');
+      h2.classList.add('text-block__headline');
+      h2.classList.add('headline');
+      h2.classList.add('hl-l');
+    }
+
+    section.querySelectorAll('strong').forEach((strong) => {
+      strong.classList.add('text--bold');
+    });
+  }
+}
+
 /**
  * loads everything that doesn't need to be delayed.
  */
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
+  decorateContentBlocks(main);
   await loadBlocks(main);
 
   const { hash } = window.location;

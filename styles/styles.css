@@ -557,3 +557,1063 @@ main {
 .plain-link > div, .plain-link > span, .plain-link > figure {
   pointer-events: none
 }
+
+/* text  */
+:root {
+  --text-color-text: var(--text-color-body);
+  --list-indent: 2.8rem
+}
+
+.text {
+  color: var(--text-color-text)
+}
+
+.text > * {
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit
+}
+
+.text__ordered_list, .text__unordered_list {
+  margin-left: 0;
+  padding-left: var(--list-indent);
+  counter-reset: first-level
+}
+
+.text__ordered_list li, .text__unordered_list li {
+  padding-bottom: var(--spacing-vertical-xs);
+  counter-increment: first-level
+}
+
+.text__ordered_list li:last-child, .text__unordered_list li:last-child {
+  padding-bottom: 0
+}
+
+.text__ordered_list li::before, .text__unordered_list li::before {
+  content: counter(first-level) ".";
+  padding-right: var(--spacing-horizontal-s);
+  position: absolute;
+  transform: translateX(-100%)
+}
+
+.text__ordered_list li a, .text__unordered_list li a {
+  display: inline-block;
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  transition: color .75s;
+  outline: none
+}
+
+@keyframes hover {
+  0% {
+    left: 0
+  }
+  50% {
+    left: 100%;
+    right: 0
+  }
+  51% {
+    left: 0;
+    right: 100%
+  }
+  100% {
+    right: 0
+  }
+}
+
+.text__ordered_list li a::after, .text__unordered_list li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--button-tertiary-underline-default);
+  -webkit-animation-duration: .75s;
+  animation-duration: .75s
+}
+
+.text__ordered_list li a:hover, .text__unordered_list li a:hover {
+  color: var(--text-color-link-hover)
+}
+
+.text__ordered_list li a:hover::after, .text__unordered_list li a:hover::after {
+  background-color: var(--button-tertiary-underline-hover);
+  -webkit-animation-name: hover;
+  animation-name: hover
+}
+
+.text__ordered_list li a:active, .text__ordered_list li a:focus, .text__unordered_list li a:active, .text__unordered_list li a:focus {
+  color: var(--text-color-link-focus)
+}
+
+.text__ordered_list li a:active::after, .text__ordered_list li a:focus::after, .text__unordered_list li a:active::after, .text__unordered_list li a:focus::after {
+  background-color: var(--button-tertiary-underline-focus)
+}
+
+.text__ordered_list li a:focus::before, .text__unordered_list li a:focus::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: var(--button-tertiary-outline-focus)
+}
+
+.text__ordered_list li ol, .text__ordered_list li ul, .text__unordered_list li ol, .text__unordered_list li ul {
+  padding-left: var(--list-indent);
+  counter-reset: second-level
+}
+
+.text__ordered_list li ol li, .text__ordered_list li ul li, .text__unordered_list li ol li, .text__unordered_list li ul li {
+  counter-increment: second-level
+}
+
+.text__ordered_list li ol li:first-child, .text__ordered_list li ul li:first-child, .text__unordered_list li ol li:first-child, .text__unordered_list li ul li:first-child {
+  padding-top: var(--spacing-vertical-xs)
+}
+
+.text__ordered_list li ol li::before, .text__ordered_list li ul li::before, .text__unordered_list li ol li::before, .text__unordered_list li ul li::before {
+  content: counter(first-level) "." counter(second-level)
+}
+
+.text__ordered_list li ol li ol, .text__ordered_list li ol ul, .text__ordered_list li ul li ol, .text__ordered_list li ul ul, .text__unordered_list li ol li ol, .text__unordered_list li ol ul, .text__unordered_list li ul li ol, .text__unordered_list li ul ul {
+  counter-reset: third-level
+}
+
+.text__ordered_list li ol li ol li, .text__ordered_list li ol ul li, .text__ordered_list li ul li ol li, .text__ordered_list li ul ul li, .text__unordered_list li ol li ol li, .text__unordered_list li ol ul li, .text__unordered_list li ul li ol li, .text__unordered_list li ul ul li {
+  counter-increment: third-level
+}
+
+.text__ordered_list li ol li ol li::before, .text__ordered_list li ol ul li::before, .text__ordered_list li ul li ol li::before, .text__ordered_list li ul ul li::before, .text__unordered_list li ol li ol li::before, .text__unordered_list li ol ul li::before, .text__unordered_list li ul li ol li::before, .text__unordered_list li ul ul li::before {
+  content: counter(first-level) "." counter(second-level) "." counter(third-level)
+}
+
+.text__unordered_list li::before {
+  content: "●";
+  font-size: .75rem
+}
+
+.text__unordered_list li ul li::before {
+  content: "◦";
+  font-size: 1.375rem
+}
+
+.text__unordered_list li ul li ul li::before {
+  content: "▪";
+  font-size: unset
+}
+
+.text--body-xs p {
+  padding-top: 1.125rem
+}
+
+.text--body-s p {
+  padding-top: 1.25rem
+}
+
+.text--body-m p {
+  padding-top: 1.5rem
+}
+
+.text--body-l p {
+  padding-top: 1.75rem
+}
+
+.text > ul, .text > ol {
+  padding-top: var(--spacing-vertical-m);
+  padding-bottom: var(--spacing-vertical-m)
+}
+
+.text > ul li:not(:last-child), .text > ol li:not(:last-child) {
+  padding-bottom: var(--spacing-vertical-xs)
+}
+
+.text > ul + *, .text > ol + * {
+  padding-top: 0
+}
+
+.text :first-child {
+  padding-top: 0
+}
+
+.text :only-child {
+  padding-top: 0;
+  padding-bottom: 0
+}
+
+.text--inverted {
+  --text-color-text: var(--text-color-invert-body);
+  --text-color-link-hover: var(--interaction-color-grey-hover);
+  --text-color-link-focus: var(--interaction-color-grey-focused)
+}
+
+.text--display-s, .text--display-m, .text--display-l {
+  font-family: var(--font-family-frutiger);
+  font-weight: 900;
+  font-style: normal
+}
+
+.text--display-s {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+  .text--display-s {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .text--display-s {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .text--display-s {
+    font-size: 4rem;
+    line-height: 4.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .text--display-s {
+    font-size: 4rem;
+    line-height: 4.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+.text--display-m {
+  font-size: 2.5rem;
+  line-height: 2.75rem;
+  letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+  .text--display-m {
+    font-size: 4rem;
+    line-height: 4.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .text--display-m {
+    font-size: 4rem;
+    line-height: 4.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .text--display-m {
+    font-size: 5rem;
+    line-height: 5.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .text--display-m {
+    font-size: 5rem;
+    line-height: 5.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+.text--display-l {
+  font-size: 3.75rem;
+  line-height: 4rem;
+  letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+  .text--display-l {
+    font-size: 5rem;
+    line-height: 5.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .text--display-l {
+    font-size: 5rem;
+    line-height: 5.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .text--display-l {
+    font-size: 6rem;
+    line-height: 6.5rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .text--display-l {
+    font-size: 6rem;
+    line-height: 6.5rem;
+    letter-spacing: 1.5px
+  }
+}
+
+.text--quote {
+  font-family: var(--font-family-frutiger);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .text--quote {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .text--quote {
+    font-size: 2.5rem;
+    line-height: 3.125rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .text--quote {
+    font-size: 3rem;
+    line-height: 3.75rem;
+    letter-spacing: 1.0px
+  }
+}
+
+@media (min-width: 90rem) {
+  .text--quote {
+    font-size: 3.75rem;
+    line-height: 4.625rem;
+    letter-spacing: 1.0px
+  }
+}
+
+.text--body-xs {
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  letter-spacing: 0.5px
+}
+
+.text--body-s {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.5px
+}
+
+.text--body-m {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px
+}
+
+.text--body-l {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+.text--caption {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.5px;
+  color: var(--text-color-body);
+  font-family: var(--font-family-frutiger);
+  font-weight: normal;
+  font-style: normal
+}
+
+.text--eyebrow {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-frutiger);
+  font-weight: 500;
+  font-style: normal
+}
+
+.text--eyebrow-l, .text--eyebrow-l--light, .text--eyebrow-s, .text--eyebrow-s--light {
+  text-transform: uppercase
+}
+
+.text--eyebrow-l {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-frutiger);
+  font-weight: 500;
+  font-style: normal
+}
+
+@media (min-width: 64rem) {
+  .text--eyebrow-l {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+  }
+}
+
+.text--eyebrow-s {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-frutiger);
+  font-weight: 500;
+  font-style: normal
+}
+
+.text--table {
+  font-family: var(--font-family-frutiger);
+  font-weight: normal;
+  font-style: normal;
+  color: var(--text-color-body)
+}
+
+.text--table-s {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.5px
+}
+
+.text--table-attribute {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-frutiger);
+  font-weight: 500;
+  font-style: normal
+}
+
+.text--table-value {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px
+}
+
+.text--table-hl {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px;
+  font-family: var(--font-family-frutiger);
+  font-weight: 700;
+  font-style: normal
+}
+
+.text--navi-active {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.text--navi-inactive {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.text--bold, b {
+  font-family: var(--font-family-frutiger);
+  font-weight: 700;
+  font-style: normal
+}
+
+i .text--bold, .text--bold i, i b, b i {
+  font-family: var(--font-family-frutiger);
+  font-weight: 700;
+  font-style: italic
+}
+
+i {
+  font-style: italic
+}
+
+sup, sub {
+  position: relative;
+  font-size: 75%;
+  line-height: 1rem
+}
+
+sup {
+  top: -0.5em
+}
+
+sub {
+  bottom: -0.25em
+}
+
+/* text-block */
+.text-block {
+  margin-top: var(--spacing-vertical-xxl);
+  margin-bottom: var(--spacing-vertical-xxl)
+}
+
+.text-block__expandable-area {
+  height: calc(var(--spacing-vertical-xxl) + 3rem);
+  min-height: calc(var(--spacing-vertical-xxl) + 3rem);
+  padding-bottom: var(--spacing-vertical-m);
+  overflow: hidden;
+  position: relative
+}
+
+.text-block__expandable-area::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--spacing-vertical-xxl);
+  opacity: 1;
+  transition: opacity .2s ease-in-out;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--bg-color-primary) 60%)
+}
+
+.text-block__headline {
+  margin-bottom: var(--spacing-vertical-s)
+}
+
+.text-block--expanded .text-block__expandable-area::after {
+  opacity: 0;
+  pointer-events: none
+}
+
+.text-block__button {
+  padding-top: var(--spacing-vertical-s)
+}
+
+.text-block__buttonToggle--hidden {
+  display: none
+}
+
+/* headings */
+.hl-xs, .hl-s, .hl-m, .hl-l, .hl-xl {
+  font-family: var(--font-family-frutiger);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--text-color-headlines)
+}
+
+.hl-xxl {
+  font-family: var(--font-family-frutiger);
+  font-weight: 900;
+  font-style: normal;
+  color: var(--text-color-headlines)
+}
+
+.hl--sub {
+  font-family: var(--font-family-frutiger);
+  font-weight: 300;
+  font-style: normal
+}
+
+.hl--sub-xxl .hl--sub {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: 1px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-xxl .hl--sub {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-xxl .hl--sub {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-xxl .hl--sub {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-xxl .hl--sub {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+.hl--sub-xl .hl--sub {
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  letter-spacing: 1px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-xl .hl--sub {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-xl .hl--sub {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-xl .hl--sub {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-xl .hl--sub {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl--sub-l .hl--sub {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-l .hl--sub {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-l .hl--sub {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-l .hl--sub {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-l .hl--sub {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl--sub-m .hl--sub {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-m .hl--sub {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-m .hl--sub {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-m .hl--sub {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-m .hl--sub {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl--sub-s .hl--sub {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-s .hl--sub {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-s .hl--sub {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-s .hl--sub {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-s .hl--sub {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+.hl--sub-xs .hl--sub {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl--sub-xs .hl--sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl--sub-xs .hl--sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl--sub-xs .hl--sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl--sub-xs .hl--sub {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+.hl-xxl {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: 1px
+}
+
+@media (min-width: 48rem) {
+  .hl-xxl {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-xxl {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-xxl {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-xxl {
+    font-size: 3rem;
+    line-height: 3.25rem;
+    letter-spacing: 1.5px
+  }
+}
+
+.hl-xl {
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  letter-spacing: 1px
+}
+
+@media (min-width: 48rem) {
+  .hl-xl {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-xl {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-xl {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-xl {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl-l {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl-l {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-l {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-l {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-l {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl-m {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl-m {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-m {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-m {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-m {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 1px
+  }
+}
+
+.hl-s {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl-s {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-s {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-s {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-s {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.5px
+  }
+}
+
+.hl-xs {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.5px
+}
+
+@media (min-width: 48rem) {
+  .hl-xs {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 64rem) {
+  .hl-xs {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 80rem) {
+  .hl-xs {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+@media (min-width: 90rem) {
+  .hl-xs {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.5px
+  }
+}
+
+:root {
+  --headline-color: var(--text-color-headlines);
+  --headline-color-eyebrow: var(--text-color-headlines)
+}
+
+.headline {
+  text-align: left;
+  color: var(--headline-color)
+}
+
+.headline__main, .headline__sub, .headline__eyebrow {
+  display: block
+}
+
+.headline--align-center {
+  text-align: center
+}
+
+.headline--align-right {
+  text-align: right
+}
+
+.headline .headline__eyebrow {
+  color: var(--headline-color-eyebrow)
+}
+
+.headline--inverted {
+  --headline-color: var(--text-color-invert-headlines);
+  --headline-color-eyebrow: var(--text-color-invert-headlines)
+}
