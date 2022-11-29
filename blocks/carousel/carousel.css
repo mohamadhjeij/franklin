@@ -1,0 +1,66 @@
+.carousel-container {
+    padding: 0;
+    width: 100%;
+}
+
+.carousel-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.carousel {
+    display: flex;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    height: 100%;
+    /* required for safari */
+    overflow-x: scroll;
+}
+
+.carousel > div {
+    min-width: 100%;
+}
+
+.section > div.carousel-wrapper {
+    max-width: 100%;
+}
+
+.carousel-buttons {
+    text-align: center;
+}
+
+.carousel-buttons > button {
+    width: 100px;
+    height: 50px;
+}
+
+.carousel-buttons > button.selected {
+    background-color: red;
+    width: 100px;
+    height: 50px;
+}
+
+.carousel-prev {
+    width: 50px;
+    height: 20px;
+    float: left;
+}
+
+.carousel-prev::after {
+    content: "prev";
+}
+
+.carousel-next {
+    width: 50px;
+    height: 20px;
+    float: right;
+}
+
+.carousel-next::after {
+    content: "next";
+}
+
+
+
+
+  
