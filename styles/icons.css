@@ -1,0 +1,27 @@
+.icon {
+  display: block
+}
+
+.icon svg {
+  height: 100%;
+  width: 100%
+}
+
+.icon use {
+  pointer-events: none
+}
+
+.svg-scale-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%
+}
+
+.svg-scale-wrapper > svg {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%
+}
