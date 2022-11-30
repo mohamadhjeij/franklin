@@ -1558,6 +1558,21 @@ sub {
   --headline-color-eyebrow: var(--text-color-invert-headlines)
 }
 
+.module-headline--column {
+  grid-column: 1/-1
+}
+
+@media (min-width: 64rem) {
+  .module-headline--column {
+    grid-column: 3/8 span
+  }
+}
+
+.module-headline .hl-l .hl--sub {
+  margin-top: var(--spacing-vertical-xs);
+  color: var(--text-color-headlines)
+}
+
 /* buttons */
 :root {
   --button-primary-background-default: var(--interaction-color-link);
