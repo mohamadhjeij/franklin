@@ -1,7 +1,7 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 function template(props) {
-  return document.createRange().createContextualFragment(`
+  return `
     <div class="in-page-navigation exclude-site-search">
       <div class="in-page-navigation__placeholder"></div>
       <section class="grid__container grid__container--full-bleed in-page-navigation__grid">
@@ -62,7 +62,7 @@ function template(props) {
         </div>
       </section>
     </div>
-  `);
+  `;
 }
 
 function addStickyListener(navigation) {
@@ -143,15 +143,12 @@ export default async function decorate(block) {
 
   const CTALink = links.pop();
 
-  const navTemplate = template({
+  block.innerHTML = template({
     links,
     CTALink,
   });
 
-  decorateIcons(navTemplate, true);
-
-  block.textContent = '';
-  block.append(navTemplate);
+  decorateIcons(block, true);
 
   const nav = block.querySelector('.in-page-navigation');
   addStickyListener(nav);

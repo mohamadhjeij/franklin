@@ -61,7 +61,7 @@ function menuTemplate(menu) {
 }
 
 function template(props) {
-  return document.createRange().createContextualFragment(`
+  return `
     <div class="main-header header exclude-site-search">
       <section class="header__meta grid__container grid__container--full-bleed">
         <div class="grid__structure">
@@ -124,7 +124,7 @@ function template(props) {
         </div>
       </section>
     </div>
-  `);
+  `;
 }
 
 function addScrollListener(header) {
@@ -204,13 +204,10 @@ export default async function decorate(block) {
       },
     };
 
-    const headerTemplate = template(props);
+    block.innerHTML = template(props);
 
-    decorateIcons(headerTemplate, true);
+    decorateIcons(block, true);
 
-    block.append(headerTemplate);
-
-    const header = document.querySelector('header');
-    addScrollListener(header);
+    addScrollListener(document.querySelector('header'));
   }
 }

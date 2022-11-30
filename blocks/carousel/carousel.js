@@ -1,7 +1,7 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 function template(props) {
-  return document.createRange().createContextualFragment(`
+  return `
     <div class="image-slideshow grid__container">
       <div class="grid__structure">
         <div class="grid__column grid__column--100 image-slideshow__wrapper">
@@ -72,7 +72,7 @@ function template(props) {
         </div>
       </div>
     </div>
-  `);
+  `;
 }
 
 function addSwiperListener(carousel) {
@@ -160,13 +160,9 @@ export default async function decorate(block) {
     };
   });
 
-  const carouselTemplate = template({ items });
+  block.innerHTML = template({ items });
 
-  decorateIcons(carouselTemplate, true);
+  decorateIcons(block, true);
 
-  block.textContent = '';
-  block.append(carouselTemplate);
-
-  const carousel = block.querySelector('.image-slideshow');
-  addSwiperListener(carousel);
+  addSwiperListener(block.querySelector('.image-slideshow'));
 }
