@@ -1,3 +1,4 @@
+/* lazy-image */
 .lazy-image {
   width: 100%
 }
@@ -302,4 +303,38 @@
 
 .lazy-image__active-image-indicator {
   display: none
+}
+
+/* elevation */
+:root {
+  --elevation-base: 0 0 0 rgba(0, 0, 0, 0);
+  --elevation-low: 0 0.125rem 0.5rem rgba(25, 25, 25, 0.04);
+  --elevation-raised: 0.125rem 0.25rem 1rem rgba(25, 25, 25, 0.08);
+  --elevation-highlight: 0.25rem 0.5rem 2rem rgba(25, 25, 25, 0.16);
+  --elevation-overlay: 0.5rem 1rem 4rem rgba(25, 25, 25, 0.24);
+  --elevation-standout: 1rem 2rem 8rem rgba(25, 25, 25, 0.48)
+}
+
+.elevation--base {
+  box-shadow: var(--elevation-base)
+}
+
+.elevation--low {
+  box-shadow: var(--elevation-low)
+}
+
+.elevation--raised {
+  box-shadow: var(--elevation-raised)
+}
+
+.elevation--highlight {
+  box-shadow: var(--elevation-highlight)
+}
+
+.elevation--overlay {
+  box-shadow: var(--elevation-overlay)
+}
+
+.elevation--stand-out {
+  box-shadow: var(--elevation-standout)
 }

@@ -1558,6 +1558,50 @@ sub {
   --headline-color-eyebrow: var(--text-color-invert-headlines)
 }
 
+.module-headline--column {
+  grid-column: 1/-1
+}
+
+@media (min-width: 64rem) {
+  .module-headline--column {
+    grid-column: 3/8 span
+  }
+}
+
+.module-headline .hl-l .hl--sub {
+  margin-top: var(--spacing-vertical-xs);
+  color: var(--text-color-headlines)
+}
+
+/* icons */
+.icon {
+  display: block
+}
+
+.icon svg {
+  height: 100%;
+  width: 100%
+}
+
+.icon use {
+  pointer-events: none
+}
+
+.svg-scale-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%
+}
+
+.svg-scale-wrapper > svg {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%
+}
+
 /* buttons */
 :root {
   --button-primary-background-default: var(--interaction-color-link);
