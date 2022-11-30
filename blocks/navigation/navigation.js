@@ -42,7 +42,7 @@ function template(props) {
                           <div class="button-link button-link--icon-rounded">
                             <a class=" button-link--icon  button-link--internal" href="${props.CTALink.href}">
                               <span class="button-link__content">
-                                <span class="icon icon-inline-page-navigation/contact-message_selected">
+                                <span class="icon">
                                   <span class="svg-scale-wrapper" style="padding-bottom: 100%;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path></svg>
                                   </span>
