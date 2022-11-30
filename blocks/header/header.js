@@ -60,7 +60,7 @@ function menuTemplate(menu) {
   `;
 }
 
-function headerTemplate(props) {
+function template(props) {
   return document.createRange().createContextualFragment(`
     <div class="main-header header exclude-site-search">
       <section class="header__meta grid__container grid__container--full-bleed">
@@ -125,6 +125,17 @@ function headerTemplate(props) {
       </section>
     </div>
   `);
+}
+
+function addScrollListener(header) {
+  window.addEventListener('scroll', () => {
+    const isScrolling = window.scrollY > 0;
+
+    header.classList.toggle('header--scrolled', isScrolling);
+    header.classList.toggle('header--got-animated', isScrolling);
+  }, {
+    passive: true,
+  });
 }
 
 /**
@@ -193,20 +204,13 @@ export default async function decorate(block) {
       },
     };
 
-    const header = headerTemplate(props);
+    const headerTemplate = template(props);
 
-    decorateIcons(header, true);
+    decorateIcons(headerTemplate, true);
 
-    block.append(header);
+    block.append(headerTemplate);
 
-    window.addEventListener('scroll', () => {
-      const isScrolling = window.scrollY > 0;
-      const animatedHeader = document.querySelector('header');
-
-      animatedHeader.classList.toggle('header--scrolled', isScrolling);
-      animatedHeader.classList.toggle('header--got-animated', isScrolling);
-    }, {
-      passive: true,
-    });
+    const header = document.querySelector('header');
+    addScrollListener(header);
   }
 }
