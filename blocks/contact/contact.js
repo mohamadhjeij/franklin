@@ -1,4 +1,19 @@
-export default function decorate(block) {
+import { decorateIcons } from '../../scripts/lib-franklin.js';
+
+function template(entry) {
+  return `<div>
+  <div>PRESSEKONTAKT</div>
+  <div>${entry.Name}</div>
+  <div>${entry.Org}</div>
+  <ul>
+  <li><a href="tel:${entry.Phone}">${entry.Phone}</a></li>
+  <li><a href="mailTo:${entry.Email}">${entry.Email}</a></li>
+  <li><a href="${entry.vCard}">vCard herunterladen</a></li>
+  </ul>
+  </div>`;
+}
+
+export default async function decorate(block) {
   const map = new Map();
   [...block.firstElementChild.querySelector('ul').children].forEach((li) => {
     const child = li.querySelector('a');
@@ -7,44 +22,13 @@ export default function decorate(block) {
     map.set(child.text, parent);
   });
 
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', new URL('/contacts.json', window.location), true);
-  xhr.responseType = 'json';
-  xhr.onload = () => {
-    xhr.response.data.forEach((entry) => {
+  const req = await fetch('/contacts.json');
+  if (req.ok) {
+    const res = await req.json();
+    res.data.forEach((entry) => {
       if (map.get(entry.Email)) {
-        const wrapper = document.createElement('div');
-        wrapper.textContent = 'PRESSEKONTAKT';
-        const name = document.createElement('div');
-        name.textContent = entry.Name;
-        wrapper.appendChild(name);
-        const org = document.createElement('div');
-        org.textContent = entry.Org;
-        wrapper.appendChild(org);
-        const list = document.createElement('ul');
-        wrapper.appendChild(list);
-        const phone = document.createElement('a');
-        phone.href = `tel:${entry.Phone}`;
-        phone.text = entry.Phone;
-        let li = document.createElement('li');
-        li.appendChild(phone);
-        list.appendChild(li);
-        const mail = document.createElement('a');
-        mail.href = `mailTo:${entry.Email}`;
-        mail.text = entry.Email;
-        li = document.createElement('li');
-        li.appendChild(mail);
-        list.appendChild(li);
-        const vcard = document.createElement('a');
-        vcard.href = entry.vCard;
-        vcard.text = 'vCard herunterladen';
-        li = document.createElement('li');
-        li.appendChild(vcard);
-        list.appendChild(li);
-        const parent = map.get(entry.Email);
-        parent.appendChild(wrapper);
+        map.get(entry.Email).innerHTML = template(entry);
       }
     });
-  };
-  xhr.send();
+  }
 }
