@@ -135,7 +135,7 @@ export function decorateIcons(element = document, isSprite = false) {
     }
     const icon = span.classList[1].substring(5);
 
-    if (isSprite) {
+    if (isSprite && !span.querySelector('svg')) {
       const link = `${window.hlx.codeBasePath}/icons/symbols-sprite.svg#svgsymbol-${icon}`;
       span.innerHTML = `
         <span class="svg-scale-wrapper">
