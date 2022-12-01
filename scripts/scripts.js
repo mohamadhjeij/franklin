@@ -130,9 +130,13 @@ async function loadLazy(doc) {
   decorateContentBlocks(main);
   await loadBlocks(main);
 
-  const { hash } = window.location;
-  const element = hash ? main.querySelector(hash) : false;
-  if (hash && element) element.scrollIntoView();
+  try {
+    const { hash } = window.location;
+    // Hash can be an invalid selector
+    const element = hash ? main.querySelector(hash) : false;
+    if (hash && element) element.scrollIntoView();
+  /* eslint-disable no-empty */
+  } catch (e) {}
 
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));

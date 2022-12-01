@@ -75,9 +75,8 @@ function template(items) {
 
 export default async function decorate(block) {
   const contacts = [];
-  [...block.firstElementChild.firstElementChild.children].forEach((p) => {
-    const child = p.querySelector('a');
-    contacts.push(child.href);
+  block.querySelectorAll('p > a').forEach((a) => {
+    contacts.push(a.href);
   });
 
   const reqs = await Promise.all(contacts.map((contact) => fetch(contact)));
