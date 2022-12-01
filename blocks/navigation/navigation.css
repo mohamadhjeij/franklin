@@ -8,6 +8,10 @@
   transition: z-index .5s
 }
 
+body.fixed-body-scroll-position .in-page-navigation {
+  z-index: -1;
+}
+
 .in-page-navigation.in-page-navigation--expanded .in-page-navigation__grid {
   box-shadow: var(--elevation-raised)
 }
