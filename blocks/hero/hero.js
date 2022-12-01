@@ -53,27 +53,24 @@ function template(info) {
 }
 
 export default async function decorate(block) {
-  const req = await fetch('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json');
-  if (req.ok) {
-    const res = await req.json();
-    const pub = res.data.find((entry) => entry.path === window.location.pathname);
-    let dateString = '';
-    if (pub && pub.publicationDate) {
-      dateString = pub.publicationDate;
-    }
-    let timeString = '';
-    if (pub && pub.readingTime) {
-      timeString = `${pub.readingTime}.`;
-    }
-    block.innerHTML = template(
-      {
-        Date: dateString,
-        Duration: timeString,
-        Main: block.querySelector('h1').textContent,
-        Sub: block.querySelector('h2').textContent
-      }
-    );
-
-    decorateIcons(block, true);
+  const pub = document.querySelector('head > meta[name="publicationdate"');
+  const time = document.querySelector('head > meta[name="readingtime"');
+  let dateString = '';
+  if (pub && pub.content) {
+    dateString = pub.content;
   }
+  let timeString = '';
+  if (time && time.content) {
+    timeString = time.content;
+  }
+  block.innerHTML = template(
+    {
+      Date: dateString,
+      Duration: timeString,
+      Main: block.querySelector('h1').textContent,
+      Sub: block.querySelector('h2').textContent
+    }
+  );
+
+  decorateIcons(block, true);
 }
