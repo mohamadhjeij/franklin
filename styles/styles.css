@@ -2052,3 +2052,18 @@ sub {
 .button-toggle--expanded .icon .svg-scale-wrapper {
   transform: rotate(180deg)
 }
+
+/* divider */
+.divider {
+  border: none;
+  background-color: var(--border-color-inactive);
+  height: 1px;
+  width: 100%;
+  -webkit-margin-before: 0;
+  margin-block-start: 0
+}
+
+.divider--dark {
+  background-color: var(--border-color-active);
+  height: 0.125rem
+}
