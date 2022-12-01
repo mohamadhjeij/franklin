@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 function template(items) {
