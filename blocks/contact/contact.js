@@ -3,6 +3,7 @@ import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 function template(items) {
   return `<div class="profile-collection ">
+    <div class="heading-slot"></div>
     <div class="profile-collection__settings" data-primary-count="3">
         <div class="grid__container">
             <div class="profile-collection__content profile-collection__content-medium">
@@ -74,6 +75,7 @@ function template(items) {
 }
 
 export default async function decorate(block) {
+  const heading = block.querySelector('h2');
   const contacts = [];
   block.querySelectorAll('p > a').forEach((a) => {
     contacts.push(a.href);
@@ -102,6 +104,8 @@ export default async function decorate(block) {
   }
 
   block.innerHTML = template(items);
+  // Required for navigation scroll tracking
+  block.querySelector('.heading-slot').append(heading);
 
   decorateIcons(block, true);
 }

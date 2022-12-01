@@ -137,7 +137,7 @@ function addActiveLinkListener(navigation) {
 
 export default async function decorate(block) {
   const links = Array.from(block.querySelectorAll('a')).map((link) => ({
-    href: link.href,
+    href: new URL(link.href).hash,
     label: link.textContent,
   }));
 
