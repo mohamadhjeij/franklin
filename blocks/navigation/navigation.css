@@ -245,7 +245,7 @@
   }
 }
 
-.in-page-navigation__expand-button.in-page-navigation--expanded .icon {
+.in-page-navigation__expand-button.in-page-navigation--expanded .in-page-navigation__expand-button-icon {
   transform: rotate(180deg)
 }
 

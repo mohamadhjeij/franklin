@@ -130,6 +130,22 @@ function addActiveLinkListener(navigation) {
   });
 }
 
+function addInteractions(nav) {
+  nav.querySelector('.in-page-navigation__expand-button').onclick = (event) => {
+    event.preventDefault();
+
+    const button = event.target;
+    const list = nav.querySelector('.in-page-navigation__navigation-list');
+    const isExpanded = nav.classList.contains('in-page-navigation--expanded');
+
+    button.classList.toggle('in-page-navigation--expanded', !isExpanded);
+    list.classList.toggle('in-page-navigation--expanded', !isExpanded);
+    nav.classList.toggle('in-page-navigation--expanded', !isExpanded);
+
+    list.style.height = isExpanded ? '0px' : `${list.childElementCount * list.firstElementChild.getBoundingClientRect().height}px`;
+  };
+}
+
 /**
  * decorates the navigation block
  * @param {Element} block The navigation block element
@@ -153,4 +169,5 @@ export default async function decorate(block) {
   const nav = block.querySelector('.in-page-navigation');
   addStickyListener(nav);
   addActiveLinkListener(nav);
+  addInteractions(nav);
 }
