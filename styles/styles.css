@@ -290,10 +290,10 @@ body.fixed-body-scroll-position {
 
 /* header */
 header {
-  position: fixed;
+  position: sticky;
+  width: 100vw;
   top: 0;
   left: 0;
-  right: 0;
   z-index: 5000;
   background-color: var(--color-white);
   transition: ease-out .5s;
@@ -307,17 +307,6 @@ header {
 
   header.header--scrolled {
     height: 96px;
-  }
-}
-
-/* main */
-main {
-  margin-top: 96px;
-}
-
-@media (min-width: 768px) {
-  main {
-    margin-top: 136px;
   }
 }
 
