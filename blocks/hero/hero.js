@@ -12,9 +12,9 @@ function template(info) {
                 <div class="headline hl-xxl hl--sub-m">
                     <span>
                         <span class="headline__eyebrow text--eyebrow">Presseinformation</span>
-                        <h2>
+                        <h1>
                             <span class="headline__main" data-js-select="Headline_main">${info.Main}</span>
-                        </h2>
+                        </h1>
                         <h3 class="headline__sub hl--sub">${info.Sub}</h3>
                     </span>
                 </div>
@@ -52,8 +52,8 @@ export default async function decorate(block) {
     {
       Date: dateString,
       Duration: timeString,
-      Main: block.querySelector('h1').textContent,
-      Sub: block.querySelector('h2').textContent,
+      Main: block.querySelector('h1')?.textContent || '',
+      Sub: block.querySelector('h3')?.textContent || '',
       socials,
     },
   );

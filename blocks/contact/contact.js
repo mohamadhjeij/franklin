@@ -16,10 +16,10 @@ function template(items) {
                                         <div class="headline hl-xs    profile__headline ">
                                             <span>
                                                 <span class="headline__eyebrow text--eyebrow">Pressekontakt</span>
-                                                <h2>
+                                                <h3>
                                                     <span class="headline__main" data-js-select="Headline_main">${item.Name}</span>
-                                                </h2>
-                                                <h3 class="headline__sub hl--sub">${item.Org}</h3>
+                                                </h3>
+                                                <h4 class="headline__sub hl--sub">${item.Org}</h4>
                                             </span>
                                         </div>
                                         <div class="profile__actions">

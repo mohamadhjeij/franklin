@@ -23,7 +23,7 @@ function template(props) {
                         <a class="plain-link in-page-navigation__navigation-link" href="${link.href}" title="${link.label}">${link.label}</a>
                       `).join('')}
                     </div>
-                    
+                    ${props.CTALink ? `   
                     <div class="in-page-navigation__cta-wrapper">
                       <div class="in-page-navigation__cta-wrapper-button">
                         <div>
@@ -52,7 +52,7 @@ function template(props) {
                           </div>
                         </div>
                       </div>
-              
+                    ` : ''}
                     </div>
                   </div>
                 </div>
@@ -152,12 +152,24 @@ function addInteractions(nav) {
  */
 
 export default async function decorate(block) {
-  const links = Array.from(block.querySelectorAll('a')).map((link) => ({
-    href: new URL(link.href).hash,
-    label: link.textContent,
-  }));
+  const links = Array.from(document.querySelectorAll('main .section h2')).map((link) => {
+    const u = new URL(window.location.href);
+    u.hash = link.id;
+    return {
+      href: u.toString(),
+      label: link.textContent,
+    };
+  });
 
-  const CTALink = links.pop();
+  const a = block.querySelector('a');
+  let CTALink = null;
+  if (a) {
+    CTALink = {
+      href: a.href,
+      label: a.textContent,
+    };
+  }
+
 
   block.innerHTML = template({
     links,

@@ -18,11 +18,11 @@ window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information 
 
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
-  const h2 = main.querySelector('h2');
+  const h3 = main.querySelector('h3');
   // eslint-disable-next-line no-bitwise
-  if (h1 && h2) {
+  if (h1 && h3) {
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [h1, h2] }));
+    section.append(buildBlock('hero', { elems: [h1, h3] }));
     main.prepend(section);
   }
 }
