@@ -68,7 +68,7 @@ function template(articles) {
                     </div>
                     
                     <div
-                        class="grid__structure featured-articles-with-teaser__items featured-articles-with-teaser__items--2">
+                        class="grid__structure featured-articles-with-teaser__items featured-articles-with-teaser__items--${articles.length}">
                         ${articles.map(articleTemplate).join('')}
                         
 
