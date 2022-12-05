@@ -15,8 +15,8 @@ function articleTemplate(article) {
                                                 <div class="lazy-image__image-container">
                                                     <img class="lazy-image__image lazy-image__target-image "
                                                         src="${article.image}"
-                                                        alt="${article['og:image:alt']}"
-                                                        title="${article['og:image:alt']}">
+                                                        alt="${article.imagealt}"
+                                                        title="${article.imagealt}">
                                                 </div>
                                                 <div class="lazy-image__active-image-indicator"></div>
                                             </figure>
