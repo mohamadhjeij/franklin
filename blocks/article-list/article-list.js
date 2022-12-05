@@ -1,4 +1,4 @@
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
 
 function articleTemplate(article) {
   return `
@@ -113,9 +113,14 @@ function template(articles) {
 }
 
 export default async function decorate(block) {
+  const config = await readBlockConfig(block);
+  const limit = parseInt(config['number-of-articles'], 10) || 2;
   const dataurl = new URL('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json', window.location.href);
   const response = await fetch(dataurl);
   const { data } = await response.json();
-  block.innerHTML = template(data);
+  const articles = data
+    .filter((article) => article.path !== window.location.pathname)
+    .slice(0, limit);
+  block.innerHTML = template(articles);
   decorateIcons(block, true);
 }
