@@ -3,14 +3,11 @@
  * @param {Element} pEl The original element to be placed in figcaption.
  * @returns figCaptionEl Generated figcaption
  */
- export function buildCaption(pEl, figCaptionEl) {
-  if (!figCaptionEl) {
-    figCaptionEl = document.createElement('figcaption');
-  }
+export function buildCaption(pEl, figCaptionEl) {
+  const fig = figCaptionEl || document.createElement('figcaption');
   pEl.classList.add('caption');
-  figCaptionEl.append(pEl);
-
-  return figCaptionEl;
+  fig.append(pEl);
+  return fig;
 }
 
 /**
@@ -18,7 +15,7 @@
  * @param {Element} blockEl The original element to be placed in figure.
  * @returns figEl Generated figure
  */
- function buildFigure(blockEl) {
+function buildFigure(blockEl) {
   const figEl = document.createElement('figure');
   figEl.classList.add('figure');
   let figElCaption;
@@ -62,7 +59,6 @@
 }
 
 export default function decorateImage(blockEl) {
-  const blockCount = blockEl.firstElementChild.childElementCount;
   const figEl = buildFigure(blockEl.firstElementChild.firstElementChild);
   blockEl.innerHTML = '';
   blockEl.append(figEl);
