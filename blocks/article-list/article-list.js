@@ -114,8 +114,6 @@ function template(articles, title = 'Weitere Artikel') {
 
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
-  console.log(config);
-  console.log((config['number-of-articles'] || '').replace(/[^0-9]/g, ''));
   const limit = parseInt(config['number-of-articles'], 10) || 2;
   const dataurl = new URL('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json', window.location.href);
   const response = await fetch(dataurl);
