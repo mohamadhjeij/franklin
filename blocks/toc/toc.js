@@ -146,12 +146,7 @@ function addInteractions(nav) {
   };
 }
 
-/**
- * decorates the navigation block
- * @param {Element} block The navigation block element
- */
-
-export default async function decorate(block) {
+function decorateInPageNavigation(block) {
   const links = Array.from(document.querySelectorAll('main .section h2')).map((link) => {
     const u = new URL(window.location.href);
     u.hash = link.id;
@@ -181,4 +176,15 @@ export default async function decorate(block) {
   addStickyListener(nav);
   addActiveLinkListener(nav);
   addInteractions(nav);
+}
+
+/**
+ * decorates the navigation block
+ * @param {Element} block The navigation block element
+ */
+export default async function decorate(block) {
+  // dirty: postpone to let other blocks recreate their h2s.
+  window.setTimeout(() => {
+    decorateInPageNavigation(block);
+  }, 1000);
 }

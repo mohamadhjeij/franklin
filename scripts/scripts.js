@@ -21,8 +21,13 @@ function buildHeroBlock(main) {
   const h3 = main.querySelector('h3');
   // eslint-disable-next-line no-bitwise
   if (h1 && h3) {
+    const parent = h1.closest('div');
+    let picture;
+    if (parent) {
+      picture = parent.querySelector('picture');
+    }
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [h1, h3] }));
+    section.append(buildBlock('hero', { elems: [h1, h3, picture] }));
     main.prepend(section);
   }
 }

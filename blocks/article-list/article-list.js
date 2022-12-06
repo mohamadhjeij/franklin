@@ -27,9 +27,9 @@ function articleTemplate(article) {
                                         </div>
                                         <div class="headline hl-s     ">
                                             <span>
-                                                <h2>
+                                                <h3>
                                                     <span class="headline__main">${article.title}</span>
-                                                </h2>
+                                                </h3>
                                             </span>
                                         </div>
                                     </a>
@@ -45,7 +45,7 @@ function articleTemplate(article) {
                         </div>`;
 }
 
-function template(articles) {
+function template(articles, title = 'Weitere Artikel') {
   return `<div class="featured-articles-with-teaser featured-articles-with-teaser--background-grey">
     <div class="grid__container">
         <div class="grid__structure">
@@ -57,8 +57,8 @@ function template(articles) {
                                 <div class="grid__column module-headline--column">
                                     <div class="headline hl-l headline--align-center    hl--sub-xs">
                                         <span>
-                                            <h2>
-                                                <span class="headline__main">Weitere Artikel</span>
+                                            <h2 id="${title.toLowerCase().replace(/\s/gm, '-')}">
+                                                <span class="headline__main">${title}</span>
                                             </h2>
                                         </span>
                                     </div>
@@ -77,9 +77,9 @@ function template(articles) {
                             <div class="featured-articles-with-teaser__teaser">
                                 <div class="headline hl-s featured-articles-with-teaser__teaser-headline">
                                     <span>
-                                        <h2>
+                                        <h3>
                                             <span class="headline__main">Alle Pressemeldungen</span>
-                                        </h2>
+                                        </h3>
                                     </span>
                                 </div>
                                 <div class="text text--body-m featured-articles-with-teaser__teaser-text">
@@ -123,6 +123,6 @@ export default async function decorate(block) {
   const articles = data
     .filter((article) => article.path !== window.location.pathname)
     .slice(0, limit);
-  block.innerHTML = template(articles);
+  block.innerHTML = template(articles, config.title);
   decorateIcons(block, true);
 }

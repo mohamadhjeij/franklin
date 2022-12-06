@@ -48,6 +48,7 @@ export default async function decorate(block) {
   if (time && time.content) {
     timeString = time.content;
   }
+  const picture = block.querySelector('picture');
   block.innerHTML = template(
     {
       Date: dateString,
@@ -57,6 +58,10 @@ export default async function decorate(block) {
       socials,
     },
   );
+
+  if (picture) {
+    block.querySelector('.general-article-stage__column-content').prepend(picture);
+  }
 
   decorateIcons(block, true);
 
