@@ -68,7 +68,7 @@ function template(articles) {
                     </div>
                     
                     <div
-                        class="grid__structure featured-articles-with-teaser__items featured-articles-with-teaser__items--2">
+                        class="grid__structure featured-articles-with-teaser__items featured-articles-with-teaser__items--${articles.length}">
                         ${articles.map(articleTemplate).join('')}
                         
 
@@ -114,6 +114,8 @@ function template(articles) {
 
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
+  console.log(config);
+  console.log((config['number-of-articles'] || '').replace(/[^0-9]/g, ''));
   const limit = parseInt(config['number-of-articles'], 10) || 2;
   const dataurl = new URL('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json', window.location.href);
   const response = await fetch(dataurl);
