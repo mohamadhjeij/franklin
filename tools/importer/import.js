@@ -26,6 +26,11 @@ const createMetadata = (main, document) => {
     meta.Description = desc.content;
   }
 
+  const publishingDate = document.querySelector('[property="article_publishing_date"]');
+  if (publishingDate) {
+    meta['publicationDate'] = publishingDate.content;
+  }
+
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
     const el = document.createElement('img');
@@ -88,11 +93,21 @@ export default {
 };
 
 function customLogic(main, document) {
+
+  // Change subheading to h3
+  const subHeading = document.createElement('h3');
+  subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
+  document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
+
+
+  // Add social share blocks
   document.querySelectorAll('.share').forEach((item) => {
     const cells = [['social']];
     const table = WebImporter.DOMUtils.createTable(cells, document);
     item.replaceWith(table);
-    //document.append(table);
   });
+
+  // Add section break after header
+  document.querySelector('.general-article-stage').after(document.createElement('hr'));
 
 }
