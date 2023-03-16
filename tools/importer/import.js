@@ -12,7 +12,6 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
-
 const createMetadata = (main, document) => {
   const meta = {};
 
@@ -28,7 +27,7 @@ const createMetadata = (main, document) => {
 
   const publishingDate = document.querySelector('[property="article_publishing_date"]');
   if (publishingDate) {
-    meta['publicationDate'] = publishingDate.content;
+    meta.publicationDate = publishingDate.content;
   }
 
   const img = document.querySelector('[property="og:image"]');
@@ -43,6 +42,40 @@ const createMetadata = (main, document) => {
 
   return meta;
 };
+
+function customLogic(main, document) {
+  // Change subheading to h3
+  const subHeading = document.createElement('h3');
+  subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
+  document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
+
+  // Add social share blocks
+  document.querySelectorAll('.share').forEach((item) => {
+    const cells = [['social']];
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    item.replaceWith(table);
+  });
+
+  // Add section break after header
+  document.querySelector('.general-article-stage').after(document.createElement('hr'));
+
+  // Add cards block for media
+  if (document.querySelector('.text-media-grid')) {
+    const cells = [['cards']];
+    document.querySelectorAll('.text-media-grid .text-media-item-vertical').forEach((item) => {
+      const image = item.querySelector('.text-media-item-vertical__media figure img');
+      const src = JSON.parse(image.getAttribute('src')).max;
+      const cardImg = document.createElement('img');
+      cardImg.src = src;
+
+      const text = item.querySelector('.text-media-item-vertical__text p');
+      const row = [cardImg, text.textContent];
+      cells.push(row);
+    });
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.text-media-grid').replaceWith(table);
+  }
+}
 
 export default {
   /**
@@ -91,23 +124,3 @@ export default {
     document, url, html, params,
   }) => WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, '')),
 };
-
-function customLogic(main, document) {
-
-  // Change subheading to h3
-  const subHeading = document.createElement('h3');
-  subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
-  document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
-
-
-  // Add social share blocks
-  document.querySelectorAll('.share').forEach((item) => {
-    const cells = [['social']];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    item.replaceWith(table);
-  });
-
-  // Add section break after header
-  document.querySelector('.general-article-stage').after(document.createElement('hr'));
-
-}
