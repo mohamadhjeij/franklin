@@ -16,6 +16,7 @@ const authorMap = {
   'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/de/authors/frederic-franz ',
   'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/de/authors/manuel-thomae ',
   'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner ',
+  'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/de/authors/jeannine-rapp',
 };
 const createMetadata = (main, document) => {
   const meta = {};
