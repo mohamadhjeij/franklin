@@ -12,6 +12,12 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+const authorMap = {
+  'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/de/authors/frederic-franz ',
+  'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/de/authors/manuel-thomae ',
+  'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner ',
+  'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/de/authors/jeannine-rapp',
+};
 const createMetadata = (main, document) => {
   const meta = {};
 
@@ -45,9 +51,11 @@ const createMetadata = (main, document) => {
 
 function customLogic(main, document) {
   // Change subheading to h3
-  const subHeading = document.createElement('h3');
-  subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
-  document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
+  if (document.querySelector('h2.headline__sub.hl--sub')) {
+    const subHeading = document.createElement('h3');
+    subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
+    document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
+  }
 
   // Add social share blocks
   document.querySelectorAll('.share').forEach((item) => {
@@ -64,7 +72,13 @@ function customLogic(main, document) {
     const cells = [['cards']];
     document.querySelectorAll('.text-media-grid .text-media-item-vertical').forEach((item) => {
       const image = item.querySelector('.text-media-item-vertical__media figure img');
-      const src = JSON.parse(image.getAttribute('src')).max;
+      let src;
+      try {
+        src = JSON.parse(image.getAttribute('src')).max;
+      } catch (e) {
+        src = image.getAttribute('src');
+      }
+
       const cardImg = document.createElement('img');
       cardImg.src = src;
 
@@ -73,7 +87,34 @@ function customLogic(main, document) {
       cells.push(row);
     });
     const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.text-media-grid').after(document.createElement('hr'));
     document.querySelector('.text-media-grid').replaceWith(table);
+  }
+
+  // Add contacts block
+  if (document.querySelector('.profileCollection.module')) {
+    const cells = [['contact(small)']];
+    const div = document.createElement('div');
+    const presseinformation = document.createElement('h3');
+    presseinformation.textContent = 'Presseinformation';
+    div.append(presseinformation);
+    document.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
+      const p = document.createElement('p');
+      const name = item.querySelector('h2 > span').textContent;
+      if (authorMap[name]) {
+        const a = document.createElement('a');
+        a.href = authorMap[name];
+        a.textContent = authorMap[name];
+        p.append(a);
+      } else {
+        p.textContent = name;
+      }
+      div.append(p);
+    });
+    cells.push([div]);
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.profileCollection.module').after(document.createElement('hr'));
+    document.querySelector('.profileCollection.module').replaceWith(table);
   }
 }
 
