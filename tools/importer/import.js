@@ -57,15 +57,28 @@ function customLogic(main, document) {
     document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
   }
 
+  // Add section breaks after text blocks
+  document.querySelectorAll('[data-module="TextBlock"]').forEach((item) => {
+    item.after(document.createElement('hr'));
+  });
+
   // Add social share blocks
-  document.querySelectorAll('.share').forEach((item) => {
+  document.querySelectorAll('.general-article-stage__share').forEach((item) => {
+    item.after(document.createElement('hr'));
     const cells = [['social']];
     const table = WebImporter.DOMUtils.createTable(cells, document);
     item.replaceWith(table);
   });
 
-  // Add section break after header
-  document.querySelector('.general-article-stage').after(document.createElement('hr'));
+  document.querySelectorAll('.page-utility-bar').forEach((item) => {
+    if (item.querySelector('.share')) {
+      const cells = [['social']];
+      cells.push([item.querySelector('.page-utility-bar__label')]);
+      item.after(document.createElement('hr'));
+      const table = WebImporter.DOMUtils.createTable(cells, document);
+      item.replaceWith(table);
+    }
+  });
 
   // Add cards block for media
   if (document.querySelector('.text-media-grid')) {
@@ -116,6 +129,56 @@ function customLogic(main, document) {
     document.querySelector('.profileCollection.module').after(document.createElement('hr'));
     document.querySelector('.profileCollection.module').replaceWith(table);
   }
+
+  // Add collapse block
+  if (document.querySelector('.text-block__expandable-area')) {
+    const cells = [['collapse']];
+    const div = document.createElement('div');
+    const heading = document.querySelector('.text-block__expandable-area').closest('.text-block').querySelector('.text-block__headline h2');
+    document.querySelector('.text-block__expandable-area').closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
+    div.append(heading);
+    document.querySelectorAll('.text-block__expandable-area>div>p').forEach((item) => {
+      div.append(item);
+    });
+    div.append(document.querySelector('.text-block__expandable-area .text-block__button a'));
+    cells.push([div]);
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.text-block__expandable-area').replaceWith(table);
+  }
+
+  // Add downloads block
+  if (document.querySelector('.downloads-wrapper')) {
+    const cells = [['columns']];
+    const headline = document.createElement('h2');
+    headline.textContent = document.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
+    cells.push([headline]);
+
+    document.querySelectorAll('.downloads__tabs .slideshow__list > .slideshow__item').forEach((item) => {
+      const img = document.createElement('img');
+      img.src = item.querySelector('.download-item__image-link').href;
+      const div = document.createElement('div');
+      const h3 = document.createElement('h3');
+      h3.textContent = item.querySelector('.download-item__headline h3 span').textContent;
+      const h4 = document.createElement('h4');
+      h4.textContent = item.querySelector('.download-item__headline h4').textContent;
+      div.append(h3);
+      div.append(h4);
+      cells.push([img, div]);
+    });
+    document.querySelector('.downloads-wrapper').after(document.createElement('hr'));
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.downloads-wrapper').replaceWith(table);
+  }
+
+  // Add featured articles block
+  if (document.querySelector('.featured-articles-with-teaser')) {
+    const cells = [['Article List']];
+    const count = document.querySelectorAll('.featured-articles-with-teaser__item--article').length;
+    cells.push(['Number of articles', count]);
+    document.querySelector('.featured-articles-with-teaser').after(document.createElement('hr'));
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.featured-articles-with-teaser').replaceWith(table);
+  }
 }
 
 export default {
@@ -142,6 +205,7 @@ export default {
       '.headline__eyebrow.text--eyebrow',
       '.general-article-stage__back-button',
       '.general-article-stage__details.text--eyebrow',
+      '#onetrust-banner-sdk',
     ]);
 
     customLogic(main, document);
