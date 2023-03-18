@@ -22,15 +22,6 @@ function template(info) {
                     ${info.Date}
                     · ${info.Duration} Lesedauer
                 </div>
-                <div class="general-article-stage__share">
-                    <div class="share">
-                      ${info.socials.map((item) => `
-                      <a data-type="${item.type}" aria-label="${item.label}" class="plain-link share__link" target="_blank" href="${item.href}" title="${item.label}">
-                        <span class="icon icon-${item.icon}"></span>
-                      </a>
-                      `).join('')}
-                    </div>
-                </div>
             </div>
         </div>
     </div>

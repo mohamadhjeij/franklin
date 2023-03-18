@@ -101,29 +101,31 @@ function decorateContentBlocks(main) {
   `);
 
   // Start with 1 to ignore hero
-  for (let i = 1; i < sections.length; i += 1) {
+  for (let i = 0; i < sections.length; i += 1) {
     const section = sections[i];
-    section.classList.add('text-block');
-
     const content = section.querySelector('.default-content-wrapper');
-    content.classList.add('text');
-    content.classList.add('text--body-m');
+    if (content) {
+      section.classList.add('text-block');
 
-    const wrapper = template.cloneNode(true);
-    wrapper.querySelector('.grid__column--inner').append(content);
-    section.append(wrapper);
+      content.classList.add('text');
+      content.classList.add('text--body-m');
 
-    const h2 = section.querySelector('h2');
-    if (h2) {
-      h2.classList.add('headline__main');
-      h2.classList.add('text-block__headline');
-      h2.classList.add('headline');
-      h2.classList.add('hl-l');
+      const wrapper = template.cloneNode(true);
+      wrapper.querySelector('.grid__column--inner').append(content);
+      section.append(wrapper);
+
+      const h2 = section.querySelector('h2');
+      if (h2) {
+        h2.classList.add('headline__main');
+        h2.classList.add('text-block__headline');
+        h2.classList.add('headline');
+        h2.classList.add('hl-l');
+      }
+
+      section.querySelectorAll('strong').forEach((strong) => {
+        strong.classList.add('text--bold');
+      });
     }
-
-    section.querySelectorAll('strong').forEach((strong) => {
-      strong.classList.add('text--bold');
-    });
   }
 }
 
