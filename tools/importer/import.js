@@ -108,9 +108,6 @@ function customLogic(main, document) {
   if (document.querySelector('.profileCollection.module')) {
     const cells = [['contact(small)']];
     const div = document.createElement('div');
-    const presseinformation = document.createElement('h3');
-    presseinformation.textContent = 'Presseinformation';
-    div.append(presseinformation);
     document.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
       const p = document.createElement('p');
       const name = item.querySelector('h2 > span').textContent;
