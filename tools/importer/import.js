@@ -50,6 +50,13 @@ const createMetadata = (main, document) => {
 };
 
 function customLogic(main, document) {
+  // Change heading to h1
+  if (document.querySelector('.headline.hl-xxl .headline__main')) {
+    const heading = document.createElement('h1');
+    heading.textContent = document.querySelector('.headline.hl-xxl .headline__main').textContent;
+    document.querySelector('.headline.hl-xxl .headline__main').replaceWith(heading);
+  }
+
   // Change subheading to h3
   if (document.querySelector('h2.headline__sub.hl--sub')) {
     const subHeading = document.createElement('h3');
@@ -161,6 +168,7 @@ function customLogic(main, document) {
       div.append(h3);
       div.append(h4);
 
+      // Use MAM links
       const downloadLink = document.createElement('a');
       downloadLink.href = item.querySelector('.download-item__content .button-link--icon').href;
       downloadLink.textContent = 'Download Link';
