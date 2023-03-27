@@ -160,6 +160,11 @@ function customLogic(main, document) {
       h4.textContent = item.querySelector('.download-item__headline h4').textContent;
       div.append(h3);
       div.append(h4);
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = item.querySelector('.download-item__content .button-link--icon').href;
+      downloadLink.textContent = 'Download Link';
+      div.append(downloadLink);
       cells.push([img, div]);
     });
     document.querySelector('.downloads-wrapper').after(document.createElement('hr'));
