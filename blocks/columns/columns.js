@@ -4,7 +4,7 @@ function template(props) {
   return `
     <div class="downloads-wrapper">
       <div class="downloads">
-      
+
         <div class="grid__container downloads__headline-grid">
           <div class="grid__structure">
               <div class="grid__column grid__column--100">
@@ -20,7 +20,7 @@ function template(props) {
               </div>
             </div>
           </div>
-      
+
           <div class="downloads__tabs downloads__tabs--no-tabs">
             <div class="tabs-horizontal tabs-horizontal--js-init">
               <div>
@@ -31,10 +31,10 @@ function template(props) {
                         <div class="slideshow slideshow--assets assets__slideshow slideshow--navigation-recenter slideshow--hide-interaction">
                           <div class="slideshow__container swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
                             <ul class="slideshow__list swiper-wrapper">
-                            
+
                               ${props.items.map((item) => `
                               <li class="slideshow__item">
-                              
+
                                 <div class="download-item download-item--landscape">
                                   <div class="download-item__image">
                                     <a class="plain-link download-item__image-link" href="${item.href}">
@@ -46,7 +46,7 @@ function template(props) {
                                       </figure>
                                     </a>
                                   </div>
-  
+
                                   <div class="download-item__content">
                                     <div class="download-item__info text--body-m">
                                       <div class="download-item__info-data">
@@ -54,7 +54,7 @@ function template(props) {
                                         <span class="download-item__info-value download-size-slot"></span>
                                       </div>
                                     </div>
-                                    
+
                                     <div class="button-link button-link--link">
                                       <a class=" button-link--icon  button-link--internal" href="${item.href}" download="${item.name}">
                                         <span class="button-link__content">
@@ -67,10 +67,10 @@ function template(props) {
                                     </div>
                                   </div>
                                 </div>
-                                
+
                               </li>
                               `).join('')}
-                              
+
                             </ul>
                           </div>
                         </div>
@@ -97,28 +97,25 @@ function formatBytes(bytes, decimals = 1) {
 
 export default function decorate(block) {
   const heading = block.querySelector('h2');
-  const pictures = Array.from(block.querySelectorAll('picture'));
 
-  const unoptimize = (src) => {
-    const url = new URL(src);
-    url.search = '';
-    return url.toString();
-  };
+  const items = [];
+  Array.from(block.children).forEach((child, idx) => {
+    if (idx > 0) {
+      const picture = child.querySelector('picture');
+      picture.classList.add('lazy-image__image');
+      picture.classList.add('lazy-image__target-image');
 
-  const items = pictures.map((picture) => {
-    picture.classList.add('lazy-image__image');
-    picture.classList.add('lazy-image__target-image');
+      const img = picture.querySelector('img');
+      const name = img.alt;
+      img.alt = `Vorschaubild von ${name}`;
+      img.title = 'Download';
 
-    const img = picture.querySelector('img');
-    const name = img.alt;
-    img.alt = `Vorschaubild von ${name}`;
-    img.title = 'Download';
+      const { href } = child.querySelector('a');
 
-    return {
-      name,
-      image: picture.outerHTML,
-      href: unoptimize(img.src),
-    };
+      items.push({
+        image: picture.outerHTML, name, href,
+      });
+    }
   });
 
   block.innerHTML = template({ items });
@@ -128,12 +125,9 @@ export default function decorate(block) {
   // Insert the heading back in the respective slot for navigation scroll tracking
   block.querySelector('.heading-slot').append(heading);
 
-  // Update download-size-slot in non-blocking manner
-  pictures.forEach((picture, index) => {
-    const { src } = picture.querySelector('img');
-
-    fetch(unoptimize(src)).then((req) => req.blob()).then((blob) => {
-      block.querySelector(`li.slideshow__item:nth-child(${index + 1}) .download-size-slot`).textContent = formatBytes(blob.size);
+  items.forEach((item, idx) => {
+    fetch(item.href).then((req) => req.blob()).then((blob) => {
+      block.querySelectorAll('li.slideshow__item .download-size-slot')[idx].textContent = formatBytes(blob.size);
     });
   });
 }
