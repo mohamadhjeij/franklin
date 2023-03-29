@@ -5,9 +5,8 @@ function template(props) {
   return `
     <div class="page-utility-bar grid__container">
       <div class="grid__structure">
-      
-        <hr class="divider divider--dark">
-        
+        ${props.highlighted ? '<hr class="divider divider--dark">' : ''}
+
         <div class="page-utility-bar__label">${props.title}</div>
 
         <div class="page-utility-bar__share-container">
@@ -21,7 +20,7 @@ function template(props) {
         </div>
 
         <hr class="divider">
-        
+
       </div>
     </div>
   `;
@@ -36,6 +35,7 @@ export default async function decorate(block) {
   block.innerHTML = template({
     title: block.textContent.trim(),
     items: socials,
+    highlighted: block.classList.contains('highlighted'),
   });
 
   decorateIcons(block, true);

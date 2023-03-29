@@ -79,7 +79,7 @@ function customLogic(main, document) {
 
   document.querySelectorAll('.page-utility-bar').forEach((item) => {
     if (item.querySelector('.share')) {
-      const cells = [['social']];
+      const cells = [['social(highlighted)']];
       cells.push([item.querySelector('.page-utility-bar__label')]);
       item.after(document.createElement('hr'));
       const table = WebImporter.DOMUtils.createTable(cells, document);
