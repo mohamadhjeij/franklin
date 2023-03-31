@@ -49,6 +49,15 @@ const createMetadata = (main, document) => {
   return meta;
 };
 
+function deriveImageSrc(image) {
+  let src;
+  try {
+    src = JSON.parse(image.getAttribute('src')).max;
+  } catch (e) {
+    src = image.getAttribute('src');
+  }
+  return src;
+}
 function customLogic(main, document) {
   // Change heading to h1
   if (document.querySelector('.headline.hl-xxl .headline__main')) {
@@ -92,12 +101,7 @@ function customLogic(main, document) {
     const cells = [['cards']];
     document.querySelectorAll('.text-media-grid .text-media-item-vertical').forEach((item) => {
       const image = item.querySelector('.text-media-item-vertical__media figure img');
-      let src;
-      try {
-        src = JSON.parse(image.getAttribute('src')).max;
-      } catch (e) {
-        src = image.getAttribute('src');
-      }
+      const src = deriveImageSrc(image);
 
       const cardImg = document.createElement('img');
       cardImg.src = src;
@@ -188,6 +192,19 @@ function customLogic(main, document) {
     document.querySelector('.featured-articles-with-teaser').after(document.createElement('hr'));
     const table = WebImporter.DOMUtils.createTable(cells, document);
     document.querySelector('.featured-articles-with-teaser').replaceWith(table);
+  }
+
+  // Add carousel block
+  if (document.querySelector('.image-slideshow')) {
+    const cells = [['Carousel']];
+    document.querySelectorAll('.image-slideshow .thumbnail-slideshow__main .slideshow__list .slideshow__item').forEach((item) => {
+      const img = document.createElement('img');
+      img.src = deriveImageSrc(item.querySelector('figure img'));
+      const caption = item.querySelector('figure figcaption .lazy-image__caption p');
+      cells.push([img, caption]);
+    });
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.image-slideshow').replaceWith(table);
   }
 }
 
