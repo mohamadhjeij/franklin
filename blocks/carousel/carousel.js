@@ -10,7 +10,7 @@ function template(props) {
               <div class="slideshow thumbnail-slideshow__main slideshow--navigation-recenter">
                 <div class="slideshow__container swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
                   <ul class="slideshow__list swiper-wrapper">
-                  
+
                     ${props.items.map((item, i) => `
                     <li class="slideshow__item swiper-slide ${i === 0 ? 'swiper-slide-active' : ''}">
                       <div class="thumbnail-slideshow-item">
@@ -24,9 +24,17 @@ function template(props) {
                                   </div>
                                   <div class="lazy-image__active-image-indicator"></div>
                                   <figcaption class="lazy-image__figcaption text--caption">
-                                    <span class="lazy-image__copyright">
-                                      <span class="lazy-image__copyright-text ">${item.copyright}</span>
-                                    </span>
+                                    ${(() => {
+    if (item.copyright) {
+      return `
+      <span class="lazy-image__copyright">
+        <span class="lazy-image__copyright-text ">${item.copyright}</span>
+      </span>
+      `;
+    }
+    return '';
+  })()}
+
                                     <span class="lazy-image__caption">
                                       <p>${item.label}</p>
                                     </span>
@@ -40,9 +48,9 @@ function template(props) {
                         <div class="thumbnail-slideshow-item__media-indicator"></div>
                       </div>
                     </li>
-                    
+
                     `).join('')}
-                    
+
                   </ul>
 
                   <div class="swiper-button-next slideshow__navigation-button slideshow__navigation-button--next" role="navigation">
@@ -60,11 +68,11 @@ function template(props) {
                           <span class="slideshow__pagination-bullet ${index === 0 ? 'slideshow__pagination-bullet--active' : ''}"></span>
                         `).join('')}
                       </div>
-                      
+
                       <span class="slideshow__pagination-bullet slideshow__pagination-bullet--animated" style="width: ${100 / props.items.length}%; left: 0%;"></span>
                     </div>
                   </div>
-    
+
                 </div>
               </div>
             </div>
@@ -151,7 +159,14 @@ export default async function decorate(block) {
     image.classList.add('lazy-image__target-image');
 
     const label = item.querySelector('div:last-of-type').textContent;
-    const copyright = label.split('©').pop();
+
+    let copyright;
+    if (item.querySelector('div:first-of-type p:last-of-type')) {
+      copyright = item.querySelector('div:first-of-type p:last-of-type').textContent;
+      if (copyright.startWith && !copyright.startWith('©')) {
+        copyright = undefined;
+      }
+    }
 
     return {
       image: image.outerHTML,

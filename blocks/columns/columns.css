@@ -458,6 +458,17 @@
   display: none
 }
 
+.slideshow--hide-interaction .slideshow__list {
+  justify-content: center
+}
+
+.slideshow {
+  position: relative;
+  width: 100%;
+  margin-top: var(--spacing-vertical-l)
+}
+
+
 @media (min-width: 48rem) {
   .assets__slideshow .slideshow__list {
     height: 100%;

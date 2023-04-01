@@ -58,7 +58,7 @@ function deriveImageSrc(image) {
   }
   return src;
 }
-function customLogic(main, document) {
+function customLogic(main, document, url) {
   // Change heading to h1
   if (document.querySelector('.headline.hl-xxl .headline__main')) {
     const heading = document.createElement('h1');
@@ -198,10 +198,21 @@ function customLogic(main, document) {
   if (document.querySelector('.image-slideshow')) {
     const cells = [['Carousel']];
     document.querySelectorAll('.image-slideshow .thumbnail-slideshow__main .slideshow__list .slideshow__item').forEach((item) => {
+      const imgDiv = document.createElement('div');
       const img = document.createElement('img');
       img.src = deriveImageSrc(item.querySelector('figure img'));
+      imgDiv.appendChild(img);
+      // Copyright
+      if (item.querySelector('.lazy-image__copyright-text')) {
+        const copyrightTxt = `©${item.querySelector('.lazy-image__copyright-text').textContent}`;
+        const copyright = document.createElement('p');
+        copyright.textContent = copyrightTxt;
+        imgDiv.appendChild(copyright);
+      }
+
       const caption = item.querySelector('figure figcaption .lazy-image__caption p');
-      cells.push([img, caption]);
+
+      cells.push([imgDiv, caption]);
     });
     const table = WebImporter.DOMUtils.createTable(cells, document);
     document.querySelector('.image-slideshow').replaceWith(table);
@@ -235,7 +246,7 @@ export default {
       '#onetrust-banner-sdk',
     ]);
 
-    customLogic(main, document);
+    customLogic(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document);
 
