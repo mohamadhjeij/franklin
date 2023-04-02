@@ -13,9 +13,9 @@
 /* eslint-disable no-console, class-methods-use-this */
 
 const authorMap = {
-  'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/de/authors/frederic-franz ',
-  'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/de/authors/manuel-thomae ',
-  'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner ',
+  'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/de/authors/frederic-franz',
+  'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/de/authors/manuel-thomae',
+  'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner',
   'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/de/authors/jeannine-rapp',
 };
 const createMetadata = (main, document) => {
@@ -58,7 +58,7 @@ function deriveImageSrc(image) {
   }
   return src;
 }
-function customLogic(main, document, url) {
+function customLogic(main, document) {
   // Change heading to h1
   if (document.querySelector('.headline.hl-xxl .headline__main')) {
     const heading = document.createElement('h1');
@@ -211,10 +211,10 @@ function customLogic(main, document, url) {
       }
 
       const caption = item.querySelector('figure figcaption .lazy-image__caption p');
-
       cells.push([imgDiv, caption]);
     });
     const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.image-slideshow').after(document.createElement('hr'));
     document.querySelector('.image-slideshow').replaceWith(table);
   }
 }

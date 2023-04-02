@@ -1,5 +1,3 @@
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-
 function template(props) {
   return `
   <div class="text-media-grid grid__container">
