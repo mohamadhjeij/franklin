@@ -139,20 +139,20 @@ function customLogic(main, document) {
   }
 
   // Add collapse block
-  if (document.querySelector('.text-block__expandable-area')) {
+  document.querySelectorAll('.text-block__expandable-area').forEach((collapseItem) => {
     const cells = [['collapse']];
     const div = document.createElement('div');
-    const heading = document.querySelector('.text-block__expandable-area').closest('.text-block').querySelector('.text-block__headline h2');
-    document.querySelector('.text-block__expandable-area').closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
+    const heading = collapseItem.closest('.text-block').querySelector('.text-block__headline h2');
+    collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
     div.append(heading);
-    document.querySelectorAll('.text-block__expandable-area>div>p').forEach((item) => {
+    collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
       div.append(item);
     });
-    div.append(document.querySelector('.text-block__expandable-area .text-block__button a'));
+    div.append(collapseItem.querySelector('.text-block__button a'));
     cells.push([div]);
     const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.text-block__expandable-area').replaceWith(table);
-  }
+    collapseItem.replaceWith(table);
+  });
 
   // Add downloads block
   if (document.querySelector('.downloads-wrapper')) {
