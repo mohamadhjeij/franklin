@@ -1,6 +1,8 @@
+import { getMetadata } from './lib-franklin.js';
+
 const meta = {
   title: encodeURIComponent(document.title),
-  description: encodeURIComponent(document.head.querySelector('meta[name="description"]').content),
+  description: encodeURIComponent(getMetadata('description')),
   url: `${window.location.origin}${window.location.pathname}`,
 };
 

@@ -163,8 +163,8 @@ export default async function decorate(block) {
     let copyright;
     if (item.querySelector('div:first-of-type p:last-of-type')) {
       copyright = item.querySelector('div:first-of-type p:last-of-type').textContent;
-      if (copyright.startWith && !copyright.startWith('©')) {
-        copyright = undefined;
+      if (copyright.startsWith && copyright.startsWith('©')) {
+        copyright = copyright.substring(1);
       }
     }
 
