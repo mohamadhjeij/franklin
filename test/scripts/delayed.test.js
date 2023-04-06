@@ -38,8 +38,8 @@ describe('Delayed functionality', () => {
     doc.head = {};
     doc.head.appendChild = (c) => appendedChildren.push(c);
     doc.createElement = (name) => (name === 'script' ? created : undefined);
-    doc.querySelector = (q) => (q === "a[aria-label='Trackingeinstellungen'], a[aria-label='Tracking Preferences']" ?
-      myalink : undefined);
+    doc.querySelector = (q) => (q === "a[aria-label='Trackingeinstellungen'], a[aria-label='Tracking Preferences']"
+      ? myalink : undefined);
 
     // Preconditions
     expect(appendedChildren.length).to.equal(0, 'Precondition');
