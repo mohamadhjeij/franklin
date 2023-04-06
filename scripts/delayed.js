@@ -26,10 +26,6 @@ export function getCookieConsentID(hostname) {
   return csID;
 }
 
-// The OneTrust website says to define this function like this.
-// eslint-disable-next-line no-unused-vars
-function OptanonWrapper() { }
-
 export function loadCookieConsent(doc, hostname) {
   const csID = getCookieConsentID(hostname);
 
@@ -41,7 +37,7 @@ export function loadCookieConsent(doc, hostname) {
   cookieScript.setAttribute('data-domain-script', csID);
   doc.head.appendChild(cookieScript);
 
-  const alink = doc.querySelector("a[aria-label='Trackingeinstellungen']");
+  const alink = doc.querySelector("a[aria-label='Trackingeinstellungen'], a[aria-label='Tracking Preferences']");
   if (alink) {
     alink.setAttribute('href', '#');
     alink.setAttribute('onclick', 'OneTrust.ToggleInfoDisplay();');
@@ -49,3 +45,7 @@ export function loadCookieConsent(doc, hostname) {
 }
 
 loadCookieConsent(document, window.location.hostname);
+
+// The OneTrust website says to define this function like this.
+// eslint-disable-next-line no-unused-vars
+function OptanonWrapper() { }
