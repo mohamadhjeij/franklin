@@ -18,7 +18,89 @@ const authorMap = {
   'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner',
   'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/de/authors/jeannine-rapp',
 };
-const createMetadata = (main, document) => {
+
+const tagsMap = {
+  Technologie:
+  ['/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spie-award.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-expandiert-in-wetzlar-weiteres-werk-im-dillfeld.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-trumpf-und-fraunhofer-mit-deutschem-zukunftspreis-ausgezeichnet.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/deutscher-zukunftspreis-2020-euv.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/verkauf-von-zeiss-itrap.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/winfried-kaiser-mit-dem-spie-frits-zernike-award-ausgezeichnet.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-accelerates-semiconductor-package-failure-analysis-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/ausgezeichnete-auszubildende.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/50-jahre-halbleiterfertigungstechnologien-von-zeiss.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/european-inventor-award-2018-en-only.html'],
+
+  'Menschen und Führung':
+  ['/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spie-award.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/neue-multifunktionsfabrik-in-wetzlar.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spende-an-tafeln-aalen-heidenheim.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/mitbestimmungspreis.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/modernes-ausbildungsangebot-in-wetzlar.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/ausgezeichnete-ausbildung-bei-zeiss.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/winfried-kaiser-mit-dem-spie-frits-zernike-award-ausgezeichnet.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/european-inventor-award-2018-en-only.html'],
+
+  'Soziales Engagement':
+  ['/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/neue-multifunktionsfabrik-in-wetzlar.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spende-an-tafeln-aalen-heidenheim.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/zeiss-als-ehrenamtsfreundlicher-arbeitgeber-ausgezeichnet.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/mitbestimmungspreis.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-expandiert-in-wetzlar-weiteres-werk-im-dillfeld.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-spendet-25000-euro-an-kinderstiftung-knalltuete.html'],
+
+  'Märkte und Partner':
+  ['/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/neue-multifunktionsfabrik-in-wetzlar.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/zeiss-expandiert-am-forschungs--und-entwicklungsstandort-rossdorf.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spie-award.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-expandiert-in-wetzlar-weiteres-werk-im-dillfeld.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/intels-2022-epic-distinguished-supplier-award-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-trumpf-und-fraunhofer-mit-deutschem-zukunftspreis-ausgezeichnet.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/deutscher-zukunftspreis-2020-euv.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/verkauf-von-zeiss-itrap.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/quality-supplier-award-2019-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/50-jahre-halbleiterfertigungstechnologien-von-zeiss.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/investitionen.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/european-inventor-award-2018-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/quality-supplier-award-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/europaeischer-erfinderpreis-2018.html'],
+
+  Technology:
+  ['/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-expands-in-wetzlar-additional-plant-in-dillfeld.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-trumpf-and-fraunhofer-research-team-awarded-the-deutscher-zukunftspreis-.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/deutscher-zukunftspreis-2020-euv.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-adds-advanced-reconstruction-intelligence.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/sale-of-zeiss-itrap.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/winfried-kaiser-honored-with-the-spie-frits-zernike-award-for-microlithography.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-accelerates-semiconductor-package-failure-analysis.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-xradia.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/anniversary-50-years-smt.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award-2018.html'],
+
+  'People and Leadership':
+  ['/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/winfried-kaiser-honored-with-the-spie-frits-zernike-award-for-microlithography.html'],
+
+  'Social Commitment':
+  ['/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-expands-in-wetzlar-additional-plant-in-dillfeld.html'],
+
+  'Markets and Partners':
+  ['/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/2023/zeiss-expands-at-the-rossdorf-research-and-development-site.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-expands-in-wetzlar-additional-plant-in-dillfeld.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/intels-2022-epic-distinguished-supplier-award.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-trumpf-and-fraunhofer-research-team-awarded-the-deutscher-zukunftspreis-.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/deutscher-zukunftspreis-2020-euv.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/sale-of-zeiss-itrap.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/intels-preferred-quality-supplier-award-2020.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-xradia.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/quality-supplier-award-2019.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/anniversary-50-years-smt.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award-2018.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/quality-supplier-award.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award.html'],
+};
+
+const createMetadata = (main, document, url) => {
   const meta = {};
 
   const title = document.querySelector('title');
@@ -42,6 +124,19 @@ const createMetadata = (main, document) => {
     el.src = img.content;
     meta.Image = el;
   }
+
+  // iterate over tagsMap
+  const tags = [];
+  Object.entries(tagsMap).forEach(([key, value]) => {
+    value.forEach((item) => {
+      if (new URL(url).pathname === item) {
+        tags.push(key);
+      }
+    });
+  });
+
+  // covert tags to string
+  meta.Tags = tags.join(', ');
 
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
   main.append(block);
@@ -248,7 +343,7 @@ export default {
 
     customLogic(main, document, url);
     // create the metadata block and append it to the main element
-    createMetadata(main, document);
+    createMetadata(main, document, url);
 
     return main;
   },
