@@ -1,61 +1,40 @@
-/* grid */
-:root {
-  --grid-gutter: 1rem;
+.text-media-grid {
+    margin-top: var(--spacing-vertical-xxl);
+    margin-bottom: var(--spacing-vertical-xxl)
 }
 
-@media (min-width: 22.5rem) {
-  :root {
-    --grid-gutter: 1rem;
-  }
+.text-media-grid__items {
+    display: flex;
+    flex-direction: column
 }
 
-@media (min-width: 48rem) {
-  :root {
-    --grid-gutter: 1.5rem;
-  }
+.text-media-grid__items> :not(:last-child) {
+    margin-bottom: var(--spacing-vertical-l)
+}
+
+.text-media-item-vertical__text {
+    margin-top: var(--spacing-vertical-m);
+    grid-column: 1/-1
 }
 
 @media (min-width: 64rem) {
-  :root {
-    --grid-gutter: 1.5rem;
-  }
+    .text-media-item-vertical__text {
+        grid-column: span 8
+    }
 }
 
-@media (min-width: 80rem) {
-  :root {
-    --grid-gutter: 1.5rem;
-  }
+@media (min-width: 48rem) {
+    .text-media-grid__items {
+        flex-direction: row
+    }
+
+    .text-media-grid__items .text-media-item-vertical__text {
+        grid-column: span 12
+    }
+
+    .text-media-grid__items> :not(:last-child) {
+        margin-right: var(--grid-gutter);
+        margin-bottom: 0
+    }
+
 }
-
-@media (min-width: 90rem) {
-  :root {
-    --grid-gutter: 1.5rem;
-  }
-}
-
-@media (min-width: 120rem) {
-  :root {
-    --grid-gutter: 1.5rem;
-  }
-}
-
-.cards > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-
-    /* Below 48rem, do not show more than 1 card in a row */
-    grid-template-columns: repeat(auto-fit, minmax(calc((48rem - 2 * var(--section-margin) - var(--grid-gutter)) / 2), 1fr));
-    grid-gap: var(--grid-gutter);
-  }
-
-  .cards .cards-card-body {
-    margin-top: var(--spacing-vertical-m);
-  }
-
-  .cards > ul > li img {
-    width: 100%;
-    object-fit: cover;
-  }
-
