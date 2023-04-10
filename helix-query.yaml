@@ -26,3 +26,37 @@ indices:
       readingtime:
         select: head > meta[name="readingtime"]
         value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, 'content')
+  en_semiconductor-manufacturing-technology_news-and-events:
+    include:
+      - /en/semiconductor-manufacturing-technology/news-and-events/**
+    target: /en/semiconductor-manufacturing-technology/news-and-events/query-index.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      imagealt:
+        select: head > meta[property="og:image:alt"]
+        value: attribute(el, "content")
+      publicationdate:
+        select: head > meta[name="publicationdate"]
+        value: attribute(el, "content")
+      readingtime:
+        select: head > meta[name="readingtime"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, 'content')
