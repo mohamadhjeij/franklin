@@ -832,7 +832,6 @@ header {
     letter-spacing: 1.5px
   }
 }
-
 .text--quote {
   font-family: var(--font-family-frutiger);
   font-weight: 500;
@@ -2056,4 +2055,54 @@ sub {
 .divider--dark {
   background-color: var(--border-color-active);
   height: 0.125rem
+}
+
+.text--eyebrow {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+.text--eyebrow-l,
+.text--eyebrow-l--light,
+.text--eyebrow-s,
+.text--eyebrow-s--light {
+    text-transform: uppercase
+}
+
+.text--eyebrow-l {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+@media (min-width: 64rem) {
+    .text--eyebrow-l {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        letter-spacing: 0.5px;
+        font-family: var(--font-family-frutiger);
+        font-weight: 500;
+        font-style: normal
+    }
+}
+
+.text--eyebrow-s {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+.general-article-stage__details {
+    margin-top: var(--spacing-vertical-s)
 }

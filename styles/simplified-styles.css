@@ -1,0 +1,277 @@
+/* stylelint-disable selector-class-pattern */
+
+:root {
+    --font-family-frutiger: "Frutiger Next", "Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
+    --interaction-color-link: #0072ef;
+    --button-tertiary-text-default: var(--interaction-color-link);
+    --text-color-body: #606a76;
+    --text-color-text: var(--text-color-body);
+    --spacing-vertical-m: 1.5rem;
+    --spacing-vertical-xxl: 3.5rem;
+    --spacing-vertical-s: 1rem;
+    --section-margin: 1.5rem;
+}
+
+a {
+    font-family: var(--font-family-frutiger);
+    font-size: 1rem;
+    color: var(--button-tertiary-text-default);
+    position: relative;
+    text-decoration: none;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--button-tertiary-text-default);
+    transform-origin: bottom left;
+    transition: all ease-in-out .3s;
+    font-weight: 500;
+}
+
+a:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* section */
+@media (min-width: 22.5rem) {
+    :root {
+        --section-margin: 1.5rem;
+    }
+}
+
+@media (min-width: 48rem) {
+    :root {
+        --section-margin: 2rem;
+    }
+}
+
+@media (min-width: 64rem) {
+    :root {
+        --section-margin: 2rem;
+    }
+}
+
+@media (min-width: 80rem) {
+    :root {
+        --section-margin: 4rem;
+    }
+}
+
+@media (min-width: 90rem) {
+    :root {
+        --section-margin: 6rem;
+    }
+}
+
+@media (min-width: 120rem) {
+    :root {
+        --section-margin: 6rem;
+    }
+}
+
+/* TODO: Sections not yet simplified are added as :not exceptions. This list  should shrink as we simplify sections */
+main .section:not(.social-container):not(.carousel-container):not(.text-block):not(.contact-container):not(.columns-container):not(.article-list-container):not(.footer) {
+    margin: 0 auto;
+    margin-top: var(--spacing-vertical-xxl);
+    margin-bottom: var(--spacing-vertical-xxl);
+    padding-left: var(--section-margin);
+    padding-right: var(--section-margin);
+    max-width: 102rem;
+    box-sizing: border-box
+}
+
+/* TODO: Block not yet simplified are added as :not exceptions. This list  should shrink as we simplify sections */
+.block:not(.header):not(.cards):not(.collapse):not(.social):not(.carousel):not(.contact):not(.columns):not(.article-list):not(.footer) {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-gap: var(--grid-gutter);
+    row-gap: 0;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    grid-template-rows: auto
+}
+
+
+/* text */
+.text {
+    color: var(--text-color-text)
+}
+
+.text--display-s,
+.text--display-m,
+.text--display-l {
+    font-family: var(--font-family-frutiger);
+    font-weight: 900;
+    font-style: normal
+}
+
+.text--display-s {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+    .text--display-s {
+        font-size: 3rem;
+        line-height: 3.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 64rem) {
+    .text--display-s {
+        font-size: 3rem;
+        line-height: 3.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 80rem) {
+    .text--display-s {
+        font-size: 4rem;
+        line-height: 4.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 90rem) {
+    .text--display-s {
+        font-size: 4rem;
+        line-height: 4.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+.text--display-m {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+    .text--display-m {
+        font-size: 4rem;
+        line-height: 4.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 64rem) {
+    .text--display-m {
+        font-size: 4rem;
+        line-height: 4.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 80rem) {
+    .text--display-m {
+        font-size: 5rem;
+        line-height: 5.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 90rem) {
+    .text--display-m {
+        font-size: 5rem;
+        line-height: 5.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+.text--display-l {
+    font-size: 3.75rem;
+    line-height: 4rem;
+    letter-spacing: 1.5px
+}
+
+@media (min-width: 48rem) {
+    .text--display-l {
+        font-size: 5rem;
+        line-height: 5.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 64rem) {
+    .text--display-l {
+        font-size: 5rem;
+        line-height: 5.25rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 80rem) {
+    .text--display-l {
+        font-size: 6rem;
+        line-height: 6.5rem;
+        letter-spacing: 1.5px
+    }
+}
+
+@media (min-width: 90rem) {
+    .text--display-l {
+        font-size: 6rem;
+        line-height: 6.5rem;
+        letter-spacing: 1.5px
+    }
+}
+
+.text--eyebrow {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+.text--eyebrow-l,
+.text--eyebrow-l--light,
+.text--eyebrow-s,
+.text--eyebrow-s--light {
+    text-transform: uppercase
+}
+
+.text--eyebrow-l {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+@media (min-width: 64rem) {
+    .text--eyebrow-l {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        letter-spacing: 0.5px;
+        font-family: var(--font-family-frutiger);
+        font-weight: 500;
+        font-style: normal
+    }
+}
+
+.text--eyebrow-s {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
+    font-family: var(--font-family-frutiger);
+    font-weight: 500;
+    font-style: normal
+}
+
+.general-article-stage__details {
+    margin-top: var(--spacing-vertical-s)
+}

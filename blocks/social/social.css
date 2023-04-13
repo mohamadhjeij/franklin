@@ -51,3 +51,46 @@
     grid-column: 3/-1
   }
 }
+
+.share {
+  display: flex
+}
+
+.share__link {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--color-white);
+  margin-left: var(--spacing-horizontal-xs)
+}
+
+.share__link:first-child {
+  margin-left: 0
+}
+
+.share__link:focus {
+  outline: 0.125rem solid var(--color-highlight-light)
+}
+
+.share__link[data-js-select=Share_copy-to-clipboard] textarea {
+  position: absolute;
+  z-index: -1;
+  left: -625rem
+}
+
+.share__link .icon {
+  width: 1.5rem;
+  margin: .5rem;
+  fill: var(--interaction-color-link)
+}
+
+.share__link:hover .icon {
+  fill: var(--interaction-color-hover)
+}
+
+.share__link:focus .icon {
+  fill: var(--interaction-color-focused)
+}
+
+.share__link:disabled .icon {
+  fill: var(--interaction-color-disabled)
+}

@@ -1,32 +1,5 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
-import { socials, addClipboardInteraction } from '../../scripts/utils.js';
-
-function template(info) {
-  return `<div class="general-article-stage">
-    <div class="grid__container" xmlns="http://www.w3.org/1999/html">
-        <div class="grid__structure">
-            <div class="grid__column grid__column--100">
-                <hr class="divider divider--dark">
-            </div>
-            <div class="grid__column general-article-stage__column-content">
-                <div class="headline hl-xxl hl--sub-m">
-                    <span>
-                        <span class="headline__eyebrow text--eyebrow">Presseinformation</span>
-                        <h1>
-                            <span class="headline__main" data-js-select="Headline_main">${info.Main}</span>
-                        </h1>
-                        <h3 class="headline__sub hl--sub">${info.Sub}</h3>
-                    </span>
-                </div>
-                <div class="general-article-stage__details text--eyebrow">
-                    ${info.Date}
-                    · ${info.Duration} Lesedauer
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`;
-}
+import { addClipboardInteraction } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
   const pub = document.querySelector('head > meta[name="publicationdate"');
@@ -39,19 +12,26 @@ export default async function decorate(block) {
   if (time && time.content) {
     timeString = time.content;
   }
-  const picture = block.querySelector('picture');
-  block.innerHTML = template(
-    {
-      Date: dateString,
-      Duration: timeString,
-      Main: block.querySelector('h1')?.textContent || '',
-      Sub: block.querySelector('h3')?.textContent || '',
-      socials,
-    },
-  );
 
+  const generalArticleStageDetails = document.createElement('div');
+  generalArticleStageDetails.innerHTML = `${dateString} · ${timeString}`;
+  generalArticleStageDetails.classList.add('general-article-stage__details');
+  generalArticleStageDetails.classList.add('text--eyebrow');
+  block.appendChild(generalArticleStageDetails);
+
+  const picture = block.querySelector('picture');
   if (picture) {
     block.querySelector('.general-article-stage__column-content').prepend(picture);
+  }
+
+  block.querySelector('h1').classList.add('headline');
+  block.querySelector('h1').classList.add('headline__main');
+  block.querySelector('h1').classList.add('hl-xxl');
+
+  if (block.querySelector('h3')) {
+    block.querySelector('h3').classList.add('headline');
+    block.querySelector('h3').classList.add('headline__sub');
+    block.querySelector('h3').classList.add('hl--sub');
   }
 
   decorateIcons(block, true);
