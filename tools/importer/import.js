@@ -118,6 +118,16 @@ const createMetadata = (main, document, url) => {
     meta.publicationDate = publishingDate.content;
   }
 
+  const readingTime = document.querySelector('[property="article_time"]');
+  if (readingTime) {
+    meta.readingTime = readingTime.content;
+  }
+
+  const timeType = document.querySelector('[property=article_time_type]');
+  if (timeType) {
+    meta.timeType = timeType.content;
+  }
+
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
     const el = document.createElement('img');
