@@ -275,3 +275,45 @@ main .section:not(.social-container):not(.carousel-container):not(.text-block):n
 .general-article-stage__details {
     margin-top: var(--spacing-vertical-s)
 }
+
+.general-article-stage.headline__sub {
+    margin-top: var(--spacing-vertical-s)
+}
+
+.hl--sub-m.hl--sub {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.005em;
+}
+
+@media (min-width: 48rem) {
+    .hl--sub-m.hl--sub {
+        font-size: 1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em;
+    }
+}
+
+@media (min-width: 64rem) {
+    .hl--sub-m.hl--sub {
+        font-size: 1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em;
+    }
+}
+
+@media (min-width: 80rem) {
+    .hl--sub-m.hl--sub {
+        font-size: 1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em;
+    }
+}
+
+@media (min-width: 90rem) {
+    .hl--sub-m.hl--sub {
+        font-size: 1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em;
+    }
+}

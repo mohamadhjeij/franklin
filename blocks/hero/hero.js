@@ -35,6 +35,8 @@ export default async function decorate(block) {
     block.querySelector('h3').classList.add('headline');
     block.querySelector('h3').classList.add('headline__sub');
     block.querySelector('h3').classList.add('hl--sub');
+    block.querySelector('h3').classList.add('hl--sub-m');
+    block.querySelector('h3').classList.add('general-article-stage');
   }
 
   decorateIcons(block, true);
