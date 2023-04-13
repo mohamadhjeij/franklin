@@ -3,9 +3,11 @@
 :root {
     --font-family-frutiger: "Frutiger Next", "Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
     --interaction-color-link: #0072ef;
+    --border-color-active: #32373e;
     --button-tertiary-text-default: var(--interaction-color-link);
     --text-color-body: #606a76;
     --text-color-text: var(--text-color-body);
+    --headline-color-eyebrow: var(--border-color-active);
     --spacing-vertical-m: 1.5rem;
     --spacing-vertical-xxl: 3.5rem;
     --spacing-vertical-s: 1rem;
@@ -26,9 +28,9 @@ a::after {
     width: 100%;
     transform: scaleX(0);
     height: 2px;
-    bottom: 0;
+    bottom: 4px;
     left: 0;
-    background-color: var(--button-tertiary-text-default);
+    background-color: var(--button-primary-border-hover);
     transform-origin: bottom left;
     transition: all ease-in-out .3s;
     font-weight: 500;
@@ -38,6 +40,9 @@ a:hover::after {
     transform: scaleX(1);
 }
 
+a:hover {
+    color: var(--button-primary-border-hover);
+}
 
 /* section */
 @media (min-width: 22.5rem) {

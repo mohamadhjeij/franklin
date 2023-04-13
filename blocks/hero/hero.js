@@ -1,7 +1,37 @@
 import { decorateIcons, getMetadata, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { addClipboardInteraction } from '../../scripts/utils.js';
 
+function addBackLink(block) {
+  if (window.location.pathname.endsWith('/news-und-events/')) {
+    return;
+  }
+
+  const p = document.createElement('p');
+  p.innerHTML = 'Pressemitteilung';
+  p.classList.add('headline-brow');
+  block.insertBefore(p, block.firstChild);
+  const hr = document.createElement('hr');
+  hr.classList.add('back-link-line');
+  block.insertBefore(hr, block.firstChild);
+
+  const bl = document.createElement('div');
+  // The 2 elements are created in the 'backward' order to allow the hover over the link
+  // to change the color of the arrow. They are put in the correct position via the
+  // 'order' attribute in the CSS.
+  bl.innerHTML = `<a href="/de/semiconductor-manufacturing-technology/news-und-events/" class="back-link"> Zurück zu Informationen und Veranstaltungen</a>
+  <a href="#" class="back-link-icon">
+    <svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink"">
+      <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-chevron-left"></use>
+    </svg>
+  </a>`;
+  bl.classList.add('back-link-base');
+
+  block.insertBefore(bl, block.firstChild);
+}
+
 export default async function decorate(block) {
+  addBackLink(block);
+
   const locale = getMetadata('locale') || 'en';
   const placeholders = await fetchPlaceholders(`/${locale}`);
   const pub = document.querySelector('head > meta[name="publicationdate"');

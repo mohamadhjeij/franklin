@@ -1,15 +1,56 @@
-main .block.hero>div {
+main .block.hero>div, main .block.hero .back-link-base {
   grid-column: 1/-1;
 }
 
+main .block.hero .back-link-line {
+  grid-column: 1/-1;
+  height: 2px;
+  width: 100%;
+  border: none;
+  background-color: var(--border-color-active);
+}
+
+main .block.hero .headline-brow {
+  color: var(--headline-color-eyebrow);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+main .block.hero .back-link-base {
+  display: inline-flex;
+  align-self: center;
+}
+
+main .block.hero .back-link-base svg {
+  top: -.25em;
+  height: 1.55em;
+  width: 1.5em;
+  fill: var(--button-tertiary-text-default);
+  margin-right: 4px;
+  position: relative;
+}
+
+main .block.hero a.back-link {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  order: 2
+}
+
+main .block.hero a.back-link:hover + a.back-link-icon svg {
+  fill: var(--button-primary-border-hover);
+}
+
 @media (min-width: 48rem) {
-  main .block.hero>div {
+  main .block.hero>div, main .block.hero .headline-brow {
     grid-column: 2/6;
   }
 }
 
 @media (min-width: 64rem) {
-  main .block.hero>div {
+  main .block.hero>div, main .block.hero .headline-brow {
     grid-column: 3/-3;
   }
 }
