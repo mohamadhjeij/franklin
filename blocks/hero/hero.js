@@ -1,13 +1,13 @@
 import { decorateIcons, getMetadata, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { addClipboardInteraction } from '../../scripts/utils.js';
 
-function addBackLink(block) {
-  if (window.location.pathname.endsWith('/news-und-events/')) {
+export function addBackLink(block, locale, placeholders, curPath) {
+  if (curPath.endsWith(placeholders.newseventsbase)) {
     return;
   }
 
   const p = document.createElement('p');
-  p.innerHTML = 'Pressemitteilung';
+  p.innerHTML = placeholders.pressrelease;
   p.classList.add('headline-brow');
   block.insertBefore(p, block.firstChild);
   const hr = document.createElement('hr');
@@ -18,8 +18,9 @@ function addBackLink(block) {
   // The 2 elements are created in the 'backward' order to allow the hover over the link
   // to change the color of the arrow. They are put in the correct position via the
   // 'order' attribute in the CSS.
-  bl.innerHTML = `<a href="/de/semiconductor-manufacturing-technology/news-und-events/" class="back-link"> Zurück zu Informationen und Veranstaltungen</a>
-  <a href="#" class="back-link-icon">
+  bl.innerHTML = `<a href="/${locale}/${placeholders.newseventsbase}/"
+    class="back-link">${placeholders.backtonewsevents}</a>
+  <a href="/${locale}/${placeholders.newseventsbase}/" class="back-link-icon">
     <svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink"">
       <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-chevron-left"></use>
     </svg>
@@ -30,10 +31,11 @@ function addBackLink(block) {
 }
 
 export default async function decorate(block) {
-  addBackLink(block);
-
   const locale = getMetadata('locale') || 'en';
   const placeholders = await fetchPlaceholders(`/${locale}`);
+
+  addBackLink(block, locale, placeholders, window.location.pathname);
+
   const pub = document.querySelector('head > meta[name="publicationdate"');
   const time = document.querySelector('head > meta[name="readingtime"');
   const options = { year: 'numeric', month: 'long', day: 'numeric' };

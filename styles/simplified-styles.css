@@ -9,6 +9,7 @@
     --text-color-text: var(--text-color-body);
     --headline-color-eyebrow: var(--border-color-active);
     --spacing-vertical-m: 1.5rem;
+    --spacing-vertical-l: 2rem;
     --spacing-vertical-xxl: 3.5rem;
     --spacing-vertical-s: 1rem;
     --section-margin: 1.5rem;

@@ -16,6 +16,7 @@ main .block.hero .headline-brow {
   font-weight: 500;
   letter-spacing: 0.01em;
   line-height: 1rem;
+  padding-top: var(--spacing-vertical-l);
   text-transform: uppercase;
 }
 
@@ -30,6 +31,7 @@ main .block.hero .back-link-base svg {
   width: 1.5em;
   fill: var(--button-tertiary-text-default);
   margin-right: 4px;
+  margin-bottom: 4px;
   position: relative;
 }
 
