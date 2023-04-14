@@ -30,7 +30,9 @@ const tagsMap = {
     '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-accelerates-semiconductor-package-failure-analysis-en-only.html',
     '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/ausgezeichnete-auszubildende.html',
     '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/50-jahre-halbleiterfertigungstechnologien-von-zeiss.html',
-    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/european-inventor-award-2018-en-only.html'],
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/european-inventor-award-2018-en-only.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/neue-multifunktionsfabrik-in-wetzlar.html',
+    '/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/zeiss-expandiert-am-forschungs--und-entwicklungsstandort-rossdorf.html'],
 
   'Menschen und Führung':
   ['/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/2023/spie-award.html',
@@ -76,7 +78,8 @@ const tagsMap = {
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-accelerates-semiconductor-package-failure-analysis.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/zeiss-xradia.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/anniversary-50-years-smt.html',
-    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award-2018.html'],
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award-2018.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/2023/new-multifunctional-factory-in-wetzlar.html'],
 
   'People and Leadership':
   ['/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/winfried-kaiser-honored-with-the-spie-frits-zernike-award-for-microlithography.html'],
@@ -97,7 +100,8 @@ const tagsMap = {
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/anniversary-50-years-smt.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award-2018.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/quality-supplier-award.html',
-    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award.html'],
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award.html',
+    '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/2023/zeiss-expands-at-the-rossdorf-research-and-development-site.html'],
 };
 
 const createMetadata = (main, document, url) => {
@@ -224,18 +228,23 @@ function customLogic(main, document, url) {
   if (document.querySelector('.profileCollection.module')) {
     const cells = [['contact(small)']];
     const div = document.createElement('div');
+    const names = [];
     document.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
       const p = document.createElement('p');
       const name = item.querySelector('h2 > span').textContent;
-      if (authorMap[name]) {
-        const a = document.createElement('a');
-        a.href = authorMap[name];
-        a.textContent = authorMap[name];
-        p.append(a);
-      } else {
-        p.textContent = name;
+      // Avoid duplicate contacts
+      if (!names.includes(name)) {
+        names.push(name);
+        if (authorMap[name]) {
+          const a = document.createElement('a');
+          a.href = authorMap[name];
+          a.textContent = authorMap[name];
+          p.append(a);
+        } else {
+          p.textContent = name;
+        }
+        div.append(p);
       }
-      div.append(p);
     });
     cells.push([div]);
     const table = WebImporter.DOMUtils.createTable(cells, document);
@@ -259,12 +268,16 @@ function customLogic(main, document, url) {
     collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
       div.append(item);
     });
-    const { href } = collapseItem.querySelector('.text-block__button a');
-    div.append(collapseItem.querySelector('.text-block__button a'));
     const expandButton = document.createElement('a');
     const collapseButton = document.createElement('a');
-    expandButton.href = href;
-    collapseButton.href = href;
+
+    if (collapseItem.querySelector('.text-block__button a')) {
+      div.append(collapseItem.querySelector('.text-block__button a'));
+    }
+
+    expandButton.href = '#';
+    collapseButton.href = '#';
+
     if (url.includes('zeiss.de')) {
       expandButton.textContent = `Mehr Informationen ${title}`;
       collapseButton.textContent = `Weniger Informationen ${title}`;
@@ -272,6 +285,7 @@ function customLogic(main, document, url) {
       expandButton.textContent = `More ${title}`;
       collapseButton.textContent = `Less ${title}`;
     }
+
     cells.push([div], [expandButton], [collapseButton]);
     const table = WebImporter.DOMUtils.createTable(cells, document);
     const styleCells = [['Section Metadata']];

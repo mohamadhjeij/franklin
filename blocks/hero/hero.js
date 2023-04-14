@@ -1,5 +1,5 @@
-import { decorateIcons, getMetadata, fetchPlaceholders } from '../../scripts/lib-franklin.js';
-import { addClipboardInteraction } from '../../scripts/utils.js';
+import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { addClipboardInteraction, getLocale } from '../../scripts/utils.js';
 
 export function addBackLink(block, locale, placeholders, curPath) {
   if (curPath.endsWith(placeholders.newseventsbase)) {
@@ -31,7 +31,8 @@ export function addBackLink(block, locale, placeholders, curPath) {
 }
 
 export default async function decorate(block) {
-  const locale = getMetadata('locale') || 'en';
+  addBackLink(block);
+  const locale = getLocale();
   const placeholders = await fetchPlaceholders(`/${locale}`);
 
   addBackLink(block, locale, placeholders, window.location.pathname);
@@ -41,7 +42,7 @@ export default async function decorate(block) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   let dateString = '';
   if (pub && pub.content) {
-    dateString = new Date(pub.content).toLocaleDateString(getMetadata('locale'), options);
+    dateString = new Date(pub.content).toLocaleDateString(locale, options);
   }
   let timeString = '';
   if (time && time.content) {

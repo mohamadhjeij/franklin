@@ -51,4 +51,15 @@ function addClipboardInteraction(block) {
   }
 }
 
-export { meta, socials, addClipboardInteraction };
+function getLocale() {
+  const locale = getMetadata('locale');
+  if (locale && locale.length > 0) {
+    return locale;
+  }
+  // Default to english
+  return 'en';
+}
+
+export {
+  meta, socials, addClipboardInteraction, getLocale,
+};
