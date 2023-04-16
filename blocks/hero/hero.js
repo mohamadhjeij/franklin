@@ -31,9 +31,14 @@ export function addBackLink(block, locale, placeholders, curPath) {
 }
 
 export default async function decorate(block) {
-  addBackLink(block);
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
+  let placeholders = {};
+  try {
+    placeholders = await fetchPlaceholders(`/${locale}`);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Could not fetch placeholders', e);
+  }
 
   addBackLink(block, locale, placeholders, window.location.pathname);
 
@@ -60,9 +65,11 @@ export default async function decorate(block) {
     block.querySelector('.general-article-stage__column-content').prepend(picture);
   }
 
-  block.querySelector('h1').classList.add('headline');
-  block.querySelector('h1').classList.add('headline__main');
-  block.querySelector('h1').classList.add('hl-xxl');
+  if (block.querySelector('h1')) {
+    block.querySelector('h1').classList.add('headline');
+    block.querySelector('h1').classList.add('headline__main');
+    block.querySelector('h1').classList.add('hl-xxl');
+  }
 
   if (block.querySelector('h3')) {
     block.querySelector('h3').classList.add('headline');

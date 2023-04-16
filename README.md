@@ -1,5 +1,5 @@
 # Zeiss Franklin POC
-POC for Zeiss 
+POC for Zeiss
 
 ## Environments
 - Preview: https://main--zeiss--hlxsites.hlx.page/de/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-trumpf-und-fraunhofer-mit-deutschem-zukunftspreis-ausgezeichnet
@@ -16,6 +16,16 @@ npm i
 ```sh
 npm tst
 ```
+### Debugging tests
+```sh
+npm run test:watch
+```
+Or to debug a specific test
+```sh
+npm i -g --save-dev @web/test-runner
+web-test-runner test/blocks/hero/hero.test.js --node-resolve --watch
+```
+[Refer here for more details](https://modern-web.dev/guides/test-runner/watch-and-debug/)
 
 ## Local development
 

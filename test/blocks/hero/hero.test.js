@@ -1,10 +1,19 @@
 /* eslint-disable no-unused-expressions */
 /* global describe it */
 
-import { expect } from '@esm-bundle/chai';
-import { addBackLink } from '../../../blocks/hero/hero.js';
+import { expect, assert } from '@esm-bundle/chai';
+import decorate, { addBackLink } from '../../../blocks/hero/hero.js';
 
 describe('Hero block', () => {
+  it('Decorates block', async () => {
+    try {
+      const block = document.createElement('div');
+      await decorate(block);
+    } catch (e) {
+      assert.fail(e);
+    }
+  });
+
   it('Adds backlink, ruler and eyebrow', () => {
     const block = document.createElement('div');
     const ph = {
