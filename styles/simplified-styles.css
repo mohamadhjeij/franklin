@@ -46,10 +46,6 @@ a:hover {
     color: var(--button-primary-border-hover);
 }
 
-ul {
-    margin: var(--spacing-vertical-m) 0;
-}
-
 li {
     list-style-type: disc;
     margin: 0 2.5rem;
@@ -78,6 +74,10 @@ li {
 @media (min-width: 80rem) {
     :root {
         --section-margin: 4rem;
+    }
+
+    ul {
+        margin: var(--spacing-vertical-m) 0;
     }
 }
 
