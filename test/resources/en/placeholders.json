@@ -1,0 +1,24 @@
+{
+    "total": 4,
+    "offset": 0,
+    "limit": 4,
+    "data": [
+        {
+            "Key": "backtonewsevents",
+            "Text": "Back to News and Events"
+        },
+        {
+            "Key": "newseventsbase",
+            "Text": "semiconductor-manufacturing-technology/news-and-events"
+        },
+        {
+            "Key": "pressrelease",
+            "Text": "Press Release"
+        },
+        {
+            "Key": "readingtime",
+            "Text": "Min Read"
+        }
+    ],
+    ":type": "sheet"
+}

@@ -1,5 +1,5 @@
 import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
-import { addClipboardInteraction, getLocale } from '../../scripts/utils.js';
+import { addClipboardInteraction, getFormattedDate, getLocale } from '../../scripts/utils.js';
 
 export function addBackLink(block, locale, placeholders, curPath) {
   if (curPath.endsWith(placeholders.newseventsbase)) {
@@ -44,10 +44,9 @@ export default async function decorate(block) {
 
   const pub = document.querySelector('head > meta[name="publicationdate"');
   const time = document.querySelector('head > meta[name="readingtime"');
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
   let dateString = '';
   if (pub && pub.content) {
-    dateString = new Date(pub.content).toLocaleDateString(locale, options);
+    dateString = getFormattedDate(new Date(pub.content), getLocale());
   }
   let timeString = '';
   if (time && time.content) {

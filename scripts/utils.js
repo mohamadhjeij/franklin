@@ -60,6 +60,15 @@ function getLocale() {
   return 'en';
 }
 
+function getFormattedDate(date, locale) {
+  const dateLocaleMap = {
+    de: 'de-DE',
+    en: 'en-GB',
+  };
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(dateLocaleMap[locale], options);
+}
+
 export {
-  meta, socials, addClipboardInteraction, getLocale,
+  meta, socials, addClipboardInteraction, getLocale, getFormattedDate,
 };

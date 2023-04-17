@@ -286,6 +286,235 @@ main .section:not(.social-container):not(.carousel-container):not(.text-block):n
     margin-top: var(--spacing-vertical-s)
 }
 
+/* Headings */
+.hl-xxl {
+    font-size: 2rem;
+    line-height: 2.25rem;
+    letter-spacing: 0.015em
+}
+
+@media(min-width: 48rem) {
+    .hl-xxl {
+        font-size:2.5rem;
+        line-height: 2.75rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-xxl {
+        font-size:2.5rem;
+        line-height: 2.75rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-xxl {
+        font-size:3rem;
+        line-height: 3.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-xxl {
+        font-size:3rem;
+        line-height: 3.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+.hl-xl {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    letter-spacing: 0.01em
+}
+
+@media(min-width: 48rem) {
+    .hl-xl {
+        font-size:2rem;
+        line-height: 2.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-xl {
+        font-size:2rem;
+        line-height: 2.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-xl {
+        font-size:2.5rem;
+        line-height: 2.75rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-xl {
+        font-size:2.5rem;
+        line-height: 2.75rem;
+        letter-spacing: 0.015em
+    }
+}
+
+.hl-l {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.005em
+}
+
+@media(min-width: 48rem) {
+    .hl-l {
+        font-size:1.75rem;
+        line-height: 2rem;
+        letter-spacing: 0.01em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-l {
+        font-size:1.75rem;
+        line-height: 2rem;
+        letter-spacing: 0.01em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-l {
+        font-size:2rem;
+        line-height: 2.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-l {
+        font-size:2rem;
+        line-height: 2.25rem;
+        letter-spacing: 0.015em
+    }
+}
+
+.hl-m {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.005em
+}
+
+@media(min-width: 48rem) {
+    .hl-m {
+        font-size:1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-m {
+        font-size:1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-m {
+        font-size:1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-m {
+        font-size:1.5rem;
+        line-height: 1.875rem;
+        letter-spacing: 0.01em
+    }
+}
+
+.hl-s {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.005em
+}
+
+@media(min-width: 48rem) {
+    .hl-s {
+        font-size:1.25rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-s {
+        font-size:1.25rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-s {
+        font-size:1.25rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-s {
+        font-size:1.25rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.005em
+    }
+}
+
+.hl-xs {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.005em
+}
+
+@media(min-width: 48rem) {
+    .hl-xs {
+        font-size:1rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 64rem) {
+    .hl-xs {
+        font-size:1rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 80rem) {
+    .hl-xs {
+        font-size:1rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.005em
+    }
+}
+
+@media(min-width: 90rem) {
+    .hl-xs {
+        font-size:1rem;
+        line-height: 1.5rem;
+        letter-spacing: 0.005em
+    }
+}
+
 .hl--sub-m.hl--sub {
     font-size: 1.25rem;
     line-height: 1.75rem;
