@@ -1,29 +1,53 @@
-import { decorateIcons } from '../../scripts/lib-franklin.js';
-import { socials, addClipboardInteraction } from '../../scripts/utils.js';
+import { decorateIcons, getMetadata, readBlockConfig } from '../../scripts/lib-franklin.js';
+import { addClipboardInteraction } from '../../scripts/utils.js';
 
-function template(props) {
-  return `
-    <div class="page-utility-bar grid__container">
-      <div class="grid__structure">
-        ${props.highlighted ? '<hr class="divider divider--dark">' : ''}
+const meta = {
+  title: encodeURIComponent(document.title),
+  description: encodeURIComponent(getMetadata('description')),
+  url: `${window.location.origin}${window.location.pathname}`,
+};
 
-        <div class="page-utility-bar__label">${props.title}</div>
+const socials = [{
+  type: 'mail',
+  label: 'Diese Website per E-Mail teilen',
+  href: `mailto:?subject=${meta.title}&amp;body=${meta.description}%0D%0A%0D%0A${meta.url}`,
+  icon: 'mail',
+}, {
+  type: 'clipboard',
+  label: 'Link in die Zwischenablage kopieren',
+  href: meta.url,
+  icon: 'content_copy',
+}, {
+  type: 'linkedin',
+  label: 'Diese Website auf LinkedIn teilen',
+  href: `https://www.linkedin.com/shareArticle?mini=true&amp;url=${meta.url}&amp;title=${meta.title}&amp;summary=${meta.description}`,
+  icon: 'linkedin',
+}, {
+  type: 'twitter',
+  label: 'Diese Website auf Twitter teilen',
+  href: `https://twitter.com/intent/tweet?url=${meta.url}&amp;text=${meta.title}`,
+  icon: 'twitter',
+}, {
+  type: 'facebook',
+  label: 'Diese Website auf Facebook teilen',
+  href: `https://www.facebook.com/sharer/sharer.php?u=${meta.url}`,
+  icon: 'facebook',
+}];
 
-        <div class="page-utility-bar__share-container">
-          <div class="share">
-            ${props.items.map((item) => `
-            <a data-type="${item.type}" aria-label="${item.label}" class="plain-link share__link" target="_blank" href="${item.href}" title="${item.label}">
-              <span class="icon icon-${item.icon}"></span>
-            </a>
-            `).join('')}
-          </div>
-        </div>
-
-        <hr class="divider">
-
-      </div>
-    </div>
-  `;
+function buildMarkup(element) {
+  element.classList.add('share');
+  element.classList.add('general-article-stage__share');
+  socials.forEach((social) => {
+    const a = document.createElement('a');
+    a.setAttribute('data-type', social.type);
+    a.setAttribute('aria-label', social.label);
+    a.setAttribute('class', 'plain-link share__link');
+    a.setAttribute('target', '_blank');
+    a.setAttribute('href', social.href);
+    a.setAttribute('title', social.label);
+    a.innerHTML = `<span class="icon icon-${social.icon}"></span>`;
+    element.appendChild(a);
+  });
 }
 
 /**
@@ -32,13 +56,35 @@ function template(props) {
  */
 
 export default async function decorate(block) {
-  block.innerHTML = template({
-    title: block.textContent.trim(),
-    items: socials,
-    highlighted: block.classList.contains('highlighted'),
-  });
+  const cfg = readBlockConfig(block);
+  block.innerHTML = '';
+
+  block.classList.add('page-utility-bar');
+  if (block.classList.contains('highlighted')) {
+    const divider = document.createElement('hr');
+    divider.classList.add('divider');
+    divider.classList.add('divider--dark');
+    block.appendChild(divider);
+  }
+  if (cfg && cfg.label) {
+    const label = document.createElement('div');
+    label.textContent = cfg.label;
+    label.classList.add('page-utility-bar__label');
+    block.appendChild(label);
+  }
+  const socialItems = document.createElement('div');
+  socialItems.classList.add('page-utility-bar__share-container');
+  buildMarkup(socialItems);
+  block.appendChild(socialItems);
+  const divider = document.createElement('hr');
+  divider.classList.add('divider');
+  divider.classList.add('grid__column');
+  divider.classList.add('grid__column--100');
+  block.appendChild(divider);
 
   decorateIcons(block, true);
 
   addClipboardInteraction(block);
 }
+
+export { decorate, buildMarkup };

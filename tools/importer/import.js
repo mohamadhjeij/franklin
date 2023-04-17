@@ -198,7 +198,7 @@ function customLogic(main, document, url) {
   document.querySelectorAll('.page-utility-bar').forEach((item) => {
     if (item.querySelector('.share')) {
       const cells = [['social(highlighted)']];
-      cells.push([item.querySelector('.page-utility-bar__label')]);
+      cells.push(['Label', item.querySelector('.page-utility-bar__label')]);
       item.after(document.createElement('hr'));
       const table = WebImporter.DOMUtils.createTable(cells, document);
       item.replaceWith(table);

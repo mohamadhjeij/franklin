@@ -1,5 +1,6 @@
 import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { addClipboardInteraction, getFormattedDate, getLocale } from '../../scripts/utils.js';
+import { buildMarkup as buildSocialMarkup } from '../social/social.js';
 
 export function addBackLink(block, locale, placeholders, curPath) {
   if (curPath.endsWith(placeholders.newseventsbase)) {
@@ -77,6 +78,17 @@ export default async function decorate(block) {
     block.querySelector('h3').classList.add('hl--sub-m');
     block.querySelector('h3').classList.add('general-article-stage');
   }
+
+  const social = block.querySelector('.social');
+  if (social) {
+    buildSocialMarkup(social);
+    block.appendChild(social);
+  }
+  const divider = document.createElement('hr');
+  divider.classList.add('divider');
+  divider.classList.add('grid__column');
+  divider.classList.add('grid__column--100');
+  block.appendChild(divider);
 
   decorateIcons(block, true);
 

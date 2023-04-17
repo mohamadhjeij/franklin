@@ -20,6 +20,7 @@ function buildHeroBlock(main) {
   const heroDiv = main.querySelector('div:first-of-type');
   const h1 = heroDiv.querySelector('h1');
   const h3 = heroDiv.querySelector('h3');
+  const social = heroDiv.querySelector('.social');
   // eslint-disable-next-line no-bitwise
   if (h1) {
     const parent = h1.closest('div');
@@ -28,7 +29,7 @@ function buildHeroBlock(main) {
       picture = parent.querySelector('picture');
     }
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [h1, h3, picture] }));
+    section.append(buildBlock('hero', { elems: [h1, h3, picture, social] }));
     main.prepend(section);
   }
 }
@@ -94,8 +95,7 @@ export function addFavIcon(href) {
 This list  should shrink as we simplify sections */
 function isNotSimplified(element) {
   const classes = element.classList;
-  return classes.contains('social-container')
-    || classes.contains('carousel-container')
+  return classes.contains('carousel-container')
     || classes.contains('text-block')
     || classes.contains('contact-container')
     || classes.contains('columns-container')

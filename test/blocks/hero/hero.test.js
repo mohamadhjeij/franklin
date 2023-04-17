@@ -14,11 +14,12 @@ await loadPlaceholders(`/${locale}`);
 describe('Hero block', () => {
   it('Decorates block', async () => {
     try {
-      const block = document.createElement('div');
+      const block = document.querySelector('.hero');
       await decorate(block);
       // This expectation is based on the meta tags in the hero.plain.html file
       expect(block.querySelector('.general-article-stage__details.text--eyebrow').innerHTML)
         .to.equal('25. November 2020 · 3 MIN. Lesedauer');
+      assert.isDefined(block.querySelector('.social'));
     } catch (e) {
       assert.fail(e);
     }
