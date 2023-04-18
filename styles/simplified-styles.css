@@ -46,7 +46,7 @@ a:hover {
     color: var(--button-primary-border-hover);
 }
 
-li {
+.text-block li {
     list-style-type: disc;
     margin-left: 2.5rem;
     padding-left: 0.6rem;
