@@ -46,6 +46,12 @@ a:hover {
     color: var(--button-primary-border-hover);
 }
 
+li {
+    list-style-type: disc;
+    margin-left: 2.5rem;
+    padding-left: 0.6rem;
+}
+
 /* section */
 @media (min-width: 22.5rem) {
     :root {
@@ -68,6 +74,10 @@ a:hover {
 @media (min-width: 80rem) {
     :root {
         --section-margin: 4rem;
+    }
+
+    ul {
+        margin: var(--spacing-vertical-m) 0;
     }
 }
 
