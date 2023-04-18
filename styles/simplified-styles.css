@@ -48,7 +48,7 @@ a:hover {
 
 li {
     list-style-type: disc;
-    margin: 0 2.5rem;
+    margin-left: 2.5rem;
     padding-left: 0.6rem;
 }
 
