@@ -1,0 +1,19 @@
+div.text-media.block {
+    display: block !important;
+}
+
+.text-media p {
+    padding: 2px 0;
+}
+
+.text-media em {
+    font-size: 0.75rem;
+    letter-spacing: 0.005em;
+    line-height: 1rem;
+}
+
+@media (min-width: 64rem) {
+    .text-media {
+        padding: 36px 0;
+    }
+}
