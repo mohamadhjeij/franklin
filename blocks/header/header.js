@@ -1,4 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { getLocale } from '../../scripts/utils.js';
 
 function subMenuItemsTemplate(subMenuItems) {
   return `
@@ -28,7 +29,7 @@ function subMenuTemplate(subMenu) {
                     <span class="drilldown__link-label">${subMenuItem.label}</span>
                     ${subMenuItem.items.length ? '<span class="icon icon-chevron-right"></span>' : ''}
                   </a>
-                  
+
                   ${subMenuItem.items.length ? subMenuItemsTemplate(subMenuItem.items) : ''}
                 </li>
                 `).join('')}
@@ -56,7 +57,7 @@ function template(props) {
           </div>
         </div>
       </section>
-  
+
       <section class="grid__container">
         <div class="grid__structure">
           <div class="header__navigation-area">
@@ -68,9 +69,9 @@ function template(props) {
               <span class="icon icon-chevron-left"/>
               Zurück
             </a>
-            
+
             <div class="header__website-area-name hide-from-m">${props.home.label}</div>
-            
+
             <nav class="header__navigation visible-from-l">
               <section class="header__first-level-container">
                 ${props.menus.map((menu) => `
@@ -83,12 +84,12 @@ function template(props) {
                 `).join('')}
               </section>
             </nav>
-            
+
             <section class="header__megamenu">
               <div class="header__megamenu__backdrop"></div>
 
               <div class="header__megamenu__menu-container" style="height:0">
-        
+
                 <div class="grid__container">
                   <div class="grid__structure">
                     <div class="grid__column grid__column--100 header__megamenu__close-button-container">
@@ -98,22 +99,22 @@ function template(props) {
                     </div>
                   </div>
                 </div>
-  
+
                 ${props.subMenus.map((subMenu) => subMenuTemplate(subMenu)).join('')}
               </div>
             </section>
-            
+
             <nav class="header__my-zeiss-area visible-from-l">
               ${props.actions.map((action) => `
                 <a aria-label="Kontakt" class="header__first-level-link" href="${action.href}" title="${action.label}">${action.label}</a>
               `).join('')}
             </nav>
-            
+
             <nav class="header__action-area">
               <a aria-label="Auf Website suchen" class="header__first-level-link header__action-area__search header__first-level-link--iconheader__first-level-link--icon header__first-level-link--no-label" href="${props.search.href}" title="Auf Website suchen" >
                 ${props.search.icon}
               </a>
-              
+
               <a aria-label="Menü öffnen / schließen" class="main-menu-toggle" href="#" title="Menü öffnen / schließen">
                 <span class="main-menu-toggle__icon icon">
                   <span class="svg-scale-wrapper">
@@ -265,7 +266,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
-  const navPath = cfg.nav || '/nav';
+  const navPath = cfg.nav || `/${getLocale()}/nav`;
   const resp = await fetch(`${navPath}.plain.html`);
   if (resp.ok) {
     const html = await resp.text();

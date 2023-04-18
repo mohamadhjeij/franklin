@@ -1,4 +1,5 @@
-import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
+import { decorateIcons, readBlockConfig, fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { getLocale } from '../../scripts/utils.js';
 
 function template(props) {
   return `
@@ -18,7 +19,7 @@ function template(props) {
 
           <div class="to-top">
             <a href="#to-top" class="to-top__link">
-              <span class="to-top__link-text">Zurück nach oben</span>
+              <span class="to-top__link-text">${props.placeholders.backtotop}</span>
               <span class="icon icon-arrow-upward"></span>
             </a>
           </div>
@@ -26,9 +27,9 @@ function template(props) {
         </div>
       </div>
     </section>
-    
-    
-    
+
+
+
     <section class="footer__related-websites grid__container grid__container--full-bleed visible-from-l">
       <div class="grid__structure">
         <div class="grid__column grid__column--100">
@@ -46,9 +47,9 @@ function template(props) {
         </div>
       </div>
     </section>
-    
-    
-    
+
+
+
     <section class="footer__main-footer grid__container grid__container--full-bleed">
       <div class="grid__structure">
         <div class="grid__column grid__column--100">
@@ -100,7 +101,7 @@ function template(props) {
                           </span>
                         </div>
                       </button>
-  
+
                       <div class="accordion__content-container">
                         <div class="accordion-links">
                           ${props.about.items.map((item) => `
@@ -112,7 +113,7 @@ function template(props) {
                   </ul>
                 </div>
               </div>
-            
+
               <div class="grid__column grid__column--33">
                 <div class="accordion">
                   <ul>
@@ -129,7 +130,7 @@ function template(props) {
                           </span>
                         </div>
                       </button>
-                      
+
                       <div class="accordion__content-container">
                         <div class="accordion-links">
                           ${props.social.items.map((item) => `
@@ -142,16 +143,16 @@ function template(props) {
                 </div>
               </div>
             </div>
-          
+
             <div class="grid__structure footer-tabs">
               <div class="footer-tabs__tab">
                 <div class="footer-tabs__tab-title">
-                  <div class="footer-tabs__tab-title__eyebrow">ZEISS Bereich wählen</div>
+                  <div class="footer-tabs__tab-title__eyebrow">${props.placeholders.selectzeissarea}</div>
                   <div class="footer-tabs__tab-title__selection zeiss-location-slot">${props.zeiss.selected}</div>
                   <span class="icon icon-expand-more"></span>
                 </div>
               </div>
-              
+
               <div class="footer-tabs__tab-content-container footer-tabs__website-area">
                 <div class="grid__container grid__container--full-bleed">
                   <div class="footer-tabs__tab-content grid__structure">
@@ -197,7 +198,7 @@ function template(props) {
                   </div>
                 </div>
               </div>
-  
+
               <div class="footer-tabs__tab">
                 <div class="footer-tabs__tab-title">
                   <div class="footer-tabs__tab-title__eyebrow">${props.language.title}</div>
@@ -205,7 +206,7 @@ function template(props) {
                   <span class="icon icon-expand-more"></span>
                 </div>
               </div>
-              
+
               <div class="footer-tabs__tab-content-container country-switch grid__container">
                 <div class="footer-tabs__tab-content grid__structure footer-tabs__tab-content--visible" style="padding-bottom: 0px;">
                   <ul class="country-switch__first-level-container" >
@@ -214,7 +215,7 @@ function template(props) {
                         <span class="country-switch__link-label">${props.language.global.title}</span>
                         <span class="icon icon-chevron-right"></span>
                       </a>
-  
+
                       <ul class="country-switch__second-level-container">
                         <li class="country-switch__second-level-list-item ${props.language.global.en.label === props.language.selected ? 'country-switch__first-level-list-item--initial-selected' : ''}">
                           <a aria-label="Seite in ${props.language.global.en.label} öffnen" class="plain-link country-switch__link" href="${props.language.global.en.href}" title="Seite in ${props.language.global.en.label} öffnen">
@@ -223,13 +224,13 @@ function template(props) {
                         </li>
                       </ul>
                     </li>
-                    
+
                     <li class="country-switch__first-level-list-item ${props.language.europa.de.label === props.language.selected ? 'country-switch__first-level-list-item--initial-selected' : ''}">
                       <a href="" aria-label="Sprache wählen aus ${props.language.europa.title}" title="Sprache wählen aus ${props.language.europa.title}" class="plain-link country-switch__link">
                         <span class="country-switch__link-label">${props.language.europa.title}</span>
                         <span class="icon icon-chevron-right"></span>
                       </a>
-  
+
                       <ul class="country-switch__second-level-container">
                         <li class="country-switch__second-level-list-item ${props.language.europa.de.label === props.language.selected ? 'country-switch__first-level-list-item--initial-selected' : ''}">
                           <a aria-label="Seite in ${props.language.europa.de.label} öffnen" class="plain-link country-switch__link" href="${props.language.europa.de.href}" title="Seite in ${props.language.europa.de.label} öffnen">
@@ -242,14 +243,14 @@ function template(props) {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
     </section>
-    
-    
-    
+
+
+
     <section class="footer-legal-links grid__container grid__container--full-bleed">
       <div class="grid__structure">
         <div class="grid__column grid__column--100">
@@ -272,7 +273,7 @@ function template(props) {
                           </span>
                         </div>
                       </button>
-  
+
                       <div class="accordion__content-container">
                         <div class="accordion-links">
                           ${props.legal.items.map((item) => `
@@ -352,7 +353,7 @@ export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
 
-  const footerPath = cfg.footer || '/footer';
+  const footerPath = cfg.footer || `/${getLocale()}/footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   if (resp.ok) {
     const html = await resp.text();
@@ -469,6 +470,14 @@ export default async function decorate(block) {
       items: toItems(legalItems),
     };
 
+    let placeholders = {};
+    try {
+      placeholders = await fetchPlaceholders(`/${getLocale()}`);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Could not fetch placeholders', e);
+    }
+
     block.innerHTML = template({
       nav,
       relatedSites,
@@ -478,6 +487,7 @@ export default async function decorate(block) {
       zeiss,
       language,
       legal,
+      placeholders,
     });
 
     decorateIcons(block, true);
