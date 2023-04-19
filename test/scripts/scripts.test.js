@@ -87,17 +87,15 @@ describe('Core Helix features', () => {
     expect(blockName).to.equal('text-media');
     expect(blockObj.elems).to.eql([parentP, captionP]);
 
-    expect(insertedElement.lastChild.localName).to.equal('myblock',
-      'Should have appended the block to the section');
+    expect(insertedElement.lastChild.localName).to
+      .equal('myblock', 'Should have appended the block to the section');
   });
 
   it('No Text-Media autoblock when no <em>', async () => {
     let insertedElement;
-    let beforeElement;
     const parentEnclosingDiv = {};
-    parentEnclosingDiv.insertBefore = (s, e) => {
+    parentEnclosingDiv.insertBefore = (s) => {
       insertedElement = s;
-      beforeElement = e;
     };
 
     const enclosingDiv = {};
