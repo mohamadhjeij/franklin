@@ -58,7 +58,7 @@ function buildTextMediaBlock(main) {
           if (hasEMChild) {
             const section = document.createElement('div');
             enclosingDiv.parentElement.insertBefore(section, enclosingDiv);
-            section.append(buildBlock('text-media', { elems: [enclosingDiv] }));
+            section.append(buildBlock('text-media', { elems: [parentP, captionP] }));
           }
         }
       }
