@@ -103,4 +103,6 @@ function loadGoogleTagManager(href) {
 function OptanonWrapper() { }
 
 loadCookieConsent(document, window.location.hostname);
-loadGoogleTagManager(window.location.href);
+
+// eslint-disable-next-line import/no-cycle
+window.setTimeout(() => loadGoogleTagManager(window.location.href), 3000);
