@@ -18,9 +18,9 @@ describe('Delayed customer features', () => {
   });
 
   it('Define Page Environment', async () => {
-    expect(delayed.pageEnvironment('unknown')).to.equal('publish');
-    expect(delayed.pageEnvironment('www.zeiss.de')).to.equal('prod_publish');
-    expect(delayed.pageEnvironment('localhost')).to.equal('local_publish');
+    expect(delayed.pageEnvironment('preview')).to.equal('publish');
+    expect(delayed.pageEnvironment('live')).to.equal('prod_publish');
+    expect(delayed.pageEnvironment('dev')).to.equal('local_publish');
   });
 
   it('Undefined Path Item', async () => {

@@ -36,6 +36,21 @@ function getFormattedDate(date, locale) {
   return date.toLocaleDateString(dateLocaleMap[locale], options);
 }
 
+/**
+ * @param {*} hostname
+ * @returns 'live' for live environment, 'preview' for preview environment,
+ *          'dev' for development environment and by default
+ */
+function getEnvType(hostname) {
+  const fqdnToEnvType = {
+    'www.zeiss.de': 'live',
+    'www.zeiss.com': 'live',
+    'main--zeiss--hlxsites.hlx.live': 'live',
+    'main--zeiss--hlxsites.hlx.page': 'preview',
+  };
+  return fqdnToEnvType[hostname] || 'dev';
+}
+
 export {
-  addClipboardInteraction, getLocale, getFormattedDate,
+  addClipboardInteraction, getLocale, getFormattedDate, getEnvType,
 };
