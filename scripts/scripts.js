@@ -34,10 +34,6 @@ function buildHeroBlock(main) {
   }
 }
 
-export function getBuildBlockFunction() {
-  return buildBlock;
-}
-
 export function buildTextMediaBlock(main, buildBlockFunction) {
   // Find blocks that contain a picture followed by an em text block. These are text-media blocks
   const pictures = main.querySelectorAll('picture');
