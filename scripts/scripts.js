@@ -34,7 +34,11 @@ function buildHeroBlock(main) {
   }
 }
 
-function buildTextMediaBlock(main) {
+export function getBuildBlockFunction() {
+  return buildBlock;
+}
+
+export function buildTextMediaBlock(main, buildBlockFunction) {
   // Find blocks that contain a picture followed by an em text block. These are text-media blocks
   const pictures = main.querySelectorAll('picture');
 
@@ -56,9 +60,10 @@ function buildTextMediaBlock(main) {
             }
           }
           if (hasEMChild) {
+            const targetElement = enclosingDiv.parentElement;
             const section = document.createElement('div');
-            enclosingDiv.parentElement.insertBefore(section, enclosingDiv);
-            section.append(buildBlock('text-media', { elems: [parentP, captionP] }));
+            targetElement.insertBefore(section, enclosingDiv);
+            section.append(buildBlockFunction('text-media', { elems: [parentP, captionP] }));
           }
         }
       }
@@ -73,7 +78,7 @@ function buildTextMediaBlock(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
-    buildTextMediaBlock(main);
+    buildTextMediaBlock(main, buildBlock);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

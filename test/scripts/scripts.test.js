@@ -40,4 +40,99 @@ describe('Core Helix features', () => {
     const $favIcon = document.querySelector('link[rel="icon"]');
     expect($favIcon.getAttribute('href')).to.equal('/foo.svg');
   });
+
+  it('Handles Text-Media autoblocks', async () => {
+    let insertedElement;
+    let beforeElement;
+    const parentEnclosingDiv = {};
+    parentEnclosingDiv.insertBefore = (s, e) => {
+      insertedElement = s;
+      beforeElement = e;
+    };
+
+    const enclosingDiv = {};
+    enclosingDiv.parentElement = parentEnclosingDiv;
+
+    const parentP = {};
+
+    const picture = {};
+    const captionP = {};
+    picture.parentElement = parentP;
+
+    parentP.parentElement = enclosingDiv;
+    parentP.nextElementSibling = captionP;
+
+    const emChild = {};
+    emChild.localName = 'em';
+    captionP.children = [{}, emChild];
+    captionP.parentElement = parentP;
+
+    const mockMain = {};
+    mockMain.querySelectorAll = () => [picture];
+
+    let blockName;
+    let blockObj;
+    const mockBBFunction = (n, e) => {
+      blockName = n;
+      blockObj = e;
+
+      return document.createElement('myblock');
+    };
+
+    scripts.buildTextMediaBlock(mockMain, mockBBFunction);
+
+    expect(insertedElement).to.not.be.undefined;
+    expect(beforeElement).to.equal(enclosingDiv);
+
+    expect(blockName).to.equal('text-media');
+    expect(blockObj.elems).to.eql([parentP, captionP]);
+
+    expect(insertedElement.lastChild.localName).to.equal('myblock',
+      'Should have appended the block to the section');
+  });
+
+  it('No Text-Media autoblock when no <em>', async () => {
+    let insertedElement;
+    let beforeElement;
+    const parentEnclosingDiv = {};
+    parentEnclosingDiv.insertBefore = (s, e) => {
+      insertedElement = s;
+      beforeElement = e;
+    };
+
+    const enclosingDiv = {};
+    enclosingDiv.parentElement = parentEnclosingDiv;
+
+    const parentP = {};
+
+    const picture = {};
+    const captionP = {};
+    picture.parentElement = parentP;
+
+    parentP.parentElement = enclosingDiv;
+    parentP.nextElementSibling = captionP;
+
+    const emChild = {};
+    emChild.localName = 'strong';
+    captionP.children = [{}, emChild];
+    captionP.parentElement = parentP;
+
+    const mockMain = {};
+    mockMain.querySelectorAll = () => [picture];
+
+    let blockName;
+    let blockObj;
+    const mockBBFunction = (n, e) => {
+      blockName = n;
+      blockObj = e;
+
+      return document.createElement('myblock');
+    };
+
+    scripts.buildTextMediaBlock(mockMain, mockBBFunction);
+
+    expect(insertedElement).to.be.undefined;
+    expect(blockName).to.be.undefined;
+    expect(blockObj).to.undefined;
+  });
 });
