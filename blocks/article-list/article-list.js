@@ -120,6 +120,10 @@ export default async function decorate(block) {
   const { data } = await response.json();
   const articles = data
     .filter((article) => article.path !== window.location.pathname)
+    .filter((article) => article.publicationdate)
+    .map((article) => [new Date(article.publicationdate).getTime(), article])
+    .sort((entry1, entry2) => entry2[0] - entry1[0])
+    .map((entry) => entry[1])
     .slice(0, limit);
   block.innerHTML = template(articles, config.title);
   decorateIcons(block, true);
