@@ -61,10 +61,15 @@
 
 main .block.collapse p.button-container {
    margin-top: var(--spacing-vertical-s);
+   padding-bottom: var(--spacing-vertical-s);
  }
 
 main .block.collapse a {
   font-weight: 500;
+}
+
+main .block.collapse a.button.primary {
+  padding-bottom: 10px;
 }
 
 .expanded-text .collapse > div:nth-child(2)::after {
@@ -73,7 +78,7 @@ main .block.collapse a {
 }
 
 .expanded-text .collapse > div:nth-child(4) {
-  margin-top: var(--spacing-vertical-m);
+  margin-top: var(--spacing-vertical-s);
 }
 
 .expanded-text .collapse > div:nth-child(3), .collapsed-text .collapse > div:nth-child(4) {
