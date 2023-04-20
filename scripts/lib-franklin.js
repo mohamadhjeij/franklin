@@ -145,18 +145,12 @@ export function decorateIcons(element = document, isSprite = false) {
         </span>
       `;
     } else {
-      // eslint-disable-next-line no-use-before-define
-      const resp = await fetch(`${window.hlx.codeBasePath}/icons/${icon}.svg`);
-      if (resp.ok) {
-        const iconHTML = await resp.text();
-        if (iconHTML.match(/<style/i)) {
-          const img = document.createElement('img');
-          img.src = `data:image/svg+xml,${encodeURIComponent(iconHTML)}`;
-          span.appendChild(img);
-        } else {
-          span.innerHTML = iconHTML;
-        }
-      }
+      span.querySelectorAll('svg > use[*|href]').forEach((xlinkRef) => {
+        const attrName = 'xlink:href';
+        const href = xlinkRef.attributes[attrName].value;
+        const pathName = href.split('/').at(-1);
+        xlinkRef.setAttribute(attrName, `/icons/${pathName}`);
+      });
     }
   });
 }

@@ -27,6 +27,14 @@ function getLocale() {
   return 'en';
 }
 
+function getAemTemplateUrl(locale) {
+  const hostname = {
+    en: 'www.zeiss.com',
+    de: 'www.zeiss.de',
+  }[locale];
+  return `https://${hostname}/semiconductor-manufacturing-technology/home.html`;
+}
+
 function getFormattedDate(date, locale) {
   const dateLocaleMap = {
     de: 'de-DE',
@@ -52,5 +60,5 @@ function getEnvType(hostname) {
 }
 
 export {
-  addClipboardInteraction, getLocale, getFormattedDate, getEnvType,
+  addClipboardInteraction, getLocale, getFormattedDate, getEnvType, getAemTemplateUrl,
 };
