@@ -1,6 +1,9 @@
-import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
+import { decorateIcons, readBlockConfig, fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { getLocale, getFormattedDate } from '../../scripts/utils.js';
 
-function articleTemplate(article) {
+function articleTemplate(noCurry) {
+  const article = noCurry[0];
+  const placeholders = noCurry[1];
   return `
                         <div
                             class="grid__column featured-articles-with-teaser__item featured-articles-with-teaser__item--article">
@@ -23,7 +26,7 @@ function articleTemplate(article) {
                                         </div>
                                         <div class="article-teaser-item__eyebrow text--eyebrow">
                                             <span
-                                                class="article-teaser-item__eyebrow--sub article-teaser-item__eyebrow--sub-without-main ">${article.pubdate}</span>
+                                                class="article-teaser-item__eyebrow--sub article-teaser-item__eyebrow--sub-without-main ">${getFormattedDate(new Date(article.publicationdate), getLocale())}</span>
                                         </div>
                                         <div class="headline hl-s     ">
                                             <span>
@@ -36,8 +39,7 @@ function articleTemplate(article) {
                                     <div class="article-teaser-item__meta text--caption">
                                         <div>
                                             Presseinformation
-                                            - <span class="article-teaser-item__meta-reading-info">${article.readingtime || '1 min'}</span>
-                                                Lesedauer</span>
+                                            - <span class="article-teaser-item__meta-reading-info">${article.readingtime || '1 min'} ${placeholders.readingtime}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +47,7 @@ function articleTemplate(article) {
                         </div>`;
 }
 
-function template(articles, title = 'Weitere Artikel') {
+function template(articles, placeholders, title = 'Weitere Artikel') {
   return `<div class="featured-articles-with-teaser featured-articles-with-teaser--background-grey">
     <div class="grid__container">
         <div class="grid__structure">
@@ -69,7 +71,7 @@ function template(articles, title = 'Weitere Artikel') {
                     
                     <div
                         class="grid__structure featured-articles-with-teaser__items featured-articles-with-teaser__items--${articles.length}">
-                        ${articles.map(articleTemplate).join('')}
+                        ${articles.map((article) => [article, placeholders]).map(articleTemplate).join('')}
                         
 
                         <div
@@ -114,6 +116,14 @@ function template(articles, title = 'Weitere Artikel') {
 
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
+  const locale = getLocale();
+  let placeholders = {};
+  try {
+    placeholders = await fetchPlaceholders(`/${locale}`);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Could not fetch placeholders', e);
+  }
   const limit = parseInt(config['number-of-articles'], 10) || 2;
   const dataurl = new URL('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json', window.location.href);
   const response = await fetch(dataurl);
@@ -125,6 +135,6 @@ export default async function decorate(block) {
     .sort((entry1, entry2) => entry2[0] - entry1[0])
     .map((entry) => entry[1])
     .slice(0, limit);
-  block.innerHTML = template(articles, config.title);
+  block.innerHTML = template(articles, placeholders, config.title);
   decorateIcons(block, true);
 }
