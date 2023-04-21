@@ -84,11 +84,6 @@ export default async function decorate(block) {
     buildSocialMarkup(social);
     block.appendChild(social);
   }
-  const divider = document.createElement('hr');
-  divider.classList.add('divider');
-  divider.classList.add('grid__column');
-  divider.classList.add('grid__column--100');
-  block.appendChild(divider);
 
   decorateIcons(block, true);
 
