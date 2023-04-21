@@ -59,6 +59,43 @@
   background-image: linear-gradient(to bottom, rgb(255 255 255 / 0%), var(--bg-color-primary) 60%);
 }
 
+main .block.collapse p:not(:first-child) {
+  padding-top: 1.5rem;
+}
+
+main .block.collapse p > strong {
+  font-weight: 700;
+}
+
+main .block.collapse p:not(.button-container) > a {
+  display: inline-block;
+  position: relative;
+  color: var(--text-color-body);
+  font-weight: normal;
+  text-decoration: none;
+  transition: color .75s;
+  outline: none;
+}
+
+main .block.collapse p:not(.button-container) > a:hover {
+  color: var(--text-color-link-hover);
+}
+
+main .block.collapse p:not(.button-container) > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid var(--button-tertiary-underline-default);
+  animation-duration: .75s;
+}
+
+main .block.collapse p:not(.button-container) > a:hover::after {
+  background-color: var(--button-tertiary-underline-hover);
+  animation-name: hover;
+}
+
 main .block.collapse p.button-container {
    margin-top: var(--spacing-vertical-s);
    padding-bottom: var(--spacing-vertical-s);
