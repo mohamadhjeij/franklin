@@ -1,6 +1,19 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { getLocale } from '../../scripts/utils.js';
 
 function template(props) {
+  const locale = getLocale();
+  const localised = {
+    en: {
+      fileSize: 'File size',
+      pages: 'Pages',
+    },
+    de: {
+      fileSize: 'Dateigröße',
+      pages: 'Seiten',
+    },
+  }[locale];
+
   return `
     <div class="downloads-wrapper">
       <div class="downloads">
@@ -48,9 +61,24 @@ function template(props) {
                                   </div>
 
                                   <div class="download-item__content">
+                                    <div class="download-item__headline">
+                                      <div class="headline hl-xs   spacing--s  ">
+                                        <span>
+                                          <h3>
+                                            <span class="headline__main" data-js-select="Headline_main">${item.headline.main}</span>
+                                          </h3>
+                                          <h4 class="headline__sub hl--sub">${item.headline.sub}</h4>
+                                        </span>
+                                      </div>
+                                    </div>
+
                                     <div class="download-item__info text--body-m">
                                       <div class="download-item__info-data">
-                                        <span class="download-item__info-label text--bold">Dateigröße:</span>
+                                        <span class="download-item__info-label text--bold">${localised.pages}:</span>
+                                        <span class="download-item__info-value">1</span>
+                                      </div>
+                                      <div class="download-item__info-data">
+                                        <span class="download-item__info-label text--bold">${localised.fileSize}:</span>
                                         <span class="download-item__info-value download-size-slot"></span>
                                       </div>
                                     </div>
@@ -112,8 +140,13 @@ export default function decorate(block) {
 
       const { href } = child.querySelector('a');
 
+      const headline = {
+        main: child.querySelector('h3').innerHTML,
+        sub: child.querySelector('h4').innerHTML,
+      };
+
       items.push({
-        image: picture.outerHTML, name, href,
+        image: picture.outerHTML, name, href, headline,
       });
     }
   });
