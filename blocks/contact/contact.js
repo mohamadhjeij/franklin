@@ -19,7 +19,7 @@ function template(items) {
                                                 <h3>
                                                     <span class="headline__main" data-js-select="Headline_main">${item.Name}</span>
                                                 </h3>
-                                                <h4 class="headline__sub hl--sub">${item.Org}</h4>
+                                                ${item.Org ? `<h4 class="headline__sub hl--sub">${item.Org}</h4>` : ''}
                                             </span>
                                         </div>
                                         <div class="profile__actions">
@@ -93,11 +93,11 @@ export default async function decorate(block) {
       const doc = parser.parseFromString(res, 'text/html');
       items.push(
         {
-          Name: doc.querySelector('html > head > title').text,
-          Email: doc.querySelector('html > head > meta[name="email"]').content,
-          Org: doc.querySelector('html > head > meta[name="org"]').content,
-          Phone: doc.querySelector('html > head > meta[name="phone"]').content,
-          vCard: doc.querySelector('html > head > meta[name="vcard"]').content
+          Name: doc.querySelector('html > head > title') ? doc.querySelector('html > head > title').text : undefined,
+          Email: doc.querySelector('html > head > meta[name="email"]') ? doc.querySelector('html > head > meta[name="email"]').content : undefined,
+          Org: doc.querySelector('html > head > meta[name="org"]') ? doc.querySelector('html > head > meta[name="org"]').content : undefined,
+          Phone: doc.querySelector('html > head > meta[name="phone"]') ? doc.querySelector('html > head > meta[name="phone"]').content : undefined,
+          vCard: doc.querySelector('html > head > meta[name="vcard"]') ? doc.querySelector('html > head > meta[name="vcard"]').content : undefined,
         }
       );
     }

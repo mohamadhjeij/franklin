@@ -12,11 +12,24 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
-const authorMap = {
+const authorMapDe = {
   'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/de/authors/frederic-franz',
   'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/de/authors/manuel-thomae',
   'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/de/authors/janis-eitner',
   'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/de/authors/jeannine-rapp',
+  'Jörg Nitschke': 'https://main--zeiss--hlxsites.hlx.page/de/authors/joerg-nitschke',
+  'Victoria Doll': 'https://main--zeiss--hlxsites.hlx.page/de/authors/victoria-doll',
+  'Nadine Schütze': 'https://main--zeiss--hlxsites.hlx.page/de/authors/nadine-schuetze',
+};
+
+const authorMapEn = {
+  'Frederic Franz': 'https://main--zeiss--hlxsites.hlx.live/en/authors/frederic-franz',
+  'Dr. Manuel Thomä': 'https://main--zeiss--hlxsites.hlx.live/en/authors/manuel-thomae',
+  'Janis Eitner': 'https://main--zeiss--hlxsites.hlx.live/en/authors/janis-eitner',
+  'Jeannine Rapp': 'https://main--zeiss--hlxsites.hlx.page/en/authors/jeannine-rapp',
+  'Jörg Nitschke': 'https://main--zeiss--hlxsites.hlx.page/en/authors/joerg-nitschke',
+  'Victoria Doll': 'https://main--zeiss--hlxsites.hlx.page/en/authors/victoria-doll',
+  'Nadine Schütze': 'https://main--zeiss--hlxsites.hlx.page/en/authors/nadine-schuetze',
 };
 
 const tagsMap = {
@@ -102,6 +115,13 @@ const tagsMap = {
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/quality-supplier-award.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/european-inventor-award.html',
     '/semiconductor-manufacturing-technology/news-and-events/smt-press-releases/2023/zeiss-expands-at-the-rossdorf-research-and-development-site.html'],
+};
+
+const getLocale = (url) => {
+  if (url.includes('zeiss.de')) {
+    return 'de';
+  }
+  return 'en';
 };
 
 const createMetadata = (main, document, url) => {
@@ -229,6 +249,7 @@ function customLogic(main, document, url) {
     const cells = [['contact(small)']];
     const div = document.createElement('div');
     const names = [];
+    const authorMap = getLocale(url) === 'de' ? authorMapDe : authorMapEn;
     document.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
       const p = document.createElement('p');
       const name = item.querySelector('h2 > span').textContent;
@@ -278,7 +299,7 @@ function customLogic(main, document, url) {
     expandButton.href = '#';
     collapseButton.href = '#';
 
-    if (url.includes('zeiss.de')) {
+    if (getLocale(url) === 'de') {
       expandButton.textContent = `Mehr Informationen ${title}`;
       collapseButton.textContent = `Weniger Informationen ${title}`;
     } else {
