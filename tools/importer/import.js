@@ -378,6 +378,75 @@ function customLogic(main, document, url) {
     document.querySelector('.image-slideshow').after(document.createElement('hr'));
     document.querySelector('.image-slideshow').replaceWith(table);
   }
+
+  // Image and text block handling
+  const imageTextBlock = document.querySelector('.image-and-text-block');
+
+  if (imageTextBlock) {
+    const cells = [['Columns New']];
+    const imageBlock = imageTextBlock.querySelectorAll('.image-and-text-block__visual');
+    const textBlock = imageTextBlock.querySelectorAll('.image-and-text-block__content');
+    const arr = [];
+
+    if (imageBlock) {
+      imageBlock.forEach((item) => {
+        const imgDiv = document.createElement('div');
+        const img = document.createElement('img');
+        img.src = deriveImageSrc(item.querySelector('figure img'));
+        imgDiv.appendChild(img);
+
+        const copyrightBlock = item.querySelector('.lazy-image__copyright-text');
+        if (copyrightBlock) {
+          const copyrightTxt = `©${copyrightBlock.textContent}`;
+          const copyright = document.createElement('p');
+          copyright.textContent = copyrightTxt;
+          imgDiv.appendChild(copyright);
+        }
+
+        const caption = item.querySelector('figure figcaption .lazy-image__caption p');
+        if (caption) {
+          imgDiv.appendChild(caption);
+        }
+        arr.push(imgDiv);
+      });
+    }
+
+    if (textBlock) {
+      textBlock.forEach((item) => {
+        const contentDiv = document.createElement('div');
+        const headline = item.querySelector('.headline');
+        const text = item.querySelector('.text');
+
+        if (headline) {
+          const h1 = document.createElement('h1');
+          h1.textContent = headline.textContent;
+          contentDiv.appendChild(h1);
+        }
+
+        if (text) {
+          const pTags = text.querySelectorAll('p');
+
+          if (pTags) {
+            pTags.forEach((pTag) => {
+              const p = document.createElement('p');
+              p.textContent = pTag.textContent;
+              contentDiv.appendChild(p);
+            });
+          }
+        }
+
+        arr.push(contentDiv);
+      });
+    }
+
+    if (arr.length) {
+      cells.push(arr);
+    }
+
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    document.querySelector('.image-and-text-block').after(document.createElement('hr'));
+    document.querySelector('.image-and-text-block').replaceWith(table);
+  }
 }
 
 export default {
