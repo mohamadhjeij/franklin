@@ -4,7 +4,7 @@ import { decorateIcons } from '../../scripts/lib-franklin.js';
 function template(items) {
   return `<div class="profile-collection ">
     <div class="heading-slot"></div>
-    <div class="profile-collection__settings" data-primary-count="3">
+    <div class="profile-collection__settings" data-primary-count="1">
         <div class="grid__container">
             <div class="profile-collection__content profile-collection__content-medium">
                 <div class="profile-collection__section profile-collection__section--visible">
