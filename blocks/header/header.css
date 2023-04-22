@@ -716,7 +716,8 @@
 }
 
 .header .header__megamenu--opened {
-  bottom: 0
+  bottom: 0;
+  left: 0;
 }
 
 @media (min-width: 64rem) {
@@ -732,7 +733,7 @@
 }
 
 .header .header__megamenu__menu--visible {
-  display: block
+  display: block;
 }
 
 .header--got-animated .header__megamenu {
@@ -893,6 +894,9 @@
   z-index: 15;
   min-height: calc(100vh - var(--header__overlay-top-offset) - 1px);
   transition: height 300ms ease-in-out;
+  border: var(--bg-color-secondary);
+  border-style: solid;
+  border-width: 1px;
 }
 
 @media (min-width: 64rem) {

@@ -1,140 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
-import { getLocale } from '../../scripts/utils.js';
-
-function subMenuItemsTemplate(subMenuItems) {
-  return `
-    <ul class="drilldown__second-level-container drilldown__x-level-container--with-overview">
-      ${subMenuItems.map((item) => `
-      <li class="drilldown__second-level-list-item">
-        <a aria-label="Übersicht" class="plain-link drilldown__link" href="${item.href}" title="${item.label}">
-          <span class="drilldown__link-label">${item.label}</span>
-        </a>
-      </li>
-      `).join('')}
-    </ul>
-  `;
-}
-
-function subMenuTemplate(subMenu) {
-  return `
-    <nav class="grid__container header__megamenu__menu" data-menu="${subMenu.title}">
-      <div class="grid__structure">
-        <div class="grid__column header__megamenu__drilldown header__megamenu__configure-toggle header__megamenu__configure-toggle--view">
-          <div class="header__megamenu__first-level-label">${subMenu.title}</div>
-            <div class="drilldown drilldown--with-overview">
-              <ul class="drilldown__first-level-container drilldown__x-level-container--with-overview">
-                ${subMenu.items.map((subMenuItem) => `
-                <li class="drilldown__first-level-list-item">
-                  <a aria-label="Übersicht" class="plain-link drilldown__link" href="${subMenuItem.href}" title="Übersicht">
-                    <span class="drilldown__link-label">${subMenuItem.label}</span>
-                    ${subMenuItem.items.length ? '<span class="icon icon-chevron-right"></span>' : ''}
-                  </a>
-
-                  ${subMenuItem.items.length ? subMenuItemsTemplate(subMenuItem.items) : ''}
-                </li>
-                `).join('')}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-  `;
-}
-
-function template(props) {
-  return `
-    <div class="main-header header exclude-site-search">
-      <section class="header__meta grid__container grid__container--full-bleed">
-        <div class="grid__structure">
-          <div class="grid__column grid__column--100 ">
-            <div class="grid__background-column"></div>
-            <div class="grid__container ">
-              <div class="grid__structure">
-                <div class="header__website-area-name visible-from-m">${props.home.label}</div>
-                <div class="header__utility-links"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="grid__container">
-        <div class="grid__structure">
-          <div class="header__navigation-area">
-            <a href="${props.home.href}" aria-label="${props.home.label}" title="${props.home.label}" class="header__logo">
-              ${props.home.logo}
-            </a>
-
-            <a href="#" aria-label="Klicken Sie hier, um zur letzten Navigationsebene zurückzukehren" title="Klicken Sie hier, um zur letzten Navigationsebene zurückzukehren" class="plain-link header__backlink">
-              <span class="icon icon-chevron-left"/>
-              Zurück
-            </a>
-
-            <div class="header__website-area-name hide-from-m">${props.home.label}</div>
-
-            <nav class="header__navigation visible-from-l">
-              <section class="header__first-level-container">
-                ${props.menus.map((menu) => `
-                <a class="header__first-level-link" href="${menu.href}" ${props.subMenus.some((subMenu) => subMenu.title === menu.label) ? `data-menu="${menu.label}"` : ''}>
-                  ${menu.label}
-                  <span class="header__first-level-link__child-indication">
-                    <span class="icon icon-chevron-right"></span>
-                  </span>
-                </a>
-                `).join('')}
-              </section>
-            </nav>
-
-            <section class="header__megamenu">
-              <div class="header__megamenu__backdrop"></div>
-
-              <div class="header__megamenu__menu-container" style="height:0">
-
-                <div class="grid__container">
-                  <div class="grid__structure">
-                    <div class="grid__column grid__column--100 header__megamenu__close-button-container">
-                      <a aria-label="Mega-Menü mit diesem Link schließen" class="plain-link header__megamenu__close-button" href="#">
-                        <span class="icon icon-close"></span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                ${props.subMenus.map((subMenu) => subMenuTemplate(subMenu)).join('')}
-              </div>
-            </section>
-
-            <nav class="header__my-zeiss-area visible-from-l">
-              ${props.actions.map((action) => `
-                <a aria-label="Kontakt" class="header__first-level-link" href="${action.href}" title="${action.label}">${action.label}</a>
-              `).join('')}
-            </nav>
-
-            <nav class="header__action-area">
-              <a aria-label="Auf Website suchen" class="header__first-level-link header__action-area__search header__first-level-link--iconheader__first-level-link--icon header__first-level-link--no-label" href="${props.search.href}" title="Auf Website suchen" >
-                ${props.search.icon}
-              </a>
-
-              <a aria-label="Menü öffnen / schließen" class="main-menu-toggle" href="#" title="Menü öffnen / schließen">
-                <span class="main-menu-toggle__icon icon">
-                  <span class="svg-scale-wrapper">
-                    <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <polygon class="top-line" fill="#000000" fill-rule="nonzero" points="3 6 3 8 21 8 21 6"></polygon>
-                      <polygon class="center-line__1" fill="#000000" fill-rule="nonzero" points="3 13 21 13 21 11 3 11"></polygon>
-                      <polygon class="center-line__2" fill="#000000" fill-rule="nonzero" points="3 13 21 13 21 11 3 11"></polygon>
-                      <polygon class="bottom-line" fill="#000000" fill-rule="nonzero" points="3 18 21 18 21 16 3 16"></polygon>
-                    </svg>
-                  </span>
-                </span>
-              </a>
-            </nav>
-
-          </div>
-        </div>
-      </section>
-    </div>
-  `;
-}
+import { getLocale, getAemTemplateUrl } from '../../scripts/utils.js';
 
 function addScrollListener(header) {
   window.addEventListener('scroll', () => {
@@ -190,39 +55,42 @@ function addHeaderInteractions(header) {
 
     const link = header.querySelector(`.${linkMenuOpenClass}`);
     if (link) {
-      const menu = header.querySelector(`.header__megamenu__menu[data-menu="${link.dataset.menu}"]`);
+      const menu = header.querySelector('.header__megamenu__menu');
       closeMegaMenu(link, menu);
     }
   };
 
-  header.querySelectorAll('.header__navigation .header__first-level-link[data-menu]').forEach((link) => {
+  header.querySelectorAll('.header__navigation .header__first-level-link[data-megamenu]').forEach((link) => {
     link.onclick = (event) => {
-      event.preventDefault();
+      const menu = header.querySelector(`.header__megamenu__menu[id=${link.getAttribute('data-megamenu')}]`);
 
-      const isMenuOpen = header.querySelector('.header__megamenu--opened') !== null;
-      const menu = header.querySelector(`.header__megamenu__menu[data-menu="${link.dataset.menu}"]`);
+      // Handle click only if there's a menu to open. Else it's a normal link.
+      if (menu) {
+        event.preventDefault();
+        const isMenuOpen = header.querySelector('.header__megamenu--opened') !== null;
 
-      if (!link.classList.contains(linkMenuOpenClass)) {
-        if (!isMenuOpen) {
-          document.body.classList.add('fixed-body-scroll-position');
+        if (!link.classList.contains(linkMenuOpenClass)) {
+          if (!isMenuOpen) {
+            document.body.classList.add('fixed-body-scroll-position');
 
-          link.classList.add(linkMenuOpenClass);
-          menu.classList.add(menuVisibleClass);
-          backdrop.setAttribute('style', 'visibility: visible; opacity: 1');
+            link.classList.add(linkMenuOpenClass);
+            menu.classList.add(menuVisibleClass);
+            backdrop.setAttribute('style', 'visibility: visible; opacity: 1');
 
-          setContainerHeight(menu);
-          megaMenu.classList.add(megaMenuOpenClass);
+            setContainerHeight(menu);
+            megaMenu.classList.add(megaMenuOpenClass);
+          } else {
+            header.querySelector(`.${linkMenuOpenClass}`).classList.remove(linkMenuOpenClass);
+            header.querySelector(`.${menuVisibleClass}`).classList.remove(menuVisibleClass);
+
+            link.classList.add(linkMenuOpenClass);
+            menu.classList.add(menuVisibleClass);
+
+            setContainerHeight(menu);
+          }
         } else {
-          header.querySelector(`.${linkMenuOpenClass}`).classList.remove(linkMenuOpenClass);
-          header.querySelector(`.${menuVisibleClass}`).classList.remove(menuVisibleClass);
-
-          link.classList.add(linkMenuOpenClass);
-          menu.classList.add(menuVisibleClass);
-
-          setContainerHeight(menu);
+          closeMegaMenu(link, menu);
         }
-      } else {
-        closeMegaMenu(link, menu);
       }
     };
   });
@@ -252,6 +120,7 @@ function addHeaderInteractions(header) {
     const mainHeader = header.querySelector('.main-header');
     mainHeader.classList.toggle('header--expanded', !mainHeader.classList.contains('header--expanded'));
     mainHeader.classList.toggle('header--mobile-navigation-open', !mainHeader.classList.contains('header--mobile-navigation-open'));
+    megaMenu.classList.remove('header__megamenu--opened');
     document.body.classList.toggle('fixed-body-scroll-position', !document.body.classList.contains('fixed-body-scroll-position'));
   };
 }
@@ -266,74 +135,27 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
-  const navPath = cfg.nav || `/${getLocale()}/nav`;
-  const resp = await fetch(`${navPath}.plain.html`);
+  const navPath = cfg.nav || getAemTemplateUrl(getLocale());
+  const resp = await fetch(navPath);
+
   if (resp.ok) {
     const html = await resp.text();
-    const doc = document.createRange().createContextualFragment(html);
+    const parser = new DOMParser();
+    const header = parser.parseFromString(html, 'text/html').querySelector('header');
+    header.querySelector('.search.search--recommended').remove();
+    if (getLocale() === 'de') {
+      header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.de/semiconductor-manufacturing-technology/z/suche.html?_charset_=UTF-8';
+    } else {
+      header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.com/semiconductor-manufacturing-technology/z/search.html?_charset_=UTF-8';
+    }
 
-    const menus = Array.from(doc.querySelectorAll('div > ul:first-of-type > li > a'));
-    const actions = Array.from(doc.querySelectorAll('div > ul:last-of-type > li > a')).slice(0, -1);
-    const search = doc.querySelector('div > ul:last-of-type > li:last-of-type > a');
-
-    const props = {
-      home: {
-        href: doc.querySelector('a:has(.icon-zeiss-logo)').href,
-        label: doc.querySelector('p').textContent,
-        logo: doc.querySelector('.icon-zeiss-logo').outerHTML,
-      },
-      menus: menus.map((menu) => ({
-        href: menu.href,
-        label: menu.textContent,
-      })),
-      subMenus: menus.map((menu) => {
-        const subMenus = [];
-        const subMenuEl = menu.nextElementSibling;
-        if (subMenuEl) {
-          subMenuEl.querySelectorAll(':scope > li > a').forEach((subMenu) => {
-            const items = [];
-
-            const subMenuItemsEl = subMenu.nextElementSibling;
-            if (subMenuItemsEl) {
-              subMenuItemsEl.querySelectorAll(':scope > li > a').forEach((item) => {
-                items.push({
-                  href: item.href,
-                  label: item.textContent,
-                });
-              });
-            }
-
-            subMenus.push({
-              href: subMenu.href,
-              label: subMenu.textContent,
-              items,
-            });
-          });
-
-          return {
-            title: menu.textContent,
-            items: subMenus,
-          };
-        }
-
-        return null;
-      }).filter((item) => item !== null),
-      actions: actions.map((action) => ({
-        href: action.href,
-        label: action.textContent,
-      })),
-      search: {
-        href: search.href,
-        icon: search.querySelector('.icon-search').outerHTML,
-      },
-    };
-
-    block.innerHTML = template(props);
-
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('header');
+    headerDiv.classList.add('main-header');
+    headerDiv.innerHTML = header.innerHTML;
+    block.appendChild(headerDiv);
+    addScrollListener(block);
+    addHeaderInteractions(block);
     decorateIcons(block, true);
-
-    const header = document.querySelector('header');
-    addScrollListener(header);
-    addHeaderInteractions(header);
   }
 }

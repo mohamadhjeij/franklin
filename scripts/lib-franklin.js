@@ -154,7 +154,6 @@ export function decorateIcons(element = document, isSprite = false) {
     }
   });
 }
-
 /**
  * Gets placeholders object
  * @param {string} prefix
