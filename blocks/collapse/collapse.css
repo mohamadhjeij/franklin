@@ -21,6 +21,12 @@
   }
 }
 
+@media (min-width: 102rem) {
+  .collapse-container {
+      max-width: 71.5rem !important;
+  }
+}
+
 .collapse > div:nth-child(1) {
   margin-bottom: var(--spacing-vertical-s);
   text-align: left;
