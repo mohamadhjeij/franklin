@@ -75,10 +75,6 @@ a:hover {
     :root {
         --section-margin: 4rem;
     }
-
-    ul {
-        margin: var(--spacing-vertical-m) 0;
-    }
 }
 
 @media (min-width: 90rem) {
