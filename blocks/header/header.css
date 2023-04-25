@@ -398,6 +398,19 @@
   width: 100%
 }
 
+.header__logo.hide {
+  transform: translate(-100px, 0);
+  opacity: 0;
+}
+
+/* No need to hide the logo on wide screens */
+@media screen and (min-width: 64rem) {
+  .header__logo.hide {
+    transform: none;
+    opacity: 1;
+  }
+}
+
 .header__backlink {
   font-family: var(--font-family-frutiger);
   font-weight: normal;
@@ -430,10 +443,22 @@
   transition: transform .3s ease-in-out
 }
 
+.header__backlink.show {
+  opacity: 1;
+  display: flex;
+}
+
 @media (min-width: 64rem) {
   .header__backlink {
     display: none
   }
+
+  /* No need to show the backlink on wide screens */
+  .header__backlink.show {
+    opacity: 0;
+    display: none;
+  }
+
 }
 
 .header__website-area-name {
