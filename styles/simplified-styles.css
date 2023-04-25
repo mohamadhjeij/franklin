@@ -52,6 +52,15 @@ a:hover {
     padding-left: 0.6rem;
 }
 
+.text-block p:first-of-type {
+    padding-top: 0
+}
+
+.text-block p:only-of-type {
+    padding-top: 0;
+    padding-bottom: 0
+}
+
 /* section */
 @media (min-width: 22.5rem) {
     :root {
