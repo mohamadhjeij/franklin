@@ -12,6 +12,12 @@
     line-height: 1rem;
 }
 
+.text-media img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
 @media (min-width: 64rem) {
     .text-media {
         padding: 36px 0;
