@@ -47,7 +47,7 @@ function articleTemplate(noCurry) {
                         </div>`;
 }
 
-function template(articles, placeholders, title = 'Weitere Artikel') {
+function template(articles, placeholders) {
   return `<div class="featured-articles-with-teaser featured-articles-with-teaser--background-grey">
     <div class="grid__container">
         <div class="grid__structure">
@@ -59,8 +59,8 @@ function template(articles, placeholders, title = 'Weitere Artikel') {
                                 <div class="grid__column module-headline--column">
                                     <div class="headline hl-l headline--align-center    hl--sub-xs">
                                         <span>
-                                            <h2 id="${title.toLowerCase().replace(/\s/gm, '-')}">
-                                                <span class="headline__main">${title}</span>
+                                            <h2 id="${placeholders.furtherarticles.toLowerCase().replace(/\s/gm, '-')}">
+                                                <span class="headline__main">${placeholders.furtherarticles}</span>
                                             </h2>
                                         </span>
                                     </div>
@@ -80,22 +80,22 @@ function template(articles, placeholders, title = 'Weitere Artikel') {
                                 <div class="headline hl-s featured-articles-with-teaser__teaser-headline">
                                     <span>
                                         <h3>
-                                            <span class="headline__main">Alle Pressemeldungen</span>
+                                            <span class="headline__main">${placeholders.furtherarticlesheadline}</span>
                                         </h3>
                                     </span>
                                 </div>
                                 <div class="text text--body-m featured-articles-with-teaser__teaser-text">
-                                    <p>Finden Sie hier die neuesten Presseinformationen von ZEISS.<br>
+                                    <p>${placeholders.furtherarticlesteaser}<br>
                                     </p>
                                 </div>
                                 <div class="featured-articles-with-teaser__teaser-link">
                                     <div class="button-link button-link--link">
                                         <a class=" button-link--icon  "
-                                            href="https://www.zeiss.de/corporate/newsroom/pressemitteilungen.html"
+                                            href="${placeholders.furtherarticleshref}"
                                             target="_blank">
                                             <span class="button-link__content">
                                                 <span>
-                                                    <span>Zu den Pressemeldungen</span>
+                                                    <span>${placeholders.furtherarticlesbutton}</span>
                                                 </span>
                                                 <span class="icon icon-external-link icon--symbol">
                                                 </span>
@@ -125,7 +125,7 @@ export default async function decorate(block) {
     console.error('Could not fetch placeholders', e);
   }
   const limit = parseInt(config['number-of-articles'], 10) || 2;
-  const dataurl = new URL('/de/semiconductor-manufacturing-technology/news-und-events/query-index.json', window.location.href);
+  const dataurl = new URL(placeholders.querypath, window.location.href);
   const response = await fetch(dataurl);
   const { data } = await response.json();
   const articles = data
