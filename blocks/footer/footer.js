@@ -1,4 +1,4 @@
-import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
+import { decorateIcons, readBlockConfig, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { getLocale, getAemTemplateUrl } from '../../scripts/utils.js';
 
 function addFooterInteractions(block) {
@@ -52,17 +52,7 @@ function addFooterInteractions(block) {
   });
 }
 
-function breadcrumbTemplate(locale) {
-  const localized = {
-    en: {
-      href: 'https://www.zeiss.com/semiconductor-manufacturing-technology/news-and-events.html',
-      text: 'News and Events',
-    },
-    de: {
-      href: 'https://www.zeiss.de/semiconductor-manufacturing-technology/news-und-events.html',
-      text: 'News Und Events',
-    },
-  }[locale];
+function breadcrumbTemplate(placeholders) {
   return `
     <ul class="breadcrumb__list-wrapper breadcrumb__list-wrapper--less-than-two">
       <li class="breadcrumb__list-item">  
@@ -83,7 +73,7 @@ function breadcrumbTemplate(locale) {
             </svg>
           </span>
         </span>
-        <a class="plain-link breadcrumb__link-item" data-gtm-eventname="Navigation" data-gtm-eventaction="Click" data-gtm-eventtype="Footer" data-gtm-eventvalue="${localized.text}" data-gtm-eventdetail="${localized.href}" href="${localized.href}">${localized.text}</a>
+        <a class="plain-link breadcrumb__link-item" data-gtm-eventname="Navigation" data-gtm-eventaction="Click" data-gtm-eventtype="Footer" data-gtm-eventvalue="${placeholders.footertext}" data-gtm-eventdetail="${placeholders.footerhref}" href="${placeholders.footerhref}">${placeholders.footertext}</a>
       </li>
     </ul>
   `;
@@ -99,6 +89,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   const locale = getLocale();
+  const placeholders = await fetchPlaceholders(`/${locale}`);
   const footerPath = cfg.footer || getAemTemplateUrl(locale);
   const resp = await fetch(footerPath);
   if (resp.ok) {
@@ -107,7 +98,7 @@ export default async function decorate(block) {
     const footer = parser.parseFromString(html, 'text/html').querySelector('footer');
     // add breadcrump
     const breadcrumb = footer.querySelector('nav[class=breadcrumb]');
-    breadcrumb.innerHTML = breadcrumbTemplate(locale);
+    breadcrumb.innerHTML = breadcrumbTemplate(placeholders);
     // fix svg relative urls
     decorateIcons(footer, true);
     block.append(footer);
