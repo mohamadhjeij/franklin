@@ -5,7 +5,6 @@
 
 .columns-new img {
     width: 100%;
-    margin-bottom: var(--spacing-vertical-xs);
 }
 
 .columns-new h1 {
@@ -44,6 +43,26 @@
     animation-name: hover;
 }
 
+.columns-new .copyright {
+    background-color: rgba(255, 255, 255, .6);
+    padding-top: var(--spacing-vertical-xxs);
+    padding-right: var(--spacing-horizontal-xs);
+    padding-bottom: 0.6rem;
+    padding-left: var(--spacing-horizontal-xs);
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+}
+
+.columns-new .caption {
+    padding-top: var(--spacing-vertical-xs);
+}
+
+.columns-new .copyright-text::before {
+    content: "©";
+    padding-right: var(--spacing-horizontal-xxs)
+}
+
 .columns-new > div > div {
     order: 1;
 }
@@ -51,6 +70,12 @@
 .columns-new > div > div:first-child {
     font-size: var(--font-size-body-750);
     margin-bottom: var(--spacing-vertical-m);
+    line-height: var(--line-height-caption-750);
+}
+
+.columns-new > div > div:first-child p {
+    position: relative;
+    display: flex;
 }
 
 .columns-new > div > div:last-child {
