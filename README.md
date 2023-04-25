@@ -33,3 +33,4 @@ web-test-runner test/blocks/hero/hero.test.js --node-resolve --watch
 1. Start Helix Pages Proxy: `hlx up` (opens your browser at `http://localhost:3000`)
 1. Go to http://localhost:3000/de/semiconductor-manufacturing-technology/news-und-events/smt-pressemeldung/zeiss-trumpf-und-fraunhofer-mit-deutschem-zukunftspreis-ausgezeichnet
 1. Open the `{repo}` directory in your favorite IDE and start coding :)
+1. Install a browser extension such as [Allow CORS: Access-Control-Allow-Origin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf) to allow requests to `www.zeiss.de` and `www.zeiss.de` and activate it
