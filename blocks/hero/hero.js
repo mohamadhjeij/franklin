@@ -81,7 +81,7 @@ export default async function decorate(block) {
 
   const social = block.querySelector('.social');
   if (social) {
-    buildSocialMarkup(social);
+    buildSocialMarkup(social, placeholders);
     block.appendChild(social);
   }
 

@@ -2,6 +2,11 @@
 import { readFile } from '@web/test-runner-commands';
 import { assert } from '@esm-bundle/chai';
 import { decorate } from '../../../blocks/social/social.js';
+import { getLocale } from '../../../scripts/utils.js';
+import loadPlaceholders from '../../test-utlis.js';
+
+const locale = getLocale();
+await loadPlaceholders(`/${locale}`);
 
 document.body.innerHTML = await readFile({ path: './social.plain.html' });
 describe('Social block', () => {
