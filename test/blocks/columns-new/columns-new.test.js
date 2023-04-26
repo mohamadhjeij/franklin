@@ -11,17 +11,21 @@ document.write(await readFile({ path: './columns-new.plain.html' }));
 const locale = getLocale();
 await loadPlaceholders(`/${locale}`);
 
+const block = document.querySelector('.columns-new');
+await decorate(block);
+
 describe('Columns New Block', () => {
   it('Decorates block', async () => {
-    const block = document.querySelector('.columns-new');
-    await decorate(block);
     expect(block.classList.contains('columns-new-2-cols')).to.equal(true);
   });
 
   it('Caption Span', async () => {
-    const block = document.querySelector('.columns-new');
-    await decorate(block);
     expect(block.querySelector('.caption')).not.to.be.null;
     expect(block.querySelector('.caption')).not.to.be.undefined;
+  });
+
+  it('Caption Copyright', async () => {
+    expect(block.querySelector('.copyright')).not.to.be.null;
+    expect(block.querySelector('.copyright')).not.to.be.undefined;
   });
 });
