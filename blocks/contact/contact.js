@@ -1,7 +1,8 @@
 /* eslint-disable comma-dangle */
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { getLocale } from '../../scripts/utils.js';
 
-function template(items) {
+function template(items, placeholders) {
   return `<div class="profile-collection ">
     <div class="heading-slot"></div>
     <div class="profile-collection__settings" data-primary-count="1">
@@ -15,7 +16,7 @@ function template(items) {
                                     <div class="grid__column profile__column--content">
                                         <div class="headline hl-xs    profile__headline ">
                                             <span>
-                                                <span class="headline__eyebrow text--eyebrow">Pressekontakt</span>
+                                                <span class="headline__eyebrow text--eyebrow">${placeholders.contactheadline}</span>
                                                 <h3>
                                                     <span class="headline__main" data-js-select="Headline_main">${item.Name}</span>
                                                 </h3>
@@ -28,18 +29,18 @@ function template(items) {
                                             <div class="profile__contact">
                                                 <ul class="profile__contact-list">
                                                     <li class="profile__contact-item">
-                                                        <a aria-label="Telefon"
+                                                        <a aria-label="${placeholders.contacttelephon}"
                                                             class="plain-link profile__contact-item-link"
-                                                            href="tel:${item.Phone}" title="Telefon">
+                                                            href="tel:${item.Phone}" title="${placeholders.contacttelephon}">
                                                             <span class="icon icon-phone">
                                                             </span>
                                                             <span class="profile__contact-item-label">${item.Phone}</span>
                                                         </a>
                                                     </li>
                                                     <li class="profile__contact-item">
-                                                        <a aria-label="E-Mail"
+                                                        <a aria-label="${placeholders.contactemail}"
                                                             class="plain-link profile__contact-item-link"
-                                                            href="mailto:${item.Email}" title="E-Mail">
+                                                            href="mailto:${item.Email}" title="${placeholders.contactemail}">
                                                             <span class="icon icon-mail icon--symbol">
                                                             </span>
                                                             <span
@@ -53,8 +54,7 @@ function template(items) {
                                                             target="_blank" title="vCard">
                                                             <span class="icon icon-file-download">
                                                             </span>
-                                                            <span class="profile__contact-item-label">vCard
-                                                                herunterladen</span>
+                                                            <span class="profile__contact-item-label">${placeholders.contactvcard}</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -75,6 +75,8 @@ function template(items) {
 }
 
 export default async function decorate(block) {
+  const locale = getLocale();
+  const placeholders = await fetchPlaceholders(`/${locale}`);
   const heading = block.querySelector('h2');
   const contacts = [];
   block.querySelectorAll('a').forEach((a) => {
@@ -103,7 +105,7 @@ export default async function decorate(block) {
     }
   }
 
-  block.innerHTML = template(items);
+  block.innerHTML = template(items, placeholders);
   // Required for navigation scroll tracking
   block.querySelector('.heading-slot').append(heading);
 
