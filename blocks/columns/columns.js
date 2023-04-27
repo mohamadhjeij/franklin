@@ -1,19 +1,7 @@
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { getLocale } from '../../scripts/utils.js';
 
-function template(props) {
-  const locale = getLocale();
-  const localised = {
-    en: {
-      fileSize: 'File size',
-      pages: 'Pages',
-    },
-    de: {
-      fileSize: 'Dateigröße',
-      pages: 'Seiten',
-    },
-  }[locale];
-
+function template(props, placeholders) {
   return `
     <div class="downloads-wrapper">
       <div class="downloads">
@@ -74,11 +62,11 @@ function template(props) {
 
                                     <div class="download-item__info text--body-m">
                                       <div class="download-item__info-data">
-                                        <span class="download-item__info-label text--bold">${localised.pages}:</span>
+                                        <span class="download-item__info-label text--bold">${placeholders.columnpages}:</span>
                                         <span class="download-item__info-value">1</span>
                                       </div>
                                       <div class="download-item__info-data">
-                                        <span class="download-item__info-label text--bold">${localised.fileSize}:</span>
+                                        <span class="download-item__info-label text--bold">${placeholders.columnfilesize}:</span>
                                         <span class="download-item__info-value download-size-slot"></span>
                                       </div>
                                     </div>
@@ -123,7 +111,7 @@ function formatBytes(bytes, decimals = 1) {
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const heading = block.querySelector('h2');
 
   const items = [];
@@ -151,7 +139,9 @@ export default function decorate(block) {
     }
   });
 
-  block.innerHTML = template({ items });
+  const locale = getLocale();
+  const placeholders = await fetchPlaceholders(`/${locale}`);
+  block.innerHTML = template({ items }, placeholders);
 
   decorateIcons(block, true);
 
