@@ -15,34 +15,6 @@
     margin-bottom: var(--spacing-vertical-s);
 }
 
-.columns-new a {
-    display: inline-block;
-    position: relative;
-    color: inherit;
-    text-decoration: none;
-    transition: color .75s;
-    outline: none;
-}
-
-.columns-new a:hover {
-    color: var(--text-color-link-hover);
-}
-
-.columns-new a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-top: 1px solid var(--button-tertiary-underline-default);
-    animation-duration: .75s;
-}
-
-.columns-new a:hover::after {
-    background-color: var(--button-tertiary-underline-hover);
-    animation-name: hover;
-}
-
 .columns-new .copyright {
     background-color: rgba(255, 255, 255, .6);
     padding-top: var(--spacing-vertical-xxs);
