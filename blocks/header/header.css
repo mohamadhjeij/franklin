@@ -22,6 +22,10 @@
   }
 }
 
+.header--got-animated .header__meta {
+  margin-top: calc(var(--header__meta-hidden-height) - var(--header__meta-visible-height));
+}
+
 .header--got-animated .header__navigation-area {
   height: 4rem
 }
@@ -48,7 +52,8 @@
 }
 
 .header__meta {
-  display: none
+  display: none;
+  transition: margin-top ease-out .5s;
 }
 
 @media (min-width: 48rem) {
