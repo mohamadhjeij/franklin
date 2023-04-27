@@ -292,8 +292,14 @@ function customLogic(main, document, url) {
     const expandButton = document.createElement('a');
     const collapseButton = document.createElement('a');
 
-    if (collapseItem.querySelector('.text-block__button a')) {
-      div.append(collapseItem.querySelector('.text-block__button a'));
+    const furtherButton = collapseItem.querySelector('.text-block__button a');
+    if (furtherButton) {
+      const fqdn = {
+        en: 'www.zeiss.com',
+        de: 'www.zeiss.de',
+      }[getLocale(url)];
+      furtherButton.href = `https://${fqdn}`;
+      div.append(furtherButton);
     }
 
     expandButton.href = '#';
