@@ -1,6 +1,14 @@
 .collapse-container {
   line-height: 1.5rem;
   letter-spacing: 0.5px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: calc(var(--spacing-vertical-xl) * 2);
+  margin-bottom: calc(var(--spacing-vertical-xxl) * 2);
+  padding-left: var(--section-margin);
+  padding-right: var(--section-margin);
+  max-width: 102rem;
 }
 
 @media (min-width: 64rem) {
@@ -23,7 +31,7 @@
 
 @media (min-width: 102rem) {
   .collapse-container {
-      max-width: 71.5rem !important;
+    max-width: 71.5rem;
   }
 }
 
@@ -40,7 +48,7 @@
 }
 
 .collapse > div:nth-child(2) {
-  height: calc(var(--spacing-vertical-xxl) + 3rem);
+  height: calc(var(--spacing-vertical-l) * 4);
   min-height: calc(var(--spacing-vertical-xxl) + 3rem);
   font-family: var(--font-family-frutiger);
   transition: height 0.5s ease-out;
@@ -59,7 +67,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: var(--spacing-vertical-xxl);
+  height: calc(var(--spacing-vertical-xl) * 2);
   opacity: 1;
   transition: opacity .2s ease-in-out;
   background-image: linear-gradient(to bottom, rgb(255 255 255 / 0%), var(--bg-color-primary) 60%);

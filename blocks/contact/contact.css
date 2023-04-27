@@ -14,7 +14,7 @@
 }
 
 .profile-collection__settings {
-  margin-top: var(--spacing-vertical-l);
+  margin-top: 0;
   margin-bottom: var(--spacing-vertical-l)
 }
 
@@ -91,11 +91,11 @@
   }
 
   .profile-collection__content {
-    padding-bottom: var(--spacing-vertical-l)
+    padding-bottom: var(--spacing-vertical-xl)
   }
 
   .profile-collection__item {
-    margin-top: var(--spacing-vertical-l)
+    margin-top: var(--spacing-vertical-xl)
   }
 
   .profile-collection__controls {

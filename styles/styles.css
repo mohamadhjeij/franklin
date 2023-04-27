@@ -1030,11 +1030,6 @@
   }
 
   /* text-block */
-  .text-block {
-    margin-top: var(--spacing-vertical-xxl);
-    margin-bottom: var(--spacing-vertical-xxl)
-  }
-
   .text-block__headline {
     margin-bottom: var(--spacing-vertical-s)
   }

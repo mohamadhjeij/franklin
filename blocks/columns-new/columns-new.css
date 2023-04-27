@@ -75,6 +75,13 @@
     display: block;
 }
 
+.columns-new-container {
+    margin: calc(var(--spacing-vertical-l) + var(--spacing-vertical-xl)) auto;
+    padding-left: var(--section-margin);
+    padding-right: var(--section-margin);
+    max-width: 102rem;
+}
+
 @media (min-width: 48rem) {
     .columns-new > div {
         flex-direction: unset;

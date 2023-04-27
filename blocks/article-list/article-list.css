@@ -864,7 +864,7 @@
   }
   
   .featured-articles-with-teaser--background-grey .featured-articles-with-teaser__inner-grid-content {
-    padding-top: var(--spacing-vertical-xxl);
+    padding-top: calc(var(--spacing-vertical-xl) * 2);
     padding-bottom: var(--spacing-vertical-xxl)
   }
   

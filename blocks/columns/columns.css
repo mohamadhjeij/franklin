@@ -1,6 +1,6 @@
 .downloads-wrapper .downloads {
   margin-top: var(--spacing-vertical-xxxl);
-  margin-bottom: var(--spacing-vertical-xxxl)
+  margin-bottom: calc(var(--spacing-vertical-l) * 4);
 }
 
 .downloads-wrapper .downloads .tabs-horizontal {

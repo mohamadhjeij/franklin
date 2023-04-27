@@ -1,0 +1,9 @@
+.social-container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: var(--spacing-vertical-xxl);
+    margin-bottom: calc(var(--spacing-vertical-xl) * 2);
+    padding-left: var(--section-margin);
+    padding-right: var(--section-margin);
+    max-width: 102rem;
+}
