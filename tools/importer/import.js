@@ -413,11 +413,10 @@ function customLogic(main, doc, url) {
     }
   }
 
-  // Text-media autoblock which is image + <em> text
-  const textMediaBlock = doc.querySelector('.text-media');
-  if (textMediaBlock) {
-    handleTextMediaBlock(textMediaBlock, textMediaBlock, doc);
-  }
+  // Text-media autoblocks to image + <em> text
+  doc.querySelectorAll('.text-media').forEach((block) => {
+    handleTextMediaBlock(block, block, doc);
+  });
 
   // Image and text block handling
   const imageTextBlock = doc.querySelector('.image-and-text-block');
