@@ -1,10 +1,19 @@
 /*  fetches existing Sharepoint documents as Markdown and stores them in a folder structure.
     I use this to research existing blocks for certain content.
+    
+    $ node --experimental-modules ./download-content-markdown.mjs
  */
 
 import fetch from 'node-fetch';
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
+
+const fqdn = 'main--zeiss--hlxsites.hlx.page';
+
+const indexPaths = [
+    '/en/semiconductor-manufacturing-technology/news-and-events/query-index.json',
+    '/de/semiconductor-manufacturing-technology/news-und-events/query-index.json'
+];
 
 async function createFolder(url) {
     const folderPath = `./mirror${new URL(url).pathname.replace('/.*$', '')}`;
@@ -15,33 +24,33 @@ async function createFolder(url) {
     return folderPath;
 }
 
-function getLocale(url) {
-  if (url.includes('www.zeiss.de')) {
-    return 'de';
-  }
-  return 'en';
-};
+async function getPageUrls(indexPath) {
+    const indexUrl = `https://${fqdn}${indexPath}`;
+    const response = await fetch(indexUrl);
+    const document = await response.json();
+    return document.data
+        .map((page) => page.path)
+        .map((pagePath) => `https://${fqdn}${pagePath}.md`);
+}
 
-async function getPaths() {
-    const response = await fetch("https://main--zeiss--hlxsites.hlx.page/drafts/import-report.json");
-    const json = await response.json();
-    return json.data.filter(row => !row.status.includes("removed"))
-        .map(row => `/${getLocale(row.URL)}${row.path}`);
+async function fetchPage(url) {
+    const response = await fetch(url);
+    if (response.ok) {
+        const folderPath = await createFolder(url);
+        response.body.pipe(fs.createWriteStream(`${folderPath}/${path.basename(url)}`));
+        console.log('ok: ', url);
+    } else {
+        console.log('failed: ', url);
+    }
+}
+
+async function fetchPages(indexPath) {
+    const urls = await getPageUrls(indexPath);
+    urls.map((url) => fetchPage(url));
 }
 
 async function main() {
-    const paths = await getPaths();
-    await Promise.all(paths.map(async (p) => {
-        const url = `https://main--zeiss--hlxsites.hlx.page${p}.md`;
-        const response = await fetch(url);
-        if (response.ok) {
-            const folderPath = await createFolder(url);
-            await response.body.pipe(fs.createWriteStream(`${folderPath}/${path.basename(url)}`));
-            console.log('ok: ', url);
-        } else {
-            console.log('failed: ', url);
-        }
-    }));
+    await Promise.all(indexPaths.map((indexPath) => fetchPages(indexPath)));
 }
 
 main();
