@@ -1,3 +1,13 @@
+main .section.hero-container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3.25rem;
+  margin-bottom: calc(var(--spacing-vertical-xl) * 2);
+  padding-left: var(--section-margin);
+  padding-right: var(--section-margin);
+  max-width: 102rem;
+}
+
 main .block.hero>div, main .block.hero .back-link-base {
   grid-column: 1/-1;
 }
