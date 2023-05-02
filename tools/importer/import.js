@@ -206,6 +206,11 @@ function handleTextMediaBlock(block, item, doc) {
   block.replaceWith(imgDiv, emCaption);
 }
 
+function curateNames(names) {
+  const filterted = names.filter((name) => ['Jeannine Rapp', 'Jörg Nitschke'].includes(name));
+  return [...new Set([...filterted, 'Jeannine Rapp'])];
+}
+
 function customLogic(main, doc, url) {
   // Change heading to h1
   if (doc.querySelector('.headline.hl-xxl .headline__main')) {
@@ -267,24 +272,20 @@ function customLogic(main, doc, url) {
   if (doc.querySelector('.profileCollection.module')) {
     const cells = [['contact(small)']];
     const div = doc.createElement('div');
-    const names = [];
     const authorMap = getLocale(url) === 'de' ? authorMapDe : authorMapEn;
-    doc.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
+    const profiles = Array.from(doc.querySelectorAll('.profileCollection.module .profile-collection__item'));
+    const names = profiles.map((profile) => profile.querySelector('h2 > span').textContent);
+    curateNames(names).forEach((name) => {
       const p = doc.createElement('p');
-      const name = item.querySelector('h2 > span').textContent;
-      // Avoid duplicate contacts
-      if (!names.includes(name)) {
-        names.push(name);
-        if (authorMap[name]) {
-          const a = doc.createElement('a');
-          a.href = authorMap[name];
-          a.textContent = authorMap[name];
-          p.append(a);
-        } else {
-          p.textContent = name;
-        }
-        div.append(p);
+      if (authorMap[name]) {
+        const a = doc.createElement('a');
+        a.href = authorMap[name];
+        a.textContent = authorMap[name];
+        p.append(a);
+      } else {
+        p.textContent = name;
       }
+      div.append(p);
     });
     cells.push([div]);
     const table = WebImporter.DOMUtils.createTable(cells, doc);
