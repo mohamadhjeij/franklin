@@ -187,77 +187,96 @@ function deriveImageSrc(image) {
   }
   return src;
 }
-function customLogic(main, document, url) {
+
+function handleTextMediaBlock(block, item, doc) {
+  const imgDiv = doc.createElement('div');
+  const img = doc.createElement('img');
+  img.src = deriveImageSrc(block.querySelector('figure img'));
+  imgDiv.appendChild(img);
+
+  const caption = item.querySelector('figure figcaption .lazy-image__caption p');
+  const emCaption = doc.createElement('em');
+  emCaption.textContent = caption.textContent;
+
+  const ps = block.previousElementSibling;
+  if (ps.localName === 'hr') {
+    // If the image is preceded by a 'hr' then delete this 'hr' as it's not needed
+    ps.remove();
+  }
+  block.replaceWith(imgDiv, emCaption);
+}
+
+function customLogic(main, doc, url) {
   // Change heading to h1
-  if (document.querySelector('.headline.hl-xxl .headline__main')) {
-    const heading = document.createElement('h1');
-    heading.textContent = document.querySelector('.headline.hl-xxl .headline__main').textContent;
-    document.querySelector('.headline.hl-xxl .headline__main').replaceWith(heading);
+  if (doc.querySelector('.headline.hl-xxl .headline__main')) {
+    const heading = doc.createElement('h1');
+    heading.textContent = doc.querySelector('.headline.hl-xxl .headline__main').textContent;
+    doc.querySelector('.headline.hl-xxl .headline__main').replaceWith(heading);
   }
 
   // Change subheading to h3
-  if (document.querySelector('h2.headline__sub.hl--sub')) {
-    const subHeading = document.createElement('h3');
-    subHeading.textContent = document.querySelector('h2.headline__sub.hl--sub').textContent;
-    document.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
+  if (doc.querySelector('h2.headline__sub.hl--sub')) {
+    const subHeading = doc.createElement('h3');
+    subHeading.textContent = doc.querySelector('h2.headline__sub.hl--sub').textContent;
+    doc.querySelector('h2.headline__sub.hl--sub').replaceWith(subHeading);
   }
 
   // Add section breaks after text blocks
-  document.querySelectorAll('[data-module="TextBlock"]').forEach((item) => {
-    item.after(document.createElement('hr'));
+  doc.querySelectorAll('[data-module="TextBlock"]').forEach((item) => {
+    item.after(doc.createElement('hr'));
   });
 
   // Add social share blocks
-  document.querySelectorAll('.general-article-stage__share').forEach((item) => {
-    item.after(document.createElement('hr'));
+  doc.querySelectorAll('.general-article-stage__share').forEach((item) => {
+    item.after(doc.createElement('hr'));
     const cells = [['social']];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
     item.replaceWith(table);
   });
 
-  document.querySelectorAll('.page-utility-bar').forEach((item) => {
+  doc.querySelectorAll('.page-utility-bar').forEach((item) => {
     if (item.querySelector('.share')) {
       const cells = [['social(highlighted)']];
       cells.push(['Label', item.querySelector('.page-utility-bar__label')]);
-      item.after(document.createElement('hr'));
-      const table = WebImporter.DOMUtils.createTable(cells, document);
+      item.after(doc.createElement('hr'));
+      const table = WebImporter.DOMUtils.createTable(cells, doc);
       item.replaceWith(table);
     }
   });
 
   // Add cards block for media
-  if (document.querySelector('.text-media-grid')) {
+  if (doc.querySelector('.text-media-grid')) {
     const cells = [['cards']];
-    document.querySelectorAll('.text-media-grid .text-media-item-vertical').forEach((item) => {
+    doc.querySelectorAll('.text-media-grid .text-media-item-vertical').forEach((item) => {
       const image = item.querySelector('.text-media-item-vertical__media figure img');
       const src = deriveImageSrc(image);
 
-      const cardImg = document.createElement('img');
+      const cardImg = doc.createElement('img');
       cardImg.src = src;
 
       const text = item.querySelector('.text-media-item-vertical__text p');
       const row = [cardImg, text.textContent];
       cells.push(row);
     });
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.text-media-grid').after(document.createElement('hr'));
-    document.querySelector('.text-media-grid').replaceWith(table);
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
+    doc.querySelector('.text-media-grid').after(doc.createElement('hr'));
+    doc.querySelector('.text-media-grid').replaceWith(table);
   }
 
   // Add contacts block
-  if (document.querySelector('.profileCollection.module')) {
+  if (doc.querySelector('.profileCollection.module')) {
     const cells = [['contact(small)']];
-    const div = document.createElement('div');
+    const div = doc.createElement('div');
     const names = [];
     const authorMap = getLocale(url) === 'de' ? authorMapDe : authorMapEn;
-    document.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
-      const p = document.createElement('p');
+    doc.querySelectorAll('.profileCollection.module .profile-collection__item').forEach((item) => {
+      const p = doc.createElement('p');
       const name = item.querySelector('h2 > span').textContent;
       // Avoid duplicate contacts
       if (!names.includes(name)) {
         names.push(name);
         if (authorMap[name]) {
-          const a = document.createElement('a');
+          const a = doc.createElement('a');
           a.href = authorMap[name];
           a.textContent = authorMap[name];
           p.append(a);
@@ -268,19 +287,19 @@ function customLogic(main, document, url) {
       }
     });
     cells.push([div]);
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.profileCollection.module').after(document.createElement('hr'));
-    document.querySelector('.profileCollection.module').replaceWith(table);
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
+    doc.querySelector('.profileCollection.module').after(doc.createElement('hr'));
+    doc.querySelector('.profileCollection.module').replaceWith(table);
   }
 
   // Add collapse block
-  document.querySelectorAll('.text-block__expandable-area').forEach((collapseItem) => {
+  doc.querySelectorAll('.text-block__expandable-area').forEach((collapseItem) => {
     const uncapitalize = (s) => {
       const trimmed = s.trim();
       return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
     };
     const cells = [['collapse']];
-    const div = document.createElement('div');
+    const div = doc.createElement('div');
     const heading = collapseItem.closest('.text-block').querySelector('.text-block__headline h2');
     collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
     cells.push([`${heading.textContent}`]);
@@ -289,8 +308,8 @@ function customLogic(main, document, url) {
     collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
       div.append(item);
     });
-    const expandButton = document.createElement('a');
-    const collapseButton = document.createElement('a');
+    const expandButton = doc.createElement('a');
+    const collapseButton = doc.createElement('a');
 
     const furtherButton = collapseItem.querySelector('.text-block__button a');
     if (furtherButton) {
@@ -314,79 +333,93 @@ function customLogic(main, document, url) {
     }
 
     cells.push([div], [expandButton], [collapseButton]);
-    const table = WebImporter.DOMUtils.createTable(cells, document);
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
     const styleCells = [['Section Metadata']];
     styleCells.push(['Style', 'collapsed-text']);
-    const stylesTable = WebImporter.DOMUtils.createTable(styleCells, document);
+    const stylesTable = WebImporter.DOMUtils.createTable(styleCells, doc);
     collapseItem.replaceWith(table, stylesTable);
   });
 
   // Add downloads block
-  if (document.querySelector('.downloads-wrapper')) {
+  if (doc.querySelector('.downloads-wrapper')) {
     const cells = [['columns']];
-    const headline = document.createElement('h2');
-    headline.textContent = document.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
+    const headline = doc.createElement('h2');
+    headline.textContent = doc.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
     cells.push([headline]);
 
-    document.querySelectorAll('.downloads__tabs .slideshow__list > .slideshow__item').forEach((item) => {
-      const img = document.createElement('img');
+    doc.querySelectorAll('.downloads__tabs .slideshow__list > .slideshow__item').forEach((item) => {
+      const img = doc.createElement('img');
       img.src = item.querySelector('.download-item__image-link').href;
-      const div = document.createElement('div');
-      const h3 = document.createElement('h3');
+      const div = doc.createElement('div');
+      const h3 = doc.createElement('h3');
       h3.textContent = item.querySelector('.download-item__headline h3 span').textContent;
-      const h4 = document.createElement('h4');
+      const h4 = doc.createElement('h4');
       h4.textContent = item.querySelector('.download-item__headline h4').textContent;
       div.append(h3);
       div.append(h4);
 
       // Use MAM links
-      const downloadLink = document.createElement('a');
+      const downloadLink = doc.createElement('a');
       downloadLink.href = item.querySelector('.download-item__content .button-link--icon').href;
       downloadLink.textContent = 'Download Link';
       div.append(downloadLink);
       cells.push([img, div]);
     });
-    document.querySelector('.downloads-wrapper').after(document.createElement('hr'));
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.downloads-wrapper').replaceWith(table);
+    doc.querySelector('.downloads-wrapper').after(doc.createElement('hr'));
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
+    doc.querySelector('.downloads-wrapper').replaceWith(table);
   }
 
   // Add featured articles block
-  if (document.querySelector('.featured-articles-with-teaser')) {
+  if (doc.querySelector('.featured-articles-with-teaser')) {
     const cells = [['Article List']];
-    const count = document.querySelectorAll('.featured-articles-with-teaser__item--article').length;
+    const count = doc.querySelectorAll('.featured-articles-with-teaser__item--article').length;
     cells.push(['Number of articles', count]);
-    document.querySelector('.featured-articles-with-teaser').after(document.createElement('hr'));
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.featured-articles-with-teaser').replaceWith(table);
+    doc.querySelector('.featured-articles-with-teaser').after(doc.createElement('hr'));
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
+    doc.querySelector('.featured-articles-with-teaser').replaceWith(table);
   }
 
-  // Add carousel block
-  if (document.querySelector('.image-slideshow')) {
-    const cells = [['Carousel']];
-    document.querySelectorAll('.image-slideshow .thumbnail-slideshow__main .slideshow__list .slideshow__item').forEach((item) => {
-      const imgDiv = document.createElement('div');
-      const img = document.createElement('img');
-      img.src = deriveImageSrc(item.querySelector('figure img'));
-      imgDiv.appendChild(img);
-      // Copyright
-      if (item.querySelector('.lazy-image__copyright-text')) {
-        const copyrightTxt = `©${item.querySelector('.lazy-image__copyright-text').textContent}`;
-        const copyright = document.createElement('p');
-        copyright.textContent = copyrightTxt;
-        imgDiv.appendChild(copyright);
-      }
+  // Add carousel block or text-media autoblock
+  if (doc.querySelector('.image-slideshow')) {
+    const items = doc.querySelectorAll('.image-slideshow .thumbnail-slideshow__main .slideshow__list .slideshow__item');
+    if (items.length !== 1) {
+      const cells = [['Carousel']];
 
-      const caption = item.querySelector('figure figcaption .lazy-image__caption p');
-      cells.push([imgDiv, caption]);
-    });
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.image-slideshow').after(document.createElement('hr'));
-    document.querySelector('.image-slideshow').replaceWith(table);
+      items.forEach((item) => {
+        const imgDiv = doc.createElement('div');
+        const img = doc.createElement('img');
+        img.src = deriveImageSrc(item.querySelector('figure img'));
+        imgDiv.appendChild(img);
+        // Copyright
+        if (item.querySelector('.lazy-image__copyright-text')) {
+          const copyrightTxt = `©${item.querySelector('.lazy-image__copyright-text').textContent}`;
+          const copyright = doc.createElement('p');
+          copyright.textContent = copyrightTxt;
+          imgDiv.appendChild(copyright);
+        }
+
+        const caption = item.querySelector('figure figcaption .lazy-image__caption p');
+        cells.push([imgDiv, caption]);
+      });
+
+      const table = WebImporter.DOMUtils.createTable(cells, doc);
+      doc.querySelector('.image-slideshow').after(doc.createElement('hr'));
+      doc.querySelector('.image-slideshow').replaceWith(table);
+    } else {
+      // There is only one image. Convert to text-media autoblock which is image + <em> text
+      const item = items[0];
+      handleTextMediaBlock(doc.querySelector('.image-slideshow'), item, doc);
+    }
   }
+
+  // Text-media autoblocks to image + <em> text
+  doc.querySelectorAll('.text-media').forEach((block) => {
+    handleTextMediaBlock(block, block, doc);
+  });
 
   // Image and text block handling
-  const imageTextBlock = document.querySelector('.image-and-text-block');
+  const imageTextBlock = doc.querySelector('.image-and-text-block');
 
   if (imageTextBlock) {
     const cells = [['Columns New']];
@@ -396,15 +429,15 @@ function customLogic(main, document, url) {
 
     if (imageBlock) {
       imageBlock.forEach((item) => {
-        const imgDiv = document.createElement('div');
-        const img = document.createElement('img');
+        const imgDiv = doc.createElement('div');
+        const img = doc.createElement('img');
         img.src = deriveImageSrc(item.querySelector('figure img'));
         imgDiv.appendChild(img);
 
         const copyrightBlock = item.querySelector('.lazy-image__copyright-text');
         if (copyrightBlock) {
           const copyrightTxt = `©${copyrightBlock.textContent}`;
-          const copyright = document.createElement('p');
+          const copyright = doc.createElement('p');
           copyright.textContent = copyrightTxt;
           imgDiv.appendChild(copyright);
         }
@@ -419,12 +452,12 @@ function customLogic(main, document, url) {
 
     if (textBlock) {
       textBlock.forEach((item) => {
-        const contentDiv = document.createElement('div');
+        const contentDiv = doc.createElement('div');
         const headline = item.querySelector('.headline');
         const text = item.querySelector('.text');
 
         if (headline) {
-          const h1 = document.createElement('h1');
+          const h1 = doc.createElement('h1');
           h1.textContent = headline.textContent;
           contentDiv.appendChild(h1);
         }
@@ -434,7 +467,7 @@ function customLogic(main, document, url) {
 
           if (pTags) {
             pTags.forEach((pTag) => {
-              const p = document.createElement('p');
+              const p = doc.createElement('p');
               p.textContent = pTag.textContent;
               contentDiv.appendChild(p);
             });
@@ -449,9 +482,9 @@ function customLogic(main, document, url) {
       cells.push(arr);
     }
 
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    document.querySelector('.image-and-text-block').after(document.createElement('hr'));
-    document.querySelector('.image-and-text-block').replaceWith(table);
+    const table = WebImporter.DOMUtils.createTable(cells, doc);
+    doc.querySelector('.image-and-text-block').after(doc.createElement('hr'));
+    doc.querySelector('.image-and-text-block').replaceWith(table);
   }
 }
 
