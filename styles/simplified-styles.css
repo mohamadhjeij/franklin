@@ -47,7 +47,7 @@ a:hover {
     color: var(--button-primary-border-hover);
 }
 
-em > a {
+:is(em, .text-block) a {
     display: inline-block;
     position: relative;
     color: inherit;
@@ -56,11 +56,11 @@ em > a {
     outline: none;
 }
 
-em> a:hover {
+:is(em, .text-block) a:hover {
     color: var(--text-color-link-hover);
 }
 
-em > a::after {
+:is(em, .text-block) a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -70,7 +70,7 @@ em > a::after {
     animation-duration: .75s;
 }
 
-em > a:hover::after {
+:is(em, .text-block) a:hover:after {
     background-color: var(--button-tertiary-underline-hover);
     animation-name: hover;
 }
