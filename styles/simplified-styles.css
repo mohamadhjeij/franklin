@@ -39,6 +39,10 @@ a.back-link::after, a.button.primary::after {
     font-weight: 500;
 }
 
+.display-hide {
+    display: none;
+}
+
 a.back-link:hover::after, a.button.primary:hover::after {
     transform: scaleX(1);
 }

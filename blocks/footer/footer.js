@@ -7,6 +7,38 @@ function addFooterInteractions(block) {
     window.scrollTo(0, 0);
   };
 
+  const accordionItems = block.querySelectorAll('.accordion__item');
+
+  if (accordionItems) {
+    accordionItems.forEach((ele) => {
+      const accordionButton = ele.querySelector('.accordion__button');
+      const accordionIconSymbol = accordionButton ? accordionButton.querySelector('.icon--symbol') : null;
+      const accordionButtonSibling = accordionButton ? accordionButton.nextElementSibling : null;
+
+      if (accordionButton && accordionButtonSibling) {
+        accordionButtonSibling.classList.toggle('display-hide');
+
+        accordionButton.onclick = () => {
+          const countryAccordionButtons = document.querySelectorAll('.footer-country-switch .accordion__button');
+
+          if (countryAccordionButtons) {
+            countryAccordionButtons.forEach((x) => {
+              const countryButtonSibling = x.nextElementSibling;
+
+              if (x !== accordionButton && countryButtonSibling && !countryButtonSibling.classList.contains('display-hide')) {
+                countryButtonSibling.classList.toggle('display-hide');
+                x.querySelector('.icon--symbol').classList.toggle('is-active');
+              }
+            });
+          }
+
+          accordionButtonSibling.classList.toggle('display-hide');
+          accordionIconSymbol.classList.toggle('is-active');
+        };
+      }
+    });
+  }
+
   block.querySelectorAll('.footer-tabs__tab').forEach((tab) => {
     tab.onclick = () => {
       const content = tab.nextElementSibling.querySelector('.footer-tabs__tab-content');
