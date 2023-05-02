@@ -95,6 +95,35 @@ em > a:hover::after {
     padding-bottom: 0
 }
 
+.text-block a {
+  display: inline-block;
+  position: relative;
+  color: var(--text-color-body);
+  font-weight: normal;
+  text-decoration: none;
+  transition: color .75s;
+  outline: none;
+}
+
+.text-block a:hover {
+    color: var(--text-color-link-hover);
+}
+
+.text-block a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid var(--button-tertiary-underline-default);
+  animation-duration: .75s;
+}
+
+.text-block a:hover:after {
+  background-color: var(--button-tertiary-underline-hover);
+  animation-name: hover;
+}
+
 /* section */
 @media (min-width: 22.5rem) {
     :root {
