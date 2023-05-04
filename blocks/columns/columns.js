@@ -112,6 +112,8 @@ function formatBytes(bytes, decimals = 1) {
 }
 
 export default async function decorate(block) {
+  const locale = getLocale();
+  const placeholders = await fetchPlaceholders(`/${locale}`);
   const heading = block.querySelector('h2');
 
   const items = [];
@@ -123,8 +125,6 @@ export default async function decorate(block) {
 
       const img = picture.querySelector('img');
       const name = img.alt;
-      img.alt = `Vorschaubild von ${name}`;
-      img.title = 'Download';
 
       const { href } = child.querySelector('a');
 
@@ -133,14 +133,15 @@ export default async function decorate(block) {
         sub: child.querySelector('h4').innerHTML,
       };
 
+      img.alt = `${placeholders.columnpreview} ${headline.main}`;
+      img.title = `Download ${headline.main}`;
+
       items.push({
         image: picture.outerHTML, name, href, headline,
       });
     }
   });
 
-  const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
   block.innerHTML = template({ items }, placeholders);
 
   decorateIcons(block, true);

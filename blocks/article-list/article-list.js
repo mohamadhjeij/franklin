@@ -18,8 +18,8 @@ function articleTemplate(noCurry) {
                                                 <div class="lazy-image__image-container">
                                                     <img class="lazy-image__image lazy-image__target-image "
                                                         src="${article.image}"
-                                                        alt="${article.imagealt}"
-                                                        title="${article.imagealt}">
+                                                        alt="${article.imagealt || article.title}"
+                                                        title="${article.title}">
                                                 </div>
                                                 <div class="lazy-image__active-image-indicator"></div>
                                             </figure>

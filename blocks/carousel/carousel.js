@@ -168,6 +168,12 @@ export default async function decorate(block) {
       }
     }
 
+    const img = image.querySelector('img');
+    if (img) {
+      img.alt = img.alt || label;
+      img.title = img.title || label;
+    }
+
     return {
       image: image.outerHTML,
       label,
