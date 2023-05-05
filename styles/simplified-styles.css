@@ -148,7 +148,7 @@ main .section:not(.carousel-container):not(.text-block):not(.contact-container):
 }
 
 /* TODO: Block not yet simplified are added as :not exceptions. This list  should shrink as we simplify sections */
-.block:not(.header):not(.cards):not(.collapse):not(.carousel):not(.contact):not(.columns):not(.article-list):not(.footer):not(.columns-new) {
+.block:not(.header):not(.cards):not(.press-cards):not(.collapse):not(.carousel):not(.contact):not(.columns):not(.article-list):not(.footer):not(.columns-new) {
     position: relative;
     width: 100%;
     display: grid;
