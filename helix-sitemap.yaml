@@ -1,0 +1,12 @@
+sitemaps:
+   website:
+     origin: https://www.zeiss.com
+     languages:
+       de:
+         source: /de/semiconductor-manufacturing-technology/news-und-events/query-index.json
+         destination: /de/semiconductor-manufacturing-technology/news-und-events/sitemap.xml
+         hreflang: de
+       en:
+         source: /en/semiconductor-manufacturing-technology/news-and-events/query-index.json
+         destination: /en/semiconductor-manufacturing-technology/news-and-events/sitemap.xml
+         hreflang: en
