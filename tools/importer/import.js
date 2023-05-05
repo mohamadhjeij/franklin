@@ -343,7 +343,7 @@ function customLogic(main, doc, url) {
 
   // Add downloads block
   if (doc.querySelector('.downloads-wrapper')) {
-    const cells = [['columns']];
+    const cells = [['press-cards']];
     const headline = doc.createElement('h2');
     headline.textContent = doc.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
     cells.push([headline]);
@@ -362,7 +362,7 @@ function customLogic(main, doc, url) {
       // Use MAM links
       const downloadLink = doc.createElement('a');
       downloadLink.href = item.querySelector('.download-item__content .button-link--icon').href;
-      downloadLink.textContent = 'Download Link';
+      downloadLink.textContent = 'Download';
       div.append(downloadLink);
       cells.push([img, div]);
     });
@@ -423,7 +423,7 @@ function customLogic(main, doc, url) {
   const imageTextBlock = doc.querySelector('.image-and-text-block');
 
   if (imageTextBlock) {
-    const cells = [['Columns New']];
+    const cells = [['Columns']];
     const imageBlock = imageTextBlock.querySelectorAll('.image-and-text-block__visual');
     const textBlock = imageTextBlock.querySelectorAll('.image-and-text-block__content');
     const arr = [];
