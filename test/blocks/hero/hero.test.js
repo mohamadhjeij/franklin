@@ -9,7 +9,7 @@ import loadPlaceholders from '../../test-utlis.js';
 
 document.write(await readFile({ path: './hero.plain.html' }));
 const locale = getLocale();
-await loadPlaceholders(`/${locale}`);
+await loadPlaceholders(`${locale}`);
 
 describe('Hero block', () => {
   it('Decorates block', async () => {

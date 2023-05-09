@@ -154,16 +154,19 @@ export function decorateIcons(element = document, isSprite = false) {
     }
   });
 }
+
 /**
  * Gets placeholders object
  * @param {string} prefix
  */
-export async function fetchPlaceholders(prefix = 'default') {
+export async function fetchPlaceholders(locale = 'en') {
   window.placeholders = window.placeholders || {};
-  const loaded = window.placeholders[`${prefix}-loaded`];
+  const TRANSLATION_KEY = 'translation';
+  const loaded = window.placeholders[`${TRANSLATION_KEY}-loaded`];
+
   if (!loaded) {
-    window.placeholders[`${prefix}-loaded`] = new Promise((resolve, reject) => {
-      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+    window.placeholders[`${TRANSLATION_KEY}-loaded`] = new Promise((resolve, reject) => {
+      fetch('/placeholders.json')
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
@@ -172,20 +175,34 @@ export async function fetchPlaceholders(prefix = 'default') {
         })
         .then((json) => {
           const placeholders = {};
-          json.data.forEach((placeholder) => {
-            placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
+          const KEY = 'Key';
+
+          json.data.forEach((entry) => {
+            Object.keys(entry).forEach((localeKey) => {
+              if (localeKey !== KEY) {
+                if (placeholders[localeKey]) {
+                  placeholders[localeKey][entry.Key.toLowerCase()] = entry[localeKey];
+                } else {
+                  placeholders[localeKey] = {
+                    [entry.Key.toLowerCase()]: entry[localeKey],
+                  };
+                }
+              }
+            });
           });
-          window.placeholders[prefix] = placeholders;
+
+          window.placeholders[TRANSLATION_KEY] = placeholders;
           resolve();
         }).catch((error) => {
-          // error loading placeholders
-          window.placeholders[prefix] = {};
+          // Error While Loading Placeholders
+          window.placeholders[TRANSLATION_KEY] = {};
           reject(error);
         });
     });
   }
-  await window.placeholders[`${prefix}-loaded`];
-  return window.placeholders[prefix];
+
+  await window.placeholders[`${TRANSLATION_KEY}-loaded`];
+  return window.placeholders[TRANSLATION_KEY][locale];
 }
 
 /**

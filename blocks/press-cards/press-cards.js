@@ -12,7 +12,7 @@ function formatBytes(bytes, decimals = 1) {
 
 export default async function decorate(block) {
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
+  const placeholders = await fetchPlaceholders(`${locale}`);
   /* format headers */
   if (block.querySelector('h2')) {
     block.querySelector('h2').classList.add('headline');

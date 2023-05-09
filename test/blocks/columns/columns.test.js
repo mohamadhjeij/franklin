@@ -9,7 +9,7 @@ import loadPlaceholders from '../../test-utlis.js';
 
 document.write(await readFile({ path: './columns.plain.html' }));
 const locale = getLocale();
-await loadPlaceholders(`/${locale}`);
+await loadPlaceholders(`${locale}`);
 
 const block = document.querySelector('.columns');
 await decorate(block);

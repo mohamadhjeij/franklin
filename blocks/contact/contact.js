@@ -76,7 +76,7 @@ function template(items, placeholders) {
 
 export default async function decorate(block) {
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
+  const placeholders = await fetchPlaceholders(`${locale}`);
   const heading = block.querySelector('h2');
   const contacts = [];
   block.querySelectorAll('a').forEach((a) => {

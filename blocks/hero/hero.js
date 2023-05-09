@@ -35,7 +35,7 @@ export default async function decorate(block) {
   const locale = getLocale();
   let placeholders = {};
   try {
-    placeholders = await fetchPlaceholders(`/${locale}`);
+    placeholders = await fetchPlaceholders(`${locale}`);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Could not fetch placeholders', e);

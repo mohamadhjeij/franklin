@@ -1,0 +1,28 @@
+{
+    "total": 4,
+    "offset": 0,
+    "limit": 4,
+    "data": [
+        {
+            "Key": "backtonewsevents",
+            "en": "Back to News and Events",
+            "de": "Zurück zu Informationen und Veranstaltungen"
+        },
+        {
+            "Key": "newseventsbase",
+            "en": "semiconductor-manufacturing-technology/news-and-events",
+            "de": "semiconductor-manufacturing-technology/news-und-events"
+        },
+        {
+            "Key": "pressrelease",
+            "en": "Press Release",
+            "de": "Pressemitteilung"
+        },
+        {
+            "Key": "readingtime",
+            "en": "Min Read",
+            "de": "MIN. Lesedauer"
+        }
+    ],
+    ":type": "sheet"
+}
