@@ -1,95 +1,118 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
-function template(props) {
-  return `
-    <div class="image-slideshow grid__container">
-      <div class="grid__structure">
-        <div class="grid__column grid__column--100 image-slideshow__wrapper">
-          <div>
-            <div class="thumbnail-slideshow thumbnail-slideshow--left-aligned">
-              <div class="slideshow thumbnail-slideshow__main slideshow--navigation-recenter">
-                <div class="slideshow__container swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
-                  <ul class="slideshow__list swiper-wrapper">
+function setLeftRightButton(carouselDiv) {
+  const rightButton = document.createElement('div');
+  rightButton.classList.add('swiper-button-next', 'slideshow__navigation-button', 'slideshow__navigation-button--next');
+  const rightButtonSpan = document.createElement('span');
+  rightButtonSpan.classList.add('icon', 'icon-chevron-right');
+  rightButton.appendChild(rightButtonSpan);
 
-                    ${props.items.map((item, i) => `
-                    <li class="slideshow__item swiper-slide ${i === 0 ? 'swiper-slide-active' : ''}">
-                      <div class="thumbnail-slideshow-item">
-                        <div class="thumbnail-slideshow-item__media">
-                          <div class="thumbnail-slideshow-item__image">
-                            <div class="slideshow-item">
-                              <div class="slideshow-item__main">
-                                <figure class="lazy-image lazy-image--ratio-16_9 lazy-image--loaded">
-                                  <div class="lazy-image__image-container">
-                                    ${item.image}
-                                  </div>
-                                  <div class="lazy-image__active-image-indicator"></div>
-                                  <figcaption class="lazy-image__figcaption text--caption">
-                                    ${(() => {
-    if (item.copyright) {
-      return `
-      <span class="lazy-image__copyright">
-        <span class="lazy-image__copyright-text ">${item.copyright}</span>
-      </span>
-      `;
+  const leftButton = document.createElement('div');
+  leftButton.classList.add('swiper-button-prev', 'slideshow__navigation-button', 'slideshow__navigation-button--right', 'swiper-button-disabled');
+  const leftButtonSpan = document.createElement('span');
+  leftButtonSpan.classList.add('icon', 'icon-chevron-left');
+  leftButton.appendChild(leftButtonSpan);
+
+  carouselDiv.appendChild(rightButton);
+  carouselDiv.appendChild(leftButton);
+}
+
+function setSlideShowPaginationWrapper(carouselDiv, props) {
+  const slideShowWrapper = document.createElement('div');
+  slideShowWrapper.classList.add('slideshow__pagination-wrapper');
+
+  const slideShowBar = document.createElement('div');
+  slideShowBar.classList.add('slideshow__pagination-bar');
+
+  const swiperPagination = document.createElement('div');
+  swiperPagination.classList.add('swiper-pagination', 'slideshow__pagination', 'swiper-pagination-clickable', 'swiper-pagination-bullets');
+
+  props.items.forEach((ele, index) => {
+    const span = document.createElement('span');
+    span.classList.add('slideshow__pagination-bullet');
+
+    if (index === 0) {
+      span.classList.add('slideshow__pagination-bullet--active');
     }
-    return '';
-  })()}
 
-                                    <span class="lazy-image__caption">
-                                      <p>${item.label}</p>
-                                    </span>
-                                  </figcaption>
-                                </figure>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+    swiperPagination.appendChild(span);
+  });
 
-                        <div class="thumbnail-slideshow-item__media-indicator"></div>
-                      </div>
-                    </li>
+  slideShowBar.appendChild(swiperPagination);
 
-                    `).join('')}
+  const paginationBullet = document.createElement('span');
+  paginationBullet.classList.add('slideshow__pagination-bullet', 'slideshow__pagination-bullet--animated');
+  paginationBullet.style.width = `${(100 / props.items.length)}%`;
 
-                  </ul>
+  slideShowBar.appendChild(paginationBullet);
+  slideShowWrapper.appendChild(slideShowBar);
 
-                  <div class="swiper-button-next slideshow__navigation-button slideshow__navigation-button--next" role="navigation">
-                    <span class="icon icon-chevron-right"></span>
-                  </div>
+  carouselDiv.appendChild(slideShowWrapper);
+}
 
-                  <div class="swiper-button-prev slideshow__navigation-button slideshow__navigation-button--right swiper-button-disabled" role="navigation">
-                    <span class="icon icon-chevron-left"></span>
-                  </div>
+function template(props, block) {
+  block.classList.add('image-slideshow', 'grid__container');
 
-                  <div class="slideshow__pagination-wrapper">
-                    <div class="slideshow__pagination-bar">
-                      <div class="swiper-pagination slideshow__pagination swiper-pagination-clickable swiper-pagination-bullets" role="navigation">
-                        ${props.items.map((_, index) => `
-                          <span class="slideshow__pagination-bullet ${index === 0 ? 'slideshow__pagination-bullet--active' : ''}"></span>
-                        `).join('')}
-                      </div>
+  if (props && props.items) {
+    const ul = document.createElement('ul');
+    ul.classList.add('slideshow__list', 'swiper-wrapper');
 
-                      <span class="slideshow__pagination-bullet slideshow__pagination-bullet--animated" style="width: ${100 / props.items.length}%; left: 0%;"></span>
-                    </div>
-                  </div>
+    props.items.forEach((ele, index) => {
+      const li = document.createElement('li');
+      li.classList.add('slideshow__item', 'swiper-slide');
+      if (index === 0) {
+        li.classList.add('swiper-slide-active');
+      }
 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+      const imageDiv = document.createElement('div');
+      imageDiv.innerHTML = ele.image;
+
+      li.appendChild(imageDiv);
+
+      if (ele.copyright || ele.label) {
+        const copyRightAndCaptionDiv = document.createElement('div');
+        copyRightAndCaptionDiv.classList.add('lazy-image__figcaption', 'text--caption', 'lazy-image');
+
+        if (ele.copyright) {
+          const copyrightSpan = document.createElement('span');
+          const copyrightSpanText = document.createElement('span');
+          copyrightSpanText.classList.add('lazy-image__copyright-text');
+          copyrightSpanText.textContent = ele.copyright;
+
+          copyrightSpan.appendChild(copyrightSpanText);
+          copyrightSpan.classList.add('lazy-image__copyright');
+          copyRightAndCaptionDiv.appendChild(copyrightSpan);
+        }
+
+        if (ele.label) {
+          const captionSpan = document.createElement('span');
+          const captionP = document.createElement('p');
+          captionP.textContent = ele.label;
+
+          captionSpan.appendChild(captionP);
+          captionSpan.classList.add('lazy-image__caption');
+          copyRightAndCaptionDiv.appendChild(captionSpan);
+        }
+
+        li.appendChild(copyRightAndCaptionDiv);
+      }
+
+      ul.appendChild(li);
+    });
+
+    block.appendChild(ul);
+    setLeftRightButton(block);
+    setSlideShowPaginationWrapper(block, props);
+  }
 }
 
 function addSwiperListener(carousel) {
   const activeSlideClass = 'swiper-slide-active';
   const activePaginationClass = 'slideshow__pagination-bullet--active';
 
-  const slides = carousel.querySelector('.thumbnail-slideshow__main .slideshow__list');
-  const pagination = carousel.querySelector('.thumbnail-slideshow__main .slideshow__pagination');
-  const animatedPagination = carousel.querySelector('.thumbnail-slideshow__main .slideshow__pagination-bullet--animated');
+  const slides = carousel.querySelector('.slideshow__list');
+  const pagination = carousel.querySelector('.swiper-pagination');
+  const animatedPagination = carousel.querySelector('.slideshow__pagination-bullet--animated');
 
   slides.style.transitionDuration = '300ms';
 
@@ -97,7 +120,7 @@ function addSwiperListener(carousel) {
   const prevButton = carousel.querySelector('.swiper-button-prev');
 
   const getIndex = () => {
-    const activeSlide = slides.querySelector(`.${activeSlideClass}`);
+    const activeSlide = carousel.querySelector(`.${activeSlideClass}`);
     const activePagination = pagination.querySelector(`.${activePaginationClass}`);
     const index = Array.from(slides.children).indexOf(activeSlide);
 
@@ -181,9 +204,8 @@ export default async function decorate(block) {
     };
   });
 
-  block.innerHTML = template({ items });
-
+  block.innerHTML = '';
+  template({ items }, block);
   decorateIcons(block, true);
-
-  addSwiperListener(block.querySelector('.image-slideshow'));
+  addSwiperListener(block);
 }
