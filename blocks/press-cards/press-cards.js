@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { getLocale } from '../../scripts/utils.js';
 
 function formatBytes(bytes, decimals = 1) {
@@ -42,7 +42,11 @@ export default async function decorate(block) {
     li.innerHTML = row.innerHTML;
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'press-cards-card-image';
+        const a = document.createElement('a');
+        a.className = 'press-cards-card-image';
+        a.setAttribute('target', '_blank');
+        a.innerHTML = div.innerHTML;
+        div.replaceWith(a);
       } else {
         div.className = 'press-cards-card-body';
         div.classList.add('text');
@@ -76,6 +80,7 @@ export default async function decorate(block) {
     });
     ul.append(li);
   });
+  ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
   block.textContent = '';
   block.append(...headline.children);
   block.append(ul);
