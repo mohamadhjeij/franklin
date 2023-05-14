@@ -47,9 +47,10 @@ function addFooterInteractions(block) {
       const isActiveTabClass = 'footer-tabs__tab--active';
       const isTabContentVisibleClass = 'footer-tabs__tab-content--visible';
       const isActive = tab.classList.contains(isActiveTabClass);
-
       const activeEl = block.querySelector(`.${isActiveTabClass}`);
-      if (!isActive && activeEl) {
+
+      // Special check for large screens as we can only open one footer-tabs__tab at a time
+      if (!isActive && activeEl && getComputedStyle(block).getPropertyValue('--is-large-screen') === '1') {
         activeEl.classList.remove(isActiveTabClass);
         block.querySelector(`.${isTabContentVisibleClass}`).classList.remove(isTabContentVisibleClass);
         block.querySelector('.icon-symbols-expand-more.is-active').classList.remove('is-active');

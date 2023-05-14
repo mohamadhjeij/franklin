@@ -109,6 +109,7 @@ a:hover {
 @media (min-width: 48rem) {
     :root {
         --section-margin: 2rem;
+        --is-large-screen: 1;
     }
 }
 
