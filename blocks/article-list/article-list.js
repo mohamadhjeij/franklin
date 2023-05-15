@@ -22,7 +22,6 @@ function template(articles, placeholders) {
   }
 
   return `
-    <div class="article-list-items">
       <h2 id="${placeholders.furtherarticles.toLowerCase().replace(/\s/gm, '-')}">
         ${placeholders.furtherarticles}
       </h2>
@@ -35,7 +34,6 @@ function template(articles, placeholders) {
             <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-external-link"></use>
           </svg>
         </a>
-      </div>
     </div>
   `;
 }
