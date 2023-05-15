@@ -23,9 +23,14 @@
   grid-area: art3b;
 }
 
+.article-list-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .block.article-list {
   background-color: var(--bg-color-secondary);
-  padding: 50px;
+  padding: 50px 24px;
   grid-template-columns: 1fr !important;
   grid-template-areas:
     "arthead"
@@ -39,9 +44,9 @@
 
 .block.article-list h2 {
   color: var(--headline-color);
-  padding-top: 32px;
-  padding-bottom: 40px;
-  font-size: 2rem;
+  padding-top: 0;
+  padding-bottom: 36px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.48px;
   text-align: center;
@@ -78,6 +83,8 @@ a:hover .article-list-item-headline{
 }
 
 .article-list-item-info {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
   font-size: 12px;
   letter-spacing: 0.5px;
 }
@@ -119,12 +126,17 @@ a:hover .article-list-item-headline{
 
 @media (min-width: 48rem) {
   .block.article-list {
+    padding-inline: 32px;
     grid-template-columns: 1fr 1fr !important;
     grid-template-areas:
       "arthead arthead"
       "art0a art1a"
       "art0b art1b"
       "art2a art2a";
+  }
+
+  .block.article-list h2 {
+    font-size: 28px;
   }
 }
 
@@ -135,6 +147,10 @@ a:hover .article-list-item-headline{
       " . arthead ."
       "art0a art1a art2a"
       "art0b art1b art2b";
+  }
+
+  .block.article-list h2 {
+    font-size: 2rem;
   }
 
   .all-articles p {
@@ -149,8 +165,9 @@ a:hover .article-list-item-headline{
 
 @media (min-width: 80rem) {
   .block.article-list {
-    width: 106% !important;
-    margin-left: -3%;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 94% !important;
   }
 }
 

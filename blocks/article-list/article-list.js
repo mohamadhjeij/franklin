@@ -48,7 +48,7 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-console
     console.error('Could not fetch placeholders', e);
   }
-  const limit = parseInt(config['number-of-articles'], 10) || 2;
+  const limit = 2; // Currently always 2 articles
   const dataurl = new URL(placeholders.querypath, window.location.href);
   const response = await fetch(dataurl);
   const { data } = await response.json();
