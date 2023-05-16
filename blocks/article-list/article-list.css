@@ -57,6 +57,10 @@ a:hover .article-list-item-headline{
   text-decoration: underline;
 }
 
+.block.article-list figure {
+  position: relative;
+}
+
 .block.article-list img {
   height: 300px;
   object-fit: cover;
@@ -87,6 +91,16 @@ a:hover .article-list-item-headline{
   padding-bottom: 2rem;
   font-size: 12px;
   letter-spacing: 0.5px;
+}
+
+.article-list-item-icon {
+  background-color: var(--border-color-active);
+  opacity: 0.8;
+  padding: 4px;
+  fill: white;
+  position: absolute;
+  right: 8px;
+  bottom: 10px;
 }
 
 .all-articles {
