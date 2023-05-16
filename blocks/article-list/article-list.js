@@ -7,6 +7,10 @@ function getArticle(article, placeholders, itemid) {
       <figure>
         <img src="${article.image}" alt="${article.imagealt || article.title}" title="${article.title}">
         </img>
+        <svg class="article-list-item-icon"
+          width="24px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 12h12v-1.333H2V12zm0-3.333h12V7.333H2v1.334zM2 4v1.333h12V4H2z"></path>
+        </svg>
       </figure>
       <div class="article-list-item-eyebrow">${getFormattedDate(new Date(article.publicationdate), getLocale())}</div>
       <div class="article-list-item-headline">${article.title}</div>
