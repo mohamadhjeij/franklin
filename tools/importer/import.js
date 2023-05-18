@@ -159,6 +159,12 @@ const createMetadata = (main, document, url) => {
     meta.Image = el;
   }
 
+  // Preference order for image alt tag is og:image:alt > og:title > title
+  const imagealt = document.querySelector('[property="og:image:alt"]') || document.querySelector('[property="og:title"]') || title;
+  if (imagealt) {
+    meta['Image-Alt'] = imagealt.content;
+  }
+
   // iterate over tagsMap
   const tags = [];
   Object.entries(tagsMap).forEach(([key, value]) => {

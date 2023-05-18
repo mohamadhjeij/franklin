@@ -190,13 +190,6 @@ export default async function decorate(block) {
         copyright = copyright.substring(1);
       }
     }
-
-    const img = image.querySelector('img');
-    if (img) {
-      img.alt = img.alt || label;
-      img.title = img.title || label;
-    }
-
     return {
       image: image.outerHTML,
       label,
