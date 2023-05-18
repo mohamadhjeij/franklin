@@ -59,7 +59,7 @@ export default async function decorate(block) {
         downloadButtonIconElement.innerHTML = `
           <span>
              <span>Download</span>
-           </span>   
+           </span>
            <svg class="download-item-icon" focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink"">
              <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-external-link"></use>
             </svg>`;
@@ -88,5 +88,6 @@ export default async function decorate(block) {
     .then((req) => req.blob())
     .then((blob) => {
       pressCardBody.querySelectorAll('.press-cards-info-value')[1].textContent = formatBytes(blob.size);
-    }));
+    })
+    .catch(() => {}));
 }
