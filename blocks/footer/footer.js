@@ -88,7 +88,7 @@ function addFooterInteractions(block) {
 function breadcrumbTemplate(placeholders) {
   return `
     <ul class="breadcrumb__list-wrapper breadcrumb__list-wrapper--less-than-two">
-      <li class="breadcrumb__list-item">  
+      <li class="breadcrumb__list-item">
         <span class="icon icon-symbols-chevron-right icon--symbol">
           <span class="svg-scale-wrapper" style="padding-bottom: 100%;">
             <svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -98,7 +98,7 @@ function breadcrumbTemplate(placeholders) {
         </span>
         <a class="plain-link breadcrumb__link-item" data-gtm-eventname="Navigation" data-gtm-eventaction="Click" data-gtm-eventtype="Footer" data-gtm-eventvalue="Home" data-gtm-eventdetail="https://www.zeiss.com/semiconductor-manufacturing-technology/home.html" href="https://www.zeiss.com/semiconductor-manufacturing-technology/home.html">Home</a>
       </li>
-      <li class="breadcrumb__list-item">   
+      <li class="breadcrumb__list-item">
         <span class="icon icon-symbols-chevron-right icon--symbol">
           <span class="svg-scale-wrapper" style="padding-bottom: 100%;">
             <svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -124,17 +124,32 @@ export default async function decorate(block) {
   const locale = getLocale();
   const placeholders = await fetchPlaceholders(`${locale}`);
   const footerPath = cfg.footer || getAemTemplateUrl(locale);
-  const resp = await fetch(footerPath);
-  if (resp.ok) {
-    const html = await resp.text();
-    const parser = new DOMParser();
-    const footer = parser.parseFromString(html, 'text/html').querySelector('footer');
-    // add breadcrump
-    const breadcrumb = footer.querySelector('nav[class=breadcrumb]');
-    breadcrumb.innerHTML = breadcrumbTemplate(placeholders);
-    // fix svg relative urls
-    decorateIcons(footer, true);
-    block.append(footer);
-    addFooterInteractions(block);
+
+  try {
+    const resp = await fetch(footerPath);
+
+    if (resp.ok) {
+      const html = await resp.text();
+      const parser = new DOMParser();
+      const footer = parser.parseFromString(html, 'text/html').querySelector('footer');
+      // add breadcrump
+      const breadcrumb = footer.querySelector('nav[class=breadcrumb]');
+      breadcrumb.innerHTML = breadcrumbTemplate(placeholders);
+      // fix svg relative urls
+      decorateIcons(footer, true);
+      block.append(footer);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('Unable to fetch footer, using fallback');
+
+    const fbhtml = await fetch(`/blocks/footer/fallback_${getLocale()}.html`);
+
+    if (fbhtml.ok) {
+      const html = await fbhtml.text();
+      block.innerHTML += html;
+    }
   }
+
+  addFooterInteractions(block);
 }

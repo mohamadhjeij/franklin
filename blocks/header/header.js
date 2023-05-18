@@ -153,26 +153,40 @@ export default async function decorate(block) {
 
   // fetch nav content
   const navPath = cfg.nav || getAemTemplateUrl(getLocale());
-  const resp = await fetch(navPath);
 
-  if (resp.ok) {
-    const html = await resp.text();
-    const parser = new DOMParser();
-    const header = parser.parseFromString(html, 'text/html').querySelector('header');
-    header.querySelector('.search.search--recommended').remove();
-    if (getLocale() === 'de') {
-      header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.de/semiconductor-manufacturing-technology/z/suche.html?_charset_=UTF-8';
-    } else {
-      header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.com/semiconductor-manufacturing-technology/z/search.html?_charset_=UTF-8';
+  try {
+    const resp = await fetch(navPath);
+
+    if (resp.ok) {
+      const html = await resp.text();
+      const parser = new DOMParser();
+      const header = parser.parseFromString(html, 'text/html').querySelector('header');
+      header.querySelector('.search.search--recommended').remove();
+      if (getLocale() === 'de') {
+        header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.de/semiconductor-manufacturing-technology/z/suche.html?_charset_=UTF-8';
+      } else {
+        header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.com/semiconductor-manufacturing-technology/z/search.html?_charset_=UTF-8';
+      }
+
+      const headerDiv = document.createElement('div');
+      headerDiv.classList.add('header');
+      headerDiv.classList.add('main-header');
+      headerDiv.innerHTML = header.innerHTML;
+      block.appendChild(headerDiv);
+      decorateIcons(block, true);
     }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('Unable to fetch navbar, using fallback');
 
-    const headerDiv = document.createElement('div');
-    headerDiv.classList.add('header');
-    headerDiv.classList.add('main-header');
-    headerDiv.innerHTML = header.innerHTML;
-    block.appendChild(headerDiv);
-    addScrollListener(block);
-    addHeaderInteractions(block);
-    decorateIcons(block, true);
+    const fbhtml = await fetch(`/blocks/header/fallback_${getLocale()}.html`);
+
+    if (fbhtml.ok) {
+      const html = await fbhtml.text();
+      block.innerHTML += html;
+    }
   }
+
+  addScrollListener(block);
+  addHeaderInteractions(block);
 }
