@@ -380,8 +380,6 @@ function customLogic(main, doc, url) {
   // Add featured articles block
   if (doc.querySelector('.featured-articles-with-teaser')) {
     const cells = [['Article List']];
-    const count = doc.querySelectorAll('.featured-articles-with-teaser__item--article').length;
-    cells.push(['Number of articles', count]);
     doc.querySelector('.featured-articles-with-teaser').after(doc.createElement('hr'));
     const table = WebImporter.DOMUtils.createTable(cells, doc);
     doc.querySelector('.featured-articles-with-teaser').replaceWith(table);
