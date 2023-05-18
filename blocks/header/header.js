@@ -142,18 +142,7 @@ function addHeaderInteractions(header) {
   };
 }
 
-/**
- * decorates the header, mainly the nav
- * @param {Element} block The header block element
- */
-
-export default async function decorate(block) {
-  const cfg = readBlockConfig(block);
-  block.textContent = '';
-
-  // fetch nav content
-  const navPath = cfg.nav || getAemTemplateUrl(getLocale());
-
+export async function decorateFetch(block, navPath, locale) {
   try {
     const resp = await fetch(navPath);
 
@@ -162,7 +151,7 @@ export default async function decorate(block) {
       const parser = new DOMParser();
       const header = parser.parseFromString(html, 'text/html').querySelector('header');
       header.querySelector('.search.search--recommended').remove();
-      if (getLocale() === 'de') {
+      if (locale === 'de') {
         header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.de/semiconductor-manufacturing-technology/z/suche.html?_charset_=UTF-8';
       } else {
         header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.com/semiconductor-manufacturing-technology/z/search.html?_charset_=UTF-8';
@@ -179,7 +168,7 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-console
     console.log('Unable to fetch navbar, using fallback');
 
-    const fbhtml = await fetch(`/blocks/header/fallback_${getLocale()}.html`);
+    const fbhtml = await fetch(`/blocks/header/fallback_${locale}.html`);
 
     if (fbhtml.ok) {
       const html = await fbhtml.text();
@@ -189,4 +178,19 @@ export default async function decorate(block) {
 
   addScrollListener(block);
   addHeaderInteractions(block);
+}
+
+/**
+ * decorates the header, mainly the nav
+ * @param {Element} block The header block element
+ */
+
+export default async function decorate(block) {
+  const cfg = readBlockConfig(block);
+  block.textContent = '';
+
+  // fetch nav content
+  const navPath = cfg.nav || getAemTemplateUrl(getLocale());
+
+  await decorateFetch(block, navPath, getLocale());
 }
