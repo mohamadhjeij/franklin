@@ -6,7 +6,6 @@ import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 import { decorateFetch } from '../../../blocks/header/header.js';
 
-
 document.body.innerHTML = await readFile({ path: '../../scripts/dummy.html' });
 
 const { buildBlock, decorateBlock, loadBlock } = await import('../../../scripts/lib-franklin.js');
@@ -58,8 +57,8 @@ describe('Header block', () => {
       if (v === footerPath) {
         return {
           ok: true,
-          text: () => '<html><header><div class="search search--recommended">hi</div>' +
-            'my-header<a class="header__action-area__search" href="foo"/></header></html>',
+          text: () => '<html><header><div class="search search--recommended">hi</div>'
+            + 'my-header<a class="header__action-area__search" href="foo"/></header></html>',
         };
       }
       throw Error('Unexpected fetch arg');
