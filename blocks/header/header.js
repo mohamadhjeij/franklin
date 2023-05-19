@@ -104,23 +104,26 @@ function addHeaderInteractions(header) {
     };
   });
 
-  header.querySelectorAll('.drilldown__first-level-container li:has(ul) a').forEach((link) => {
-    link.onclick = (event) => {
-      event.preventDefault();
+  header.querySelectorAll('.drilldown__first-level-container li a').forEach((link) => {
+    // Can't use has operator as its not supported in firefox
+    if (link.nextElementSibling && link.nextElementSibling.tagName === 'UL') {
+      link.onclick = (event) => {
+        event.preventDefault();
 
-      const li = link.parentElement;
-      if (li.classList.contains(drilldownActiveClass)) {
-        li.classList.remove(drilldownActiveClass);
-      } else {
-        const activeDrilldown = header.querySelector(`.${drilldownActiveClass}`);
-        if (activeDrilldown) {
-          activeDrilldown.classList.remove(drilldownActiveClass);
+        const li = link.parentElement;
+        if (li.classList.contains(drilldownActiveClass)) {
+          li.classList.remove(drilldownActiveClass);
+        } else {
+          const activeDrilldown = header.querySelector(`.${drilldownActiveClass}`);
+          if (activeDrilldown) {
+            activeDrilldown.classList.remove(drilldownActiveClass);
+          }
+
+          li.classList.add(drilldownActiveClass);
+          setContainerHeight(header.querySelector(`.${menuVisibleClass}`));
         }
-
-        li.classList.add(drilldownActiveClass);
-        setContainerHeight(header.querySelector(`.${menuVisibleClass}`));
-      }
-    };
+      };
+    }
   });
 
   header.querySelector('.main-menu-toggle').onclick = (event) => {
@@ -168,12 +171,12 @@ export default async function decorate(block) {
         header.querySelector('a.header__action-area__search').href = 'https://www.zeiss.com/semiconductor-manufacturing-technology/z/search.html?_charset_=UTF-8';
       }
 
+      decorateIcons(header, true);
       const headerDiv = document.createElement('div');
       headerDiv.classList.add('header');
       headerDiv.classList.add('main-header');
       headerDiv.innerHTML = header.innerHTML;
       block.appendChild(headerDiv);
-      decorateIcons(block, true);
     }
   } catch (error) {
     // eslint-disable-next-line no-console
