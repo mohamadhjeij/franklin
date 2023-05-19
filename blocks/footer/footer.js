@@ -112,19 +112,7 @@ function breadcrumbTemplate(placeholders) {
   `;
 }
 
-/**
- * loads and decorates the footer
- * @param {Element} block The header block element
- */
-
-export default async function decorate(block) {
-  const cfg = readBlockConfig(block);
-  block.textContent = '';
-
-  const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`${locale}`);
-  const footerPath = cfg.footer || getAemTemplateUrl(locale);
-
+export async function decorateFetch(block, footerPath, placeholders, locale) {
   try {
     const resp = await fetch(footerPath);
 
@@ -143,7 +131,7 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-console
     console.log('Unable to fetch footer, using fallback');
 
-    const fbhtml = await fetch(`/blocks/footer/fallback_${getLocale()}.html`);
+    const fbhtml = await fetch(`/blocks/footer/fallback_${locale}.html`);
 
     if (fbhtml.ok) {
       const html = await fbhtml.text();
@@ -152,4 +140,20 @@ export default async function decorate(block) {
   }
 
   addFooterInteractions(block);
+}
+
+/**
+ * loads and decorates the footer
+ * @param {Element} block The header block element
+ */
+
+export default async function decorate(block) {
+  const cfg = readBlockConfig(block);
+  block.textContent = '';
+
+  const locale = getLocale();
+  const placeholders = await fetchPlaceholders(`${locale}`);
+  const footerPath = cfg.footer || getAemTemplateUrl(locale);
+
+  decorateFetch(block, footerPath, placeholders, locale);
 }
