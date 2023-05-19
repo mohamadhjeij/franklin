@@ -1,65 +1,79 @@
-/* grid */
 :root {
-  --grid-gutter: 1rem;
+  --item-gap: 1rem;
 }
 
 @media (min-width: 22.5rem) {
   :root {
-    --grid-gutter: 1rem;
+    --item-gap: 1rem;
   }
 }
 
 @media (min-width: 48rem) {
   :root {
-    --grid-gutter: 1.5rem;
+    --item-gap: 1.5rem;
   }
 }
 
 @media (min-width: 64rem) {
   :root {
-    --grid-gutter: 1.5rem;
+    --item-gap: 1.5rem;
   }
 }
 
 @media (min-width: 80rem) {
   :root {
-    --grid-gutter: 1.5rem;
+    --item-gap: 1.5rem;
   }
 }
 
 @media (min-width: 90rem) {
   :root {
-    --grid-gutter: 1.5rem;
+    --item-gap: 1.5rem;
   }
 }
 
 @media (min-width: 120rem) {
   :root {
-    --grid-gutter: 1.5rem;
+    --item-gap: 1.5rem;
   }
 }
 
+.cards .cards-card-body {
+  margin-top: var(--spacing-vertical-m);
+}
+
+.cards > ul > li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1; /* Setting aspect-ratio explicitly 1/1 here */
+}
+
 .cards > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+}
 
-    /* Below 48rem, do not show more than 1 card in a row */
-    grid-template-columns: repeat(auto-fit, minmax(calc((48rem - 2 * var(--section-margin) - var(--grid-gutter)) / 2), 1fr));
-    grid-gap: var(--grid-gutter);
+.cards li {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0px;
+}
+
+.cards > ul>:not(:last-child) {
+  margin-bottom: var(--spacing-vertical-l);
+}
+
+@media (min-width: 48rem) {
+  .cards > ul {
+    flex-direction: row;
   }
 
-  .cards .cards-card-body {
-    margin-top: var(--spacing-vertical-m);
+  .cards > ul>:not(:last-child) {
+    margin-bottom: 0;
   }
-
-  .cards > ul > li > div {
-    height: calc(100% - 3rem);
-  }
-
-  .cards > ul > li img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+}
