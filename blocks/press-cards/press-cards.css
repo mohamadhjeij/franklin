@@ -34,7 +34,7 @@
 
 .press-cards > ul > li > .press-cards-card-body {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .press-cards .press-cards-item-info {
@@ -93,15 +93,20 @@
     .press-cards > ul > li > .press-cards-card-image {
         flex: 0 0 auto;
         cursor: pointer;
-        display: inline-block;
-        height: auto;
-        align-items: flex-end;
-        min-height: 20rem;
-        box-shadow: var(--elevation-highlight);
+        display: flex;
+        flex-direction: column;
+        width: 15rem;
+    }
+
+    .press-cards > ul > li > .press-cards-card-image > picture > img {
+        min-height: 12rem;
+    }
+
+    .press-cards .landscape > ul > li, .press-cards .landscape > ul > li > .press-cards-card-image {
+        width: 20rem;
     }
 
     .press-cards > ul > li > .press-cards-card-image > picture {
-        display: block;
         width: 100%;
     }
 
@@ -111,16 +116,12 @@
         font-weight: 300;
     }
 
-    .press-cards > ul > li > .press-cards-card-body h3 {
-        flex: 0 0 auto;
+    .press-cards > ul > li > .press-cards-card-body :is(h3, h4, p) {
         display: flex;
-        align-self: stretch;
+        flex: 1 0 auto;
     }
 
-    .press-cards > ul > li > .press-cards-card-body h4 {
-        flex: 1 1 auto;
-        display: flex;
-        align-self: stretch;
+    .press-cards > ul > li > .press-cards-card-body :is(h4, p) {
         margin-block-end: 1.33em;
     }
 }
