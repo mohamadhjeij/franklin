@@ -349,7 +349,12 @@ function customLogic(main, doc, url) {
 
   // Add downloads block
   if (doc.querySelector('.downloads-wrapper')) {
-    const cells = [['press-cards']];
+    let cells;
+    if (doc.querySelectorAll('.download-item--landscape').length > 0) {
+      cells = [['press-cards(landscape)']];
+    } else {
+      cells = [['press-cards']];
+    }
     const headline = doc.createElement('h2');
     headline.textContent = doc.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
     cells.push([headline]);
