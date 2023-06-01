@@ -255,6 +255,14 @@ function customLogic(main, doc, url) {
     }
   });
 
+  // Remove GTM iframe tag from the body
+  doc.querySelectorAll('body > noscript').forEach((noscript) => {
+    const content = noscript.innerHTML;
+    if (content.includes('iframe') && content.includes('googletagmanager.com')) {
+      noscript.remove();
+    }
+  });
+
   // Add cards block for media
   if (doc.querySelector('.text-media-grid')) {
     const cells = [['cards']];
