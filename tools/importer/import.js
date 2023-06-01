@@ -313,46 +313,48 @@ function customLogic(main, doc, url) {
       const trimmed = s.trim();
       return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
     };
-    const cells = [['collapse']];
-    const div = doc.createElement('div');
     const heading = collapseItem.closest('.text-block').querySelector('.text-block__headline h2');
-    collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
-    cells.push([`${heading.textContent}`]);
-    const title = uncapitalize(heading.textContent);
-    heading.remove();
-    collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
-      div.append(item);
-    });
-    const expandButton = doc.createElement('a');
-    const collapseButton = doc.createElement('a');
+    if (heading) {
+      const cells = [['collapse']];
+      const div = doc.createElement('div');
+      collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
+      cells.push([`${heading.textContent}`]);
+      const title = uncapitalize(heading.textContent);
+      heading.remove();
+      collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
+        div.append(item);
+      });
+      const expandButton = doc.createElement('a');
+      const collapseButton = doc.createElement('a');
 
-    const furtherButton = collapseItem.querySelector('.text-block__button a');
-    if (furtherButton) {
-      const fqdn = {
-        en: 'www.zeiss.com',
-        de: 'www.zeiss.de',
-      }[getLocale(url)];
-      furtherButton.href = `https://${fqdn}`;
-      div.append(furtherButton);
+      const furtherButton = collapseItem.querySelector('.text-block__button a');
+      if (furtherButton) {
+        const fqdn = {
+          en: 'www.zeiss.com',
+          de: 'www.zeiss.de',
+        }[getLocale(url)];
+        furtherButton.href = `https://${fqdn}`;
+        div.append(furtherButton);
+      }
+
+      expandButton.href = '#';
+      collapseButton.href = '#';
+
+      if (getLocale(url) === 'de') {
+        expandButton.textContent = `Mehr Informationen ${title}`;
+        collapseButton.textContent = `Weniger Informationen ${title}`;
+      } else {
+        expandButton.textContent = `More ${title}`;
+        collapseButton.textContent = `Less ${title}`;
+      }
+
+      cells.push([div], [expandButton], [collapseButton]);
+      const table = WebImporter.DOMUtils.createTable(cells, doc);
+      const styleCells = [['Section Metadata']];
+      styleCells.push(['Style', 'collapsed-text']);
+      const stylesTable = WebImporter.DOMUtils.createTable(styleCells, doc);
+      collapseItem.replaceWith(table, stylesTable);
     }
-
-    expandButton.href = '#';
-    collapseButton.href = '#';
-
-    if (getLocale(url) === 'de') {
-      expandButton.textContent = `Mehr Informationen ${title}`;
-      collapseButton.textContent = `Weniger Informationen ${title}`;
-    } else {
-      expandButton.textContent = `More ${title}`;
-      collapseButton.textContent = `Less ${title}`;
-    }
-
-    cells.push([div], [expandButton], [collapseButton]);
-    const table = WebImporter.DOMUtils.createTable(cells, doc);
-    const styleCells = [['Section Metadata']];
-    styleCells.push(['Style', 'collapsed-text']);
-    const stylesTable = WebImporter.DOMUtils.createTable(styleCells, doc);
-    collapseItem.replaceWith(table, stylesTable);
   });
 
   // Add downloads block
