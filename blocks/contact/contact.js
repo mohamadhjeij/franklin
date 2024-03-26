@@ -1,83 +1,92 @@
-/* eslint-disable comma-dangle */
 import { decorateIcons, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { getLocale } from '../../scripts/utils.js';
 
-function template(items, placeholders) {
-  return `<div class="profile-collection ">
-    <div class="heading-slot"></div>
-    <div class="profile-collection__settings" data-primary-count="1">
-        <div class="grid__container">
-            <div class="profile-collection__content profile-collection__content-medium">
-                <div class="profile-collection__section profile-collection__section--visible">
-                    <div class="grid__structure profile-collection__structure profile-collection__structure--primary">
-                        ${items.map((item) => `<div class="profile-collection__item">
-                            <div data-module="Profile" class="profile profile--primary">
-                                <div class="grid__structure profile__grid-structure">
-                                    <div class="grid__column profile__column--content">
-                                        <div class="headline hl-xs    profile__headline ">
-                                            <span>
-                                                <span class="headline__eyebrow text--eyebrow">${placeholders.contactheadline}</span>
-                                                <h3>
-                                                    <span class="headline__main" data-js-select="Headline_main">${item.Name}</span>
-                                                </h3>
-                                                ${item.Org ? `<h4 class="headline__sub hl--sub">${item.Org}</h4>` : ''}
-                                            </span>
-                                        </div>
-                                        <div class="profile__actions">
-                                            <div class="profile__toggle">
-                                            </div>
-                                            <div class="profile__contact">
-                                                <ul class="profile__contact-list">
-                                                    <li class="profile__contact-item">
-                                                        <a aria-label="${placeholders.contacttelephon}"
-                                                            class="plain-link profile__contact-item-link"
-                                                            href="tel:${item.Phone}" title="${placeholders.contacttelephon}">
-                                                            <span class="icon icon-phone">
-                                                            </span>
-                                                            <span class="profile__contact-item-label">${item.Phone}</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="profile__contact-item">
-                                                        <a aria-label="${placeholders.contactemail}"
-                                                            class="plain-link profile__contact-item-link"
-                                                            href="mailto:${item.Email}" title="${placeholders.contactemail}">
-                                                            <span class="icon icon-mail icon--symbol">
-                                                            </span>
-                                                            <span
-                                                                class="profile__contact-item-label">${item.Email}</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="profile__contact-item">
-                                                        <a aria-label="vCard"
-                                                            class="plain-link profile__contact-item-link"
-                                                            href="${item.vCard}"
-                                                            target="_blank" title="vCard">
-                                                            <span class="icon icon-file-download">
-                                                            </span>
-                                                            <span class="profile__contact-item-label">${placeholders.contactvcard}</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`).join('')}
-                    </div>
-                    <div class="grid__structure profile-collection__structure profile-collection__structure--secondary">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>`;
+function setProfileHeading(profileItem, placeholders, item) {
+  const profileHeadline = document.createElement('div');
+  profileHeadline.classList.add('headline', 'hl-xs', 'profile__headline');
+
+  const span = document.createElement('span');
+  span.classList.add('headline__eyebrow', 'text--eyebrow');
+  span.textContent = placeholders.contactheadline;
+
+  const heading3 = document.createElement('h3');
+  const innerSpan = document.createElement('span');
+  innerSpan.classList.add('headline__main');
+  innerSpan.textContent = item.Name;
+  heading3.appendChild(innerSpan);
+
+  profileHeadline.appendChild(span);
+  profileHeadline.appendChild(heading3);
+
+  if (item.Org) {
+    const heading4 = document.createElement('h4');
+    heading4.classList.add('headline__sub', 'hl--sub');
+    heading4.textContent = item.Org;
+    profileHeadline.appendChild(heading4);
+  }
+
+  profileItem.appendChild(profileHeadline);
+}
+
+function addListItem(ariaLabel, href, target, title, spanClassList, spanLabel, ul) {
+  const li = document.createElement('li');
+  li.classList.add('profile__contact-item');
+
+  const anchorTag = document.createElement('a');
+  anchorTag.classList.add('plain-link', 'profile__contact-item-link');
+  anchorTag['aria-label'] = ariaLabel;
+  anchorTag.href = href;
+  anchorTag.title = title;
+
+  if (target) {
+    anchorTag.target = target;
+  }
+
+  const spanPhone = document.createElement('span');
+  spanClassList.forEach((x) => {
+    spanPhone.classList.add(x);
+  });
+
+  const spanPhoneLabel = document.createElement('span');
+  spanPhoneLabel.classList.add('profile__contact-item-label');
+  spanPhoneLabel.textContent = spanLabel;
+
+  anchorTag.appendChild(spanPhone);
+  anchorTag.appendChild(spanPhoneLabel);
+
+  li.appendChild(anchorTag);
+  ul.appendChild(li);
+}
+
+function setProfileContact(profileItem, placeholders, item) {
+  const profileContact = document.createElement('div');
+  profileContact.classList.add('profile__contact');
+
+  const ul = document.createElement('ul');
+  ul.classList.add('profile__contact-list');
+
+  addListItem(placeholders.contacttelephon, `tel:${item.Phone}`, '', placeholders.contacttelephon, ['icon', 'icon-phone'], item.Phone, ul);
+  addListItem(placeholders.contactemail, `mailto:${item.Email}`, '', placeholders.contactemail, ['icon', 'icon-mail', 'icon--symbol'], item.Email, ul);
+  addListItem('vCard', item.vCard, '_blank', 'vCard', ['icon', 'icon-file-download'], placeholders.contactvcard, ul);
+  profileContact.appendChild(ul);
+  profileItem.appendChild(profileContact);
+}
+
+function template(block, items, placeholders) {
+  block.classList.add('profile-collection__settings', 'grid__container', `primary-count-${items.length}`, 'grid__structure', 'profile-collection__structure', 'profile-collection__structure--primary');
+
+  items.forEach((item) => {
+    const profileItem = document.createElement('div');
+    profileItem.classList.add('profile-collection__item');
+    setProfileHeading(profileItem, placeholders, item);
+    setProfileContact(profileItem, placeholders, item);
+    block.appendChild(profileItem);
+  });
 }
 
 export default async function decorate(block) {
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
-  const heading = block.querySelector('h2');
+  const placeholders = await fetchPlaceholders(`${locale}`);
   const contacts = [];
   block.querySelectorAll('a').forEach((a) => {
     contacts.push(a.href);
@@ -100,14 +109,13 @@ export default async function decorate(block) {
           Org: doc.querySelector('html > head > meta[name="org"]') ? doc.querySelector('html > head > meta[name="org"]').content : undefined,
           Phone: doc.querySelector('html > head > meta[name="phone"]') ? doc.querySelector('html > head > meta[name="phone"]').content : undefined,
           vCard: doc.querySelector('html > head > meta[name="vcard"]') ? doc.querySelector('html > head > meta[name="vcard"]').content : undefined,
-        }
+        },
       );
     }
   }
 
-  block.innerHTML = template(items, placeholders);
-  // Required for navigation scroll tracking
-  block.querySelector('.heading-slot').append(heading);
+  block.innerHTML = '';
+  template(block, items, placeholders);
 
   decorateIcons(block, true);
 }

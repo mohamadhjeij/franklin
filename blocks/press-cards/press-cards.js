@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { getLocale } from '../../scripts/utils.js';
 
 function formatBytes(bytes, decimals = 1) {
@@ -12,7 +12,7 @@ function formatBytes(bytes, decimals = 1) {
 
 export default async function decorate(block) {
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
+  const placeholders = await fetchPlaceholders(`${locale}`);
   /* format headers */
   if (block.querySelector('h2')) {
     block.querySelector('h2').classList.add('headline');
@@ -42,7 +42,11 @@ export default async function decorate(block) {
     li.innerHTML = row.innerHTML;
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'press-cards-card-image';
+        const a = document.createElement('a');
+        a.className = 'press-cards-card-image';
+        a.setAttribute('target', '_blank');
+        a.innerHTML = div.innerHTML;
+        div.replaceWith(a);
       } else {
         div.className = 'press-cards-card-body';
         div.classList.add('text');
@@ -55,7 +59,7 @@ export default async function decorate(block) {
         downloadButtonIconElement.innerHTML = `
           <span>
              <span>Download</span>
-           </span>   
+           </span>
            <svg class="download-item-icon" focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink"">
              <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-external-link"></use>
             </svg>`;
@@ -76,6 +80,7 @@ export default async function decorate(block) {
     });
     ul.append(li);
   });
+  ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
   block.textContent = '';
   block.append(...headline.children);
   block.append(ul);
@@ -83,5 +88,6 @@ export default async function decorate(block) {
     .then((req) => req.blob())
     .then((blob) => {
       pressCardBody.querySelectorAll('.press-cards-info-value')[1].textContent = formatBytes(blob.size);
-    }));
+    })
+    .catch(() => {}));
 }
