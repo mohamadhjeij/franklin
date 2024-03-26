@@ -61,7 +61,7 @@ function buildMarkup(element, placeholders) {
 
 export default async function decorate(block) {
   const locale = getLocale();
-  const placeholders = await fetchPlaceholders(`/${locale}`);
+  const placeholders = await fetchPlaceholders(`${locale}`);
   const cfg = readBlockConfig(block);
   block.innerHTML = '';
 

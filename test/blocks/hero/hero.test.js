@@ -9,7 +9,7 @@ import loadPlaceholders from '../../test-utlis.js';
 
 document.write(await readFile({ path: './hero.plain.html' }));
 const locale = getLocale();
-await loadPlaceholders(`/${locale}`);
+await loadPlaceholders(`${locale}`);
 
 describe('Hero block', () => {
   it('Decorates block', async () => {
@@ -31,6 +31,7 @@ describe('Hero block', () => {
       pressrelease: 'PressRel',
       newseventsbase: 'news/events',
       backtonewsevents: 'back to overview',
+      newsandeventsurl: 'https://www.zeiss.de/semiconductor-manufacturing-technology/news-und-events.html',
     };
     addBackLink(block, 'de', ph, 'news/events/someevent');
 
@@ -41,11 +42,11 @@ describe('Hero block', () => {
     expect(createdHR.localName).to.equal('hr');
 
     const createdLink = block.querySelector('.back-link');
-    expect(createdLink.getAttribute('href')).to.equal('/de/news/events/');
+    expect(createdLink.getAttribute('href')).to.equal('https://www.zeiss.de/semiconductor-manufacturing-technology/news-und-events.html');
     expect(createdLink.innerHTML).to.equal('back to overview');
 
     const createdLinkArrow = block.querySelector('.back-link-icon');
-    expect(createdLinkArrow.getAttribute('href')).to.equal('/de/news/events/');
+    expect(createdLinkArrow.getAttribute('href')).to.equal('https://www.zeiss.de/semiconductor-manufacturing-technology/news-und-events.html');
     expect(createdLinkArrow.children[0].localName).to
       .equal('svg', 'Link should contain an icon');
   });

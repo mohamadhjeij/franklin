@@ -19,9 +19,9 @@ export function addBackLink(block, locale, placeholders, curPath) {
   // The 2 elements are created in the 'backward' order to allow the hover over the link
   // to change the color of the arrow. They are put in the correct position via the
   // 'order' attribute in the CSS.
-  bl.innerHTML = `<a href="/${locale}/${placeholders.newseventsbase}/"
+  bl.innerHTML = `<a href=${placeholders.newsandeventsurl}
     class="back-link">${placeholders.backtonewsevents}</a>
-  <a href="/${locale}/${placeholders.newseventsbase}/" class="back-link-icon">
+  <a href=${placeholders.newsandeventsurl} class="back-link-icon">
     <svg focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink"">
       <use xlink:href="/icons/symbols-sprite.svg#svgsymbol-chevron-left"></use>
     </svg>
@@ -35,7 +35,7 @@ export default async function decorate(block) {
   const locale = getLocale();
   let placeholders = {};
   try {
-    placeholders = await fetchPlaceholders(`/${locale}`);
+    placeholders = await fetchPlaceholders(`${locale}`);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Could not fetch placeholders', e);

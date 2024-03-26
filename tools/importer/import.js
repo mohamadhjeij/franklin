@@ -159,6 +159,12 @@ const createMetadata = (main, document, url) => {
     meta.Image = el;
   }
 
+  // Preference order for image alt tag is og:image:alt > og:title > title
+  const imagealt = document.querySelector('[property="og:image:alt"]') || document.querySelector('[property="og:title"]') || title;
+  if (imagealt) {
+    meta['Image-Alt'] = imagealt.content;
+  }
+
   // iterate over tagsMap
   const tags = [];
   Object.entries(tagsMap).forEach(([key, value]) => {
@@ -249,6 +255,14 @@ function customLogic(main, doc, url) {
     }
   });
 
+  // Remove GTM iframe tag from the body
+  doc.querySelectorAll('body > noscript').forEach((noscript) => {
+    const content = noscript.innerHTML;
+    if (content.includes('iframe') && content.includes('googletagmanager.com')) {
+      noscript.remove();
+    }
+  });
+
   // Add cards block for media
   if (doc.querySelector('.text-media-grid')) {
     const cells = [['cards']];
@@ -299,51 +313,58 @@ function customLogic(main, doc, url) {
       const trimmed = s.trim();
       return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
     };
-    const cells = [['collapse']];
-    const div = doc.createElement('div');
     const heading = collapseItem.closest('.text-block').querySelector('.text-block__headline h2');
-    collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
-    cells.push([`${heading.textContent}`]);
-    const title = uncapitalize(heading.textContent);
-    heading.remove();
-    collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
-      div.append(item);
-    });
-    const expandButton = doc.createElement('a');
-    const collapseButton = doc.createElement('a');
+    if (heading) {
+      const cells = [['collapse']];
+      const div = doc.createElement('div');
+      collapseItem.closest('.text-block').querySelector('[data-js-select="TextBlock_buttonToggle"]').remove();
+      cells.push([`${heading.textContent}`]);
+      const title = uncapitalize(heading.textContent);
+      heading.remove();
+      collapseItem.querySelectorAll(':scope>div>p').forEach((item) => {
+        div.append(item);
+      });
+      const expandButton = doc.createElement('a');
+      const collapseButton = doc.createElement('a');
 
-    const furtherButton = collapseItem.querySelector('.text-block__button a');
-    if (furtherButton) {
-      const fqdn = {
-        en: 'www.zeiss.com',
-        de: 'www.zeiss.de',
-      }[getLocale(url)];
-      furtherButton.href = `https://${fqdn}`;
-      div.append(furtherButton);
+      const furtherButton = collapseItem.querySelector('.text-block__button a');
+      if (furtherButton) {
+        const fqdn = {
+          en: 'www.zeiss.com',
+          de: 'www.zeiss.de',
+        }[getLocale(url)];
+        furtherButton.href = `https://${fqdn}`;
+        div.append(furtherButton);
+      }
+
+      expandButton.href = '#';
+      collapseButton.href = '#';
+
+      if (getLocale(url) === 'de') {
+        expandButton.textContent = `Mehr Informationen ${title}`;
+        collapseButton.textContent = `Weniger Informationen ${title}`;
+      } else {
+        expandButton.textContent = `More ${title}`;
+        collapseButton.textContent = `Less ${title}`;
+      }
+
+      cells.push([div], [expandButton], [collapseButton]);
+      const table = WebImporter.DOMUtils.createTable(cells, doc);
+      const styleCells = [['Section Metadata']];
+      styleCells.push(['Style', 'collapsed-text']);
+      const stylesTable = WebImporter.DOMUtils.createTable(styleCells, doc);
+      collapseItem.replaceWith(table, stylesTable);
     }
-
-    expandButton.href = '#';
-    collapseButton.href = '#';
-
-    if (getLocale(url) === 'de') {
-      expandButton.textContent = `Mehr Informationen ${title}`;
-      collapseButton.textContent = `Weniger Informationen ${title}`;
-    } else {
-      expandButton.textContent = `More ${title}`;
-      collapseButton.textContent = `Less ${title}`;
-    }
-
-    cells.push([div], [expandButton], [collapseButton]);
-    const table = WebImporter.DOMUtils.createTable(cells, doc);
-    const styleCells = [['Section Metadata']];
-    styleCells.push(['Style', 'collapsed-text']);
-    const stylesTable = WebImporter.DOMUtils.createTable(styleCells, doc);
-    collapseItem.replaceWith(table, stylesTable);
   });
 
   // Add downloads block
   if (doc.querySelector('.downloads-wrapper')) {
-    const cells = [['press-cards']];
+    let cells;
+    if (doc.querySelectorAll('.download-item--landscape').length > 0) {
+      cells = [['press-cards(landscape)']];
+    } else {
+      cells = [['press-cards']];
+    }
     const headline = doc.createElement('h2');
     headline.textContent = doc.querySelector('.downloads-wrapper .module-headline [data-js-select="Headline_main"]').textContent;
     cells.push([headline]);
@@ -374,8 +395,6 @@ function customLogic(main, doc, url) {
   // Add featured articles block
   if (doc.querySelector('.featured-articles-with-teaser')) {
     const cells = [['Article List']];
-    const count = doc.querySelectorAll('.featured-articles-with-teaser__item--article').length;
-    cells.push(['Number of articles', count]);
     doc.querySelector('.featured-articles-with-teaser').after(doc.createElement('hr'));
     const table = WebImporter.DOMUtils.createTable(cells, doc);
     doc.querySelector('.featured-articles-with-teaser').replaceWith(table);

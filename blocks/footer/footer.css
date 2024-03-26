@@ -551,22 +551,22 @@
   margin-top: var(--spacing-vertical-xxl)
 }
 
-.footer__breadcrumb-and-to-top {
+footer .footer__breadcrumb-and-to-top {
   margin-top: calc(var(--spacing-vertical-xl) * 2);
   margin-bottom: var(--spacing-vertical-xl)
 }
 
-.footer__breadcrumb-and-to-top .grid__column {
+footer .footer__breadcrumb-and-to-top .grid__column {
   display: flex;
   justify-content: space-between;
   width: 100%
 }
 
-.footer__breadcrumb-and-to-top .breadcrumb {
+footer .footer__breadcrumb-and-to-top .breadcrumb {
   min-width: 0
 }
 
-.footer__breadcrumb-and-to-top .to-top {
+footer .footer__breadcrumb-and-to-top .to-top {
   white-space: nowrap;
   padding-left: var(--spacing-horizontal-s)
 }
