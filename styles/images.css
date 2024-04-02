@@ -84,7 +84,7 @@
 }
 
 .lazy-image .lazy-image__copyright-text {
-  display: flex;
+  display: flex
 }
 
 .lazy-image .lazy-image__copyright-text::before {
